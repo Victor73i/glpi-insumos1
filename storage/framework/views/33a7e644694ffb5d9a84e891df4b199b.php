@@ -14,8 +14,7 @@
                     <div class="d-flex align-items-lg-center flex-lg-row flex-column">
                         <div class="flex-grow-1">
                             <h4 class="fs-16 mb-1">Buenos Dias, <?php echo e(Auth::user()->name); ?></h4>
-                            <p class="text-muted mb-0">Here's what's happening with your store
-                                today.</p>
+                            <p class="text-muted mb-0">Hola Que Quieres hacer Hoy.</p>
                         </div>
                         <div class="mt-3 mt-lg-0">
                             <form action="javascript:void(0);">
@@ -30,23 +29,27 @@
                                     </div>
                                     <!--end col-->
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
-                                            Agregar Tarea</button>
+                                        <a href="<?php echo e(route('tareas.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar Tarea</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
-                                            Agregar Documentacion</button>
+                                        <a href="<?php echo e(route('documentacions.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar Documentacion</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
-                                            Agregar Reporte Consumible</button>
+                                        <a href="<?php echo e(route('reporte_insumo_consumibles.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar Reporte Consumible</a>
                                     </div>
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
-                                            Agregar Reporte Inventariado</button>
+                                        <a href="<?php echo e(route('reporte_insumo_inventariados.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar Reporte Inventariado</a>
                                     </div><div class="col-auto">
-                                        <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
-                                            Agregar Reporte Fungible</button>
+                                        <a href="<?php echo e(route('reporte_insumo_fungibles.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar Reporte Fungible</a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href="<?php echo e(route('logs.create')); ?>" type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i>
+                                            Agregar LOG</a>
                                     </div>
                                     <!--end col-->
                                     <div class="col-auto">
@@ -71,7 +74,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="flex-grow-1 overflow-hidden">
                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
-                                        Total Earnings</p>
+                                        Logs</p>
                                 </div>
                                 <div class="flex-shrink-0">
                                     <h5 class="text-success fs-14 mb-0">
@@ -84,12 +87,38 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="559.25">0</span>k
                                     </h4>
-                                    <a href="" class="text-decoration-underline">View net
-                                        earnings</a>
+                                    <a href="<?php echo e(route('logs.index')); ?>" class="text-decoration-underline">Ver Logs</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-soft-success rounded fs-3">
                                         <i class="bx bx-dollar-circle text-success"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div><!-- end card -->
+                    <div class="card card-animate">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                                        Documentacion</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <h5 class="text-muted fs-14 mb-0">
+                                        +0.00 %
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end justify-content-between mt-4">
+                                <div>
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="165.89">0</span>k
+                                    </h4>
+                                    <a href="<?php echo e(route('documentacions.index')); ?>" class="text-decoration-underline">Ver Documentacion</a>
+                                </div>
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-soft-primary rounded fs-3">
+                                        <i class="bx bx-wallet text-primary"></i>
                                     </span>
                                 </div>
                             </div>
@@ -116,7 +145,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36894">0</span></h4>
-                                    <a href="" class="text-decoration-underline">Ver Tareas</a>
+                                    <a href="<?php echo e(route('tareas.index')); ?>" class="text-decoration-underline">Ver Tareas</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-soft-info rounded fs-3">
@@ -144,7 +173,7 @@
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36894">0</span></h4>
-                                    <a href="" class="text-decoration-underline">Ver Reporte</a>
+                                    <a href="<?php echo e(route('reporte_insumo_fungibles.index')); ?>" class="text-decoration-underline">Ver Reporte</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-soft-info rounded fs-3">
@@ -176,7 +205,35 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183.35">0</span>M
                                     </h4>
-                                    <a href="" class="text-decoration-underline">Ver Reporte</a>
+                                    <a href="<?php echo e(route('reporte_insumo_consumibles.index')); ?>" class="text-decoration-underline">Ver Reporte</a>
+                                </div>
+                                <div class="avatar-sm flex-shrink-0">
+                                    <span class="avatar-title bg-soft-warning rounded fs-3">
+                                        <i class="bx bx-user-circle text-warning"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div><!-- end card body -->
+                    </div>
+                    <div class="card card-animate">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-0">
+                                        EQUIPO IT</p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <h5 class="text-success fs-14 mb-0">
+                                        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                        +29.08 %
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end justify-content-between mt-4">
+                                <div>
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183.35">0</span>M
+                                    </h4>
+                                    <a href="<?php echo e(route('equipo_its.index')); ?>" class="text-decoration-underline">Ver Equipo IT</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-soft-warning rounded fs-3">
@@ -207,7 +264,7 @@
                                 <div>
                                     <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="165.89">0</span>k
                                     </h4>
-                                    <a href="" class="text-decoration-underline">Ver Reporte</a>
+                                    <a href="<?php echo e(route('reporte_insumo_inventariados.index')); ?>" class="text-decoration-underline">Ver Reporte</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
                                     <span class="avatar-title bg-soft-primary rounded fs-3">
@@ -216,7 +273,7 @@
                                 </div>
                             </div>
                         </div><!-- end card body -->
-                    </div><!-- end card -->
+                    </div>
                 </div><!-- end col -->
             </div> <!-- end row-->
 

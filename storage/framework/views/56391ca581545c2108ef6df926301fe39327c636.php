@@ -55,6 +55,12 @@
                             </li>
                             <li class="nav-item">
                                 <a href="dashboard-nft" class="nav-link"> <?php echo app('translator')->get('translation.nft'); ?></a>
+                            </li><li class="nav-item">
+                                <a href="dashboard-nft" class="nav-link"> <?php echo app('translator')->get('translation.nft'); ?></a>
+                            </li><li class="nav-item">
+                                <a href="dashboard-nft" class="nav-link"> <?php echo app('translator')->get('translation.nft'); ?></a>
+                            </li><li class="nav-item">
+                                <a href="dashboard-nft" class="nav-link"> <?php echo app('translator')->get('translation.nft'); ?></a>
                             </li>
                         </ul>
                     </div>
