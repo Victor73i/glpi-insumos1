@@ -60,6 +60,10 @@ class LogController extends Controller
         return view('log.index',[
             'logs'=> Log::latest()->paginate(10)]);
     }
+    public function index1() {
+        return view('apps-projects-list',[
+            'logs'=> Log::latest()->paginate(10)]);
+    }
     //create
     public function create() {
         $equiposIt = EquipoIt::all();

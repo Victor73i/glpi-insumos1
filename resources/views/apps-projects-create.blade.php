@@ -8,73 +8,173 @@
 @section('content')
     @component('components.breadcrumb')
         @slot('li_1')
-            Project
+            Log
         @endslot
         @slot('title')
-            Create Project
+            Crear Log
         @endslot
     @endcomponent
+
+    <form method="POST" action="{{ route('logs.store') }}" enctype="multipart/form-data">
+        @csrf
     <div class="row">
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <label class="form-label" for="project-title-input">Project Title</label>
-                        <input type="text" class="form-control" id="project-title-input" placeholder="Enter project title">
+                        <label class="form-label" for="titulo">Titulo</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo"
+                               @class(['border-red-500' => $errors->has('titulo')])
+                               placeholder="Ingresa el Titulo" value="{{old('titulo')}}">
+                        @error('titulo')
+                        <p class="error">{{$message}}</p>
+                        @enderror
+                    </div>
+
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="observaciones">Observaciones</label>
+                        <textarea class="form-control" name="observaciones" id="ckeditor-classic"
+                            @class(['border-red-500' => $errors->has('observaciones')])>
+        {{ old('observaciones') ?? 'Escribe la descripción del observacion aquí...' }} </textarea>
+                        @error('observaciones')
+                        <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="project-thumbnail-img">Thumbnail Image</label>
-                        <input class="form-control" id="project-thumbnail-img" type="file"
-                            accept="image/png, image/gif, image/jpeg">
+                        <label for="fecha_inicio">Fecha Inicio</label>
+                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control"
+                               @class(['border-red-500' => $errors->has('fecha_inicio')])
+                               value="{{old('fecha_inicio')}}"/>
+                        @error('fecha_inicio')
+                        <p class="error">{{$message}}</p>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label for="fecha_finalizacion">Fecha Finalizacion</label>
+                        <input type="date" name="fecha_finalizacion" id="fecha_finalizacion" class="form-control"
+                               @class(['border-red-500' => $errors->has('fecha_finalizacion')])
+                               value="{{old('fecha_finalizacion')}}"/>
+                        @error('fecha_finalizacion')
+                        <p class="error">{{$message}}</p>
+                        @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Project Description</label>
-                        <div id="ckeditor-classic">
-                            <p>It will be as simple as occidental in fact, it will be Occidental. To an English person, it
-                                will seem like simplified English, as a skeptical Cambridge friend of mine told me what
-                                Occidental is. The European languages are members of the same family. Their separate
-                                existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary.</p>
-                            <ul>
-                                <li>Product Design, Figma (Software), Prototype</li>
-                                <li>Four Dashboards : Ecommerce, Analytics, Project etc.</li>
-                                <li>Create calendar, chat and email app pages.</li>
-                                <li>Add authentication pages</li>
-                            </ul>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-priority-input" class="form-label">Priority</label>
+                                <label  class="form-label" for="id_estado_log">Estado</label>
                                 <select class="form-select" data-choices data-choices-search-false
-                                    id="choices-priority-input">
-                                    <option value="High" selected>High</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
+                                        name="id_estado_log" id="id_estado_log">
+                                    @class(['border-red-500' => $errors->has('id_estado_log')])
+                                    value="{{old('id_estado_log')}}" >
+                                    @foreach ($id_estado_logs as $id_estado_log)
+                                        <option value="{{$id_estado_log->id}}">{{ $id_estado_log->id }}: {{$id_estado_log->nombre}}</option>
+                                    @endforeach
                                 </select>
+                                @error('id_estado_log')
+                                <p class="error">{{$message}}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3 mb-lg-0">
-                                <label for="choices-status-input" class="form-label">Status</label>
+                                <label class="form-label" for="id_glpi_locations">Ubicacion</label>
                                 <select class="form-select" data-choices data-choices-search-false
-                                    id="choices-status-input">
-                                    <option value="Inprogress" selected>Inprogress</option>
-                                    <option value="Completed">Completed</option>
+                                        name="id_glpi_locations" id="id_glpi_locations"
+                                        @class(['border-red-500' => $errors->has('id_glpi_locations')])
+                                        value="{{old('id_glpi_locations')}}" >
+                                    @foreach ($id_glpi_locations as $id_glpi_location)
+                                        <option value="{{$id_glpi_location->id}}">{{ $id_glpi_location->id }}: {{$id_glpi_location->name}}</option>
+                                    @endforeach
                                 </select>
+                                @error('id_glpi_locations')
+                                <p class="error">{{$message}}</p>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div>
-                                <label for="datepicker-deadline-input" class="form-label">Deadline</label>
-                                <input type="text" class="form-control" id="datepicker-deadline-input"
-                                    placeholder="Enter due date" data-provider="flatpickr">
+                            <div class="mb-3 mb-lg-0">
+                                <label class="form-label" for="id_glpi_tickets">Ticket</label>
+                                <select class="form-select" data-choices data-choices-search-false
+                                        name="id_glpi_tickets" id="id_glpi_tickets"
+                                        @class(['border-red-500' => $errors->has('id_glpi_tickets')])
+                                        value="{{old('id_glpi_tickets')}}" >
+                                    @foreach ($id_glpi_tickets as $id_glpi_ticket)
+                                        <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_glpi_tickets')
+                                <p class="error">{{$message}}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3 mb-lg-0">
+                                <label  class="form-label" for="id_equipo_computo[]">Equipo de Computo</label>
+                                <select class="form-select" data-choices data-choices-search-false
+                                        name="id_equipo_computo[]" id="multiselect-basic"
+                                       >
+
+                                    @foreach ($equipos_it as $equipo_it)
+                                        <option value="{{$equipo_it->id}}">{{ $equipo_it->id }}: {{$equipo_it->nombre}}</option>
+                                    @endforeach
+                                </select>
+                                @error('id_equipo_computo')
+                                <p class="error">{{$message}}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mt-4">
+                                    <h5 class="fs-14 mb-1" for="id_equipo_computo[]">Equipo de Computo</h5>
+                                    <form>
+                                        <select multiple="multiple" name="id_equipo_computo[]" id="multiselect-optiongroup"
+                                                @class(['border-red-500' => $errors->has('id_equipo_computo')])
+                                                value="{{old('id_equipo_computo[]')}}">
+                                            @foreach ($equipos_it as $equipo_it)
+                                                <option value="{{$equipo_it->id}}">{{ $equipo_it->id }}: {{$equipo_it->nombre}}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('id_equipo_computo')
+                                        <p class="error">{{$message}}</p>
+                                    @enderror
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3 mb-lg-0">
+                                <label class="form-label" for="id_glpi_users">Users</label>
+                                <select class="form-select" data-choices data-choices-search-false
+                                        name="id_glpi_users" id="id_glpi_users"
+                                        @class(['border-red-500' => $errors->has('id_glpi_users')])
+                                        value="{{old('id_glpi_users')}}" >
+                                    @foreach ($id_glpi_users as $id_glpi_user)
+                                        <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('id_glpi_users')
+                                <p class="error">{{$message}}</p>
+                                @enderror
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="archivo">Thumbnail Image</label>
+                    <input class="form-control" id="project-thumbnail-img" name="archivo" type="file"
+                           accept="image/png, image/gif, image/jpeg">
                 </div>
                 <!-- end card body -->
             </div>
@@ -82,22 +182,22 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Attached files</h5>
+                    <h5 class="card-title mb-0" for="archivo">Archivo</h5>
                 </div>
                 <div class="card-body">
                     <div>
-                        <p class="text-muted">Add Attached files here.</p>
+                        <p class="text-muted">Agregar Historico.</p>
 
                         <div class="dropzone">
                             <div class="fallback">
-                                <input name="file" type="file" multiple="multiple">
+                                <input name="archivo" id="archivo" type="file" multiple="multiple">
                             </div>
                             <div class="dz-message needsclick">
                                 <div class="mb-3">
                                     <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
                                 </div>
 
-                                <h5>Drop files here or click to upload.</h5>
+                                <h5>Click Para subir Historico.</h5>
                             </div>
                         </div>
 
@@ -242,7 +342,7 @@
     </div>
     <!-- end row -->
 
-
+    </form>
 
     <!-- Modal -->
     <div class="modal fade" id="inviteMembersModal" tabindex="-1" aria-labelledby="inviteMembersModalLabel"

@@ -51,6 +51,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('roo
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
 
+
 Route::get('equipo_its/{search}', [EquipoItController::class, 'filter']);
 
 

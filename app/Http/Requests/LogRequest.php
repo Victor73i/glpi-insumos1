@@ -22,6 +22,7 @@ class LogRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'titulo' => 'required',
             'observaciones' => 'required',
             'id_estado_log' => 'required',
             'fecha_inicio' => 'required',
