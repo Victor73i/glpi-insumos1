@@ -8,10 +8,10 @@
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1')
-Tasks
+Tarea
 @endslot
 @slot('title')
-Tasks view
+Lista de Tareas
 @endslot
 @endcomponent
 
@@ -21,7 +21,7 @@ Tasks view
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <p class="fw-medium text-muted mb-0">Total Tasks</p>
+                        <p class="fw-medium text-muted mb-0">Tareas Totales</p>
                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="234">0</span>k
                         </h2>
                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
@@ -45,7 +45,28 @@ Tasks view
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <p class="fw-medium text-muted mb-0">Pending Tasks</p>
+                        <p class="fw-medium text-muted mb-0">Tareas Pendientes</p>
+                        <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="64.5">0</span>k</h2>
+                        <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
+                                <i class="ri-arrow-down-line align-middle"></i> 0.87 %
+                            </span> vs. previous month</p>
+                    </div>
+                    <div>
+                        <div class="avatar-sm flex-shrink-0">
+                            <span class="avatar-title bg-soft-warning text-warning rounded-circle fs-4">
+                                <i class="mdi mdi-timer-sand"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card body -->
+        </div>
+    </div><div class="col-xxl-3 col-sm-6">
+        <div class="card card-animate">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <p class="fw-medium text-muted mb-0">Tareas En Proceso</p>
                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="64.5">0</span>k</h2>
                         <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
                                 <i class="ri-arrow-down-line align-middle"></i> 0.87 %
@@ -68,7 +89,7 @@ Tasks view
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <p class="fw-medium text-muted mb-0">Completed Tasks</p>
+                        <p class="fw-medium text-muted mb-0">Tareas Completadas</p>
                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="116.21">0</span>K</h2>
                         <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
                                 <i class="ri-arrow-down-line align-middle"></i> 2.52 %
@@ -91,7 +112,7 @@ Tasks view
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <p class="fw-medium text-muted mb-0">Deleted Tasks</p>
+                        <p class="fw-medium text-muted mb-0">Tareas Borradas</p>
                         <h2 class="mt-4 ff-secondary fw-semibold"><span class="counter-value" data-target="14.84">0</span>%</h2>
                         <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
                                 <i class="ri-arrow-up-line align-middle"></i> 0.63 %
@@ -117,10 +138,10 @@ Tasks view
         <div class="card" id="tasksList">
             <div class="card-header border-0">
                 <div class="d-flex align-items-center">
-                    <h5 class="card-title mb-0 flex-grow-1">All Tasks</h5>
+                    <h5 class="card-title mb-0 flex-grow-1">Todas las Tareas</h5>
                     <div class="flex-shrink-0">
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Create Task</button>
+                            <button class="btn btn-danger add-btn" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Crear Tarea</button>
                             <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                         </div>
                     </div>
@@ -131,33 +152,33 @@ Tasks view
                     <div class="row g-3">
                         <div class="col-xxl-5 col-sm-12">
                             <div class="search-box">
-                                <input type="text" class="form-control search bg-light border-light" placeholder="Search for tasks or something...">
+                                <input type="text" class="form-control search bg-light border-light" placeholder="Buscar por Tareas o Otra Cosa...">
                                 <i class="ri-search-line search-icon"></i>
                             </div>
                         </div>
                         <!--end col-->
 
                         <div class="col-xxl-3 col-sm-4">
-                            <input type="text" class="form-control bg-light border-light" id="demo-datepicker" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date range">
+                            <input type="text" class="form-control bg-light border-light" id="demo-datepicker" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Seleccionar Rango de Fecha">
                         </div>
                         <!--end col-->
 
                         <div class="col-xxl-3 col-sm-4">
                             <div class="input-light">
                                 <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                    <option value="">Status</option>
-                                    <option value="all" selected>All</option>
-                                    <option value="New">New</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Inprogress">Inprogress</option>
-                                    <option value="Completed">Completed</option>
+                                    <option value="">Estado</option>
+                                    <option value="all" selected>Todos</option>
+                                    <option value="New">En Espera</option>
+                                    <option value="Pending">En proceso</option>
+                                    <option value="Inprogress">Completado</option>
+                                    <option value="Completed">Nuevo</option>
                                 </select>
                             </div>
                         </div>
                         <!--end col-->
                         <div class="col-xxl-1 col-sm-4">
                             <button type="button" class="btn btn-primary w-100" onclick="SearchData();"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                Filters
+                                Filtrar
                             </button>
                         </div>
                         <!--end col-->
@@ -177,13 +198,15 @@ Tasks view
                                     </div>
                                 </th>
                                 <th class="sort" data-sort="id">ID</th>
-                                <th class="sort" data-sort="project_name">Project</th>
-                                <th class="sort" data-sort="tasks_name">Task</th>
-                                <th class="sort" data-sort="client_name">Client Name</th>
-                                <th class="sort" data-sort="assignedto">Assigned To</th>
-                                <th class="sort" data-sort="due_date">Due Date</th>
-                                <th class="sort" data-sort="status">Status</th>
-                                <th class="sort" data-sort="priority">Priority</th>
+                                <th class="sort" data-sort="project_name">Tecnico Asignado</th>
+                                <th class="sort" data-sort="tasks_name">Nombre</th>
+                                <th class="sort" data-sort="client_name">Descripcion</th>
+                                <th class="sort" data-sort="assignedto">Fecha Asignacion</th>
+                                <th class="sort" data-sort="assignedto">Fecha Aproximada</th>
+                                <th class="sort" data-sort="assignedto">Fecha Terminada</th>
+                                <th class="sort" data-sort="due_date">Estado</th>
+                                <th class="sort" data-sort="status">Prioridad</th>
+                                <th class="sort" data-sort="priority">TIcket</th>
                             </tr>
                         </thead>
                         <tbody class="list form-check-all">

@@ -14,7 +14,7 @@ class Log extends Model
 
     public function estado_log()
     {
-        return $this->belongsTo(EstadoLog::class);
+        return $this->belongsTo(EstadoLog::class, 'id_estado_log', 'id');
     }
     public function tipo_equipo_it()
     {

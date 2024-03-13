@@ -84,11 +84,9 @@
                                         <li class="nav-item">
                                             <a href="{{route('logs.index')}}" class="nav-link">@lang('Lista de Logs')</a>
                                         </li>
+
                                         <li class="nav-item">
-                                            <a href="apps-projects-overview" class="nav-link">@lang('Show LOGS')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{route('logs.create')}}" class="nav-link">@lang('Create LOGS')</a>
+                                            <a href="{{route('logs.create')}}" class="nav-link">@lang('Crear LOGS')</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -286,9 +284,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="apps-api-key" class="nav-link"> <span>@lang('translation.api-key')</span> <span class="badge badge-pill bg-success">@lang('translation.new')</span></a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>

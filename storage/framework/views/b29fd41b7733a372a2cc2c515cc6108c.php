@@ -67,15 +67,15 @@
                                         </button>
 
                                         <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item" href="apps-projects-overview"><i
+                                            <a class="dropdown-item" href="<?php echo e(route('logs.show', ['log'=>$log])); ?>"><i
                                                     class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                 View</a>
-                                            <a class="dropdown-item" href="apps-projects-create"><i
+                                            <a class="dropdown-item" href="<?php echo e(route('logs.edit', [$log->id])); ?>"><i
                                                     class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                Edit</a>
+                                                Editar</a>
                                             <div class="dropdown-divider"></div>
 
-                                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            <a class="dropdown-item" href="<?php echo e(route('logs.destroy',['log' =>$log->id])); ?>}}" data-bs-toggle="modal"
                                                data-bs-target="#removeProjectModal"><i
                                                     class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                 Remove</a>

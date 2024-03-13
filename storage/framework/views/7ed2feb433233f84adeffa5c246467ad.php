@@ -294,7 +294,30 @@
                 </div>
                 <!-- end row -->
 
-                
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mt-4">
+                            <h5 class="fs-14 mb-1">Option Groups</h5>
+                            <p class="text-muted">Example of Multi Select Option Groups</p>
+                            <form>
+                                <select multiple="multiple" name="favorite_cars" id="multiselect-optiongroup">
+                                    <optgroup label="Skoda">
+                                        <option>Kushaq</option>
+                                        <option>Superb</option>
+                                        <option>Octavia</option>
+                                        <option>Rapid</option>
+                                    </optgroup>
+                                    <optgroup label="Volkswagen">
+                                        <option>Polo</option>
+                                        <option>Taigun</option>
+                                        <option>Vento</option>
+                                    </optgroup>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- end col -->
+                </div>
                 <!-- end row -->
             </div><!-- end card-body -->
         </div><!-- end card -->

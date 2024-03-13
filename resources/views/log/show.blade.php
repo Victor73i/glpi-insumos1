@@ -1,74 +1,334 @@
-@extends('layouts.app')
-
-@section('title', $log->observaciones)
-
+@extends('layouts.master')
+@section('title', $log->titulo)
+@lang('translation.overview')
 @section('content')
-    <div class="mb-4">
-        <a href="{{route('logs.index')}}"
-           class="link">Regresar a Lista de Logs</a>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mt-n4 mx-n4">
+                <div class="bg-soft-warning">
+                    <div class="card-body pb-0 px-4">
+                        <div class="row mb-3">
+                            <div class="col-md">
+                                <div class="row align-items-center g-3">
+                                    <div class="col-md-auto">
+                                        <div class="avatar-md">
+                                            <div class="avatar-title bg-white rounded-circle">
+                                                <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" class="avatar-xs">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        <div>
+                                            <h4 class="fw-bold">{{$log->titulo}}</h4>
+                                            <div class="hstack gap-3 flex-wrap">
+                                                <div><i class="ri-building-line align-bottom me-1"></i>{{$log->glpi_tickets->id}} * {{$log->glpi_tickets->name}}</div>
+                                                <div class="vr"></div>
+                                                <div>Creado : <span class="fw-medium"> {{$log->created_at->diffForHumans()}}</span></div>
+                                                <div class="vr"></div>
+                                                <div>Actualizado : <span class="fw-medium"> {{$log->updated_at->diffForHumans()}}</span></div>
+                                                <div class="vr"></div>
+                                                {{--<div class="badge rounded-pill bg-info fs-12">New</div>--}}
+                                                <div class="badge rounded-pill bg-danger fs-12">{{$log->estado_log->nombre}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-auto">
+                                <div class="hstack gap-1 flex-wrap">
+                                    <button type="button" class="btn py-0 fs-16 favourite-btn active">
+                                        <i class="ri-star-fill"></i>
+                                    </button>
+                                    <button type="button" class="btn py-0 fs-16 text-body">
+                                        <i class="ri-share-line"></i>
+                                    </button>
+                                    <button type="button" class="btn py-0 fs-16 text-body">
+                                        <i class="ri-flag-line"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="nav nav-tabs-custom border-bottom-0" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active fw-semibold" data-bs-toggle="tab" href="#project-overview"
+                                   role="tab">
+                                    Vista Completa
+                                </a>
+                            </li>
+                            {{--
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-documents"
+                                   role="tab">
+                                    Documents
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-activities"
+                                   role="tab">
+                                    Activities
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-team" role="tab">
+                                    Team
+                                </a>
+                            </li>
+                            --}}
+
+                        </ul>
+                    </div>
+                    <!-- end card body -->
+                </div>
+            </div>
+            <!-- end card -->
+        </div>
+        <!-- end col -->
     </div>
-    <label>Observación:</label>
-    <p class="parrafo">{{$log->observaciones}}</p>
-
-    <label>Estado Log:</label>
-    <p class="parrafo">{{$log->estado_log}}</p>
-
-    <label>Fecha Inicio</label>
-    <p class="parrafo">{{$log->fecha_inicio}}</p>
-
-    @if($log->fecha_finalizacion)
-        <label>Fecha finalización:</label>
-        <p class="parrafo">{{$log->fecha_finalizacion}}</p>
-    @endif
-
-
-    <label>Ubicación:</label>
-    <p class="parrafo">{{$log->glpi_locations->id}}: {{$log->glpi_locations->name}}</p>
-
-    <label>Ticket:</label>
-    <p class="parrafo">{{$log->glpi_tickets->id}}: {{$log->glpi_tickets->name}}</p>
+    <!-- end row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tab-content text-muted">
+                <div class="tab-pane fade show active" id="project-overview" role="tabpanel">
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="text-muted">
+                                        <h6 class="mb-3 fw-semibold text-uppercase">Observaciones</h6>
+                                        <p>{{$log->observaciones}}</p>
 
 
-    <label>Equipo IT:</label>
-    <p class="parrafo"><ul>
-    @foreach($log->equiposIt as $equipoIt)
-            <li>{{$equipoIt->id}}: {{$equipoIt->nombre}}</li>
-    @endforeach
-    </ul>
-    </p>
 
-    <label>User:</label>
-    <p class="parrafo">{{$log->glpi_users->id}}: {{$log->glpi_users->name}}</p>
 
-    <p class="parrafo">Created {{$log->created_at->diffForHumans()}} * Updated {{$log->updated_at->diffForHumans()}}</p>
-    <p></p>
-    <p class="mb-4">
-        @if($log->completado)
-            <span class="completado">Completado</span>
-        @else
-            <span class="nocompletado">No Completado</span>
-        @endif
-    </p>
 
-    <div class="flex gap-3">
-        <form method="POST" action="{{route('logs.toggle-complete',[$log->id])}}">
-            @csrf
-            @method('PUT')
-            <button type="submit" class="btn">
-                Mark as {{$log->completado ? 'not completado' : 'completado'}}
-            </button>
-        </form>
+                                        <div class="pt-3 border-top border-top-dashed mt-4">
+                                            <div class="row">
 
-        <a href="{{route('logs.edit', [$log->id])}}"
-           class="btn">EDIT</a>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div>
+                                                        <p class="mb-2 text-uppercase fw-medium">Fecha Inicio :</p>
+                                                        <h5 class="fs-15 mb-0">{{$log->fecha_inicio}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div>
+                                                        <p class="mb-2 text-uppercase fw-medium">Fecha Finalizacion :</p>
+                                                        <h5 class="fs-15 mb-0">{{$log->fecha_finalizacion}}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div>
+                                                        <p class="mb-2 text-uppercase fw-medium">Estado :</p>
+                                                        <div class="badge bg-danger fs-12">{{$log->estado_log->nombre}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-sm-6">
+                                                    <div>
+                                                        <p class="mb-2 text-uppercase fw-medium">Ticket :</p>
+                                                        <div class="badge bg-warning fs-12">{{$log->glpi_tickets->name}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-        <form action="{{route('logs.destroy',[$log->id])}}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn">DELETE</button>
-        </form>
+                                            <hr>
+                                            <hr>
+                                            <hr>
+                                        </div><div class="text-muted">
+                                        <h6 class="mb-3 fw-semibold text-uppercase">¿Que Quieres Hacer?</h6>
+                                            <div class="flex gap-3">
+                                                <form method="POST" action="{{route('logs.toggle-complete',['log'=>$log])}}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="btn btn-soft-primary w-100" id="btn-new-event" type="submit"><i
+                                                            class="mdi mdi-plus"></i>  Marcar Como  {{$log->completado ? 'no completado' : 'completado'}}</button>
+
+                                                </form>
+
+                                                <a class="btn btn-soft-warning w-100" href="{{route('logs.edit', ['log' =>$log->id])}}" id="btn-new-event"><i
+                                                        class="mdi mdi-plus"></i> Editar</a>
+
+<br><br>
+                                                <div>
+                                                <form action="{{route('logs.destroy',['log' =>$log->id])}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-soft-danger w-100" id="btn-new-event"><i
+                                                            class="mdi mdi-plus"></i> Borrar</button>
+                                                </form>
+</div>
+                                            </div>
+                                        </div>
+<hr>
+                                        <div class="pt-3 border-top border-top-dashed mt-4">
+                                            <h6 class="mb-3 fw-semibold text-uppercase">Archivos</h6>
+                                            <div class="row g-3">
+                                                <div class="col-xxl-4 col-lg-6">
+                                                    <div class="border rounded border-dashed p-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0 me-3">
+                                                                <div class="avatar-sm">
+                                                                    <div
+                                                                        class="avatar-title bg-light text-secondary rounded fs-24">
+                                                                        <i class="ri-folder-zip-line"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 class="fs-13 mb-1">{{$log->glpi_tickets->name}}</h5>
+                                                            </div>
+                                                            <div class="flex-shrink-0 ms-2">
+                                                                <div class="d-flex gap-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-icon text-muted btn-sm fs-18"><i
+                                                                            class="ri-download-2-line"></i></button>
+                                                                    <div class="dropdown">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="card">
+
+
+                                                            <div class="card-body">
+
+                                                                <div>
+<div>
+                                                                    </div>
+
+                                                                </div>
+                                                                    </div>
+
+                                                </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col -->
+
+                                                <!-- end col -->
+                                            </div>
+                                            <!-- end row -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+
+                        </div>
+                        <!-- ene col -->
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title mb-4">Ubicacion</h5>
+                                    <div class="d-flex flex-wrap gap-2 fs-16">
+                                        <div class="badge fw-medium badge-soft-secondary">{{$log->glpi_locations->name}} * {{$log->glpi_locations->completename}}</div>
+
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h4 class="card-title mb-0 flex-grow-1">Usuario</h4>
+
+                                </div>
+
+                                <div class="card-body">
+                                    <div data-simplebar style="height: 235px;" class="mx-n3 px-3">
+                                        <div class="vstack gap-3">
+                                            <div class="d-flex align-items-center">
+
+                                                <div class="flex-grow-1">
+                                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block">{{$log->glpi_users->firtname}} * {{$log->glpi_users->realname}}</a></h5>
+                                                </div>
+                                                <div class="flex-shrink-0">
+                                                    <div class="d-flex align-items-center gap-1">
+                                                        <button type="button" class="btn btn-light btn-sm">{{$log->glpi_users->name}}</button>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-icon btn-sm fs-16 text-muted dropdown"
+                                                                    type="button" data-bs-toggle="dropdown"
+                                                                    aria-expanded="false">
+                                                                <i class="ri-more-fill"></i>
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end member item -->
+
+                                        </div>
+                                        <!-- end list -->
+                                    </div>
+                                </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+
+                            <div class="card">
+                                <div class="card-header align-items-center d-flex border-bottom-dashed">
+                                    <h4 class="card-title mb-0 flex-grow-1">EQUIPO IT</h4>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div class="vstack gap-2">
+                                        <div class="border rounded border-dashed p-2">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-3">
+                                                    <div class="avatar-sm">
+                                                        <div class="avatar-title bg-light text-secondary rounded fs-24">
+                                                            <i class="ri-folder-zip-line"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h5 class="fs-13 mb-1">
+                                                        <ul>
+                                                            @foreach($log->equiposIt as $equipoIt)
+                                                                <li>{{$equipoIt->id}}: {{$equipoIt->nombre}}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="mt-2 text-center">
+                                        <a href="{{route('logs.edit', [$log->id])}}" type="button" class="btn btn-success">EDITAR</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end tab pane -->
+
+            <!-- end modal-content -->
+        </div>
+        <!-- modal-dialog -->
     </div>
     @isset($debug)
         echo("<script>console.log('PHP: " . {{$debug}} . "');</script>");
     @endisset
+    <!-- end modal -->
+@endsection
+@section('script')
+    <script src="{{ URL::asset('build/js/pages/project-overview.init.js') }}"></script>
+    <script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

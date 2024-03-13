@@ -10,7 +10,7 @@ class Tarea extends Model
     use HasFactory;
     protected $table = 'tarea';
     protected $fillable = [
-        'id', 'nombre', 'descripcion', 'fecha_asignacion', 'fecha_aproximada', 'fecha_terminado','observacion', 'completado', 'id_glpi_tickets','id_glpi_users', 'created_at', 'updated_at'
+        'id', 'nombre', 'descripcion', 'fecha_asignacion','estado','prioridad', 'fecha_aproximada', 'fecha_terminado','observacion', 'completado', 'id_glpi_tickets','id_glpi_users', 'created_at', 'updated_at'
     ];
 
 

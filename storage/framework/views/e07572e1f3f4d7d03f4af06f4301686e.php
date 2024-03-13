@@ -1,6 +1,5 @@
-<?php $__env->startSection('title'); ?>
+<?php $__env->startSection('title', 's'); ?>
     <?php echo app('translator')->get('translation.overview'); ?>
-<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="row">
         <div class="col-lg-12">
@@ -19,16 +18,7 @@
                                     </div>
                                     <div class="col-md">
                                         <div>
-                                            <h4 class="fw-bold">Velzon - Admin & Dashboard</h4>
-                                            <div class="hstack gap-3 flex-wrap">
-                                                <div><i class="ri-building-line align-bottom me-1"></i> Themesbrand</div>
-                                                <div class="vr"></div>
-                                                <div>Create Date : <span class="fw-medium">15 Sep, 2021</span></div>
-                                                <div class="vr"></div>
-                                                <div>Due Date : <span class="fw-medium">29 Dec, 2021</span></div>
-                                                <div class="vr"></div>
-                                                <div class="badge rounded-pill bg-info fs-12">New</div>
-                                                <div class="badge rounded-pill bg-danger fs-12">High</div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -56,13 +46,17 @@
                                     Overview
                                 </a>
                             </li>
+                            {
+                            {--
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-documents" role="tab">
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-documents"
+                                   role="tab">
                                     Documents
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-activities" role="tab">
+                                <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-activities"
+                                   role="tab">
                                     Activities
                                 </a>
                             </li>
@@ -70,7 +64,9 @@
                                 <a class="nav-link fw-semibold" data-bs-toggle="tab" href="#project-team" role="tab">
                                     Team
                                 </a>
-                            </li>
+                            </li>--
+                            }
+                            }
                         </ul>
                     </div>
                     <!-- end card body -->

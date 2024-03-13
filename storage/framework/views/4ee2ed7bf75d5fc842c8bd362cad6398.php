@@ -2,6 +2,8 @@
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
 
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <meta charset="utf-8" />
     <title><?php echo $__env->yieldContent('title'); ?>| INFORMATICA EMPORNAC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

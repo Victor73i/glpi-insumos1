@@ -69,6 +69,8 @@
                                     <label  class="form-label" for="id_estado_log">Estado</label>
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_estado_log" id="id_estado_log">
+                                        <option value="">Seleccione un Estado</option>
+
                                         @class(['border-red-500' => $errors->has('id_estado_log')])
                                         value="{{old('id_estado_log')}}" >
                                         @foreach ($id_estado_logs as $id_estado_log)
@@ -87,7 +89,9 @@
                                             name="id_glpi_locations" id="id_glpi_locations"
                                             @class(['border-red-500' => $errors->has('id_glpi_locations')])
                                             value="{{old('id_glpi_locations')}}" >
-                                        @foreach ($id_glpi_locations as $id_glpi_location)
+                                        <option value="">Seleccione un Estado</option>
+
+                                    @foreach ($id_glpi_locations as $id_glpi_location)
                                             <option value="{{$id_glpi_location->id}}">{{ $id_glpi_location->id }}: {{$id_glpi_location->name}}</option>
                                         @endforeach
                                     </select>
@@ -103,7 +107,9 @@
                                             name="id_glpi_tickets" id="id_glpi_tickets"
                                             @class(['border-red-500' => $errors->has('id_glpi_tickets')])
                                             value="{{old('id_glpi_tickets')}}" >
-                                        @foreach ($id_glpi_tickets as $id_glpi_ticket)
+                                        <option value="">Seleccione un Estado</option>
+
+                                    @foreach ($id_glpi_tickets as $id_glpi_ticket)
                                             <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
                                         @endforeach
                                     </select>
@@ -119,7 +125,9 @@
                                             name="id_glpi_users" id="id_glpi_users"
                                             @class(['border-red-500' => $errors->has('id_glpi_users')])
                                             value="{{old('id_glpi_users')}}" >
-                                        @foreach ($id_glpi_users as $id_glpi_user)
+                                        <option value="">Seleccione un Estado</option>
+
+                                    @foreach ($id_glpi_users as $id_glpi_user)
                                             <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
                                         @endforeach
                                     </select>
@@ -135,14 +143,14 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3 mb-lg-0">
-                                    <label  class="form-label" for="id_equipo_computo[]">Equipo de Computo</label>
-                                    <select class="form-select" data-choices data-choices-search-false
+                                    <label class="form-label" for="id_equipo_computo[]">Equipo IT</label>
+                                    <select class="form-select" data-choices
                                             name="id_equipo_computo[]" id="multiselect-basic"
                                             @class(['border-red-500' => $errors->has('id_equipo_computo')])
-                                            value="{{old('id_equipo_computo[]')}}" required multiple="multiple">>
+                                            required multiple="multiple">
 
                                         @foreach ($equipos_it as $equipo_it)
-                                            <option value="{{$equipo_it->id}}">{{ $equipo_it->id }}: {{$equipo_it->nombre}}</option>
+                                            <option value="{{$equipo_it->id}}">{{ $equipo_it->nombre }}</option>
                                         @endforeach
                                     </select>
                                     @error('id_equipo_computo')
@@ -162,15 +170,15 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-0" for="archivo">Archivo</h5>
+                            <h5 class="card-title mb-0">Archivo</h5>
                         </div>
                         <div class="card-body">
-                            <div>
-                                <p class="text-muted">Agregar Historico.</p>
+                            <p class="text-muted">Agregar Histórico.</p>
+                            <div class="dropzone">
+                                <div class="fallback">
+                            <input name="archivo" type="file" class="form-control" multiple="multiple">
 
-                                <div class="dropzone">
-                                    <div class="fallback">
-                                        <input name="archivo" id="archivo" type="file" multiple="multiple">
+
                                     </div>
                                     <div class="dz-message needsclick">
                                         <div class="mb-3">
@@ -200,7 +208,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-shrink-0 ms-3">
-                                                    <button data-dz-remove class="btn btn-sm btn-danger">Delete</button>
+                                                    <button data-dz-remove class="btn btn-sm btn-danger">Borrar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,9 +228,22 @@
                 <!-- end col -->
 
             <!-- end row -->
-
+            </div>
+        </div>
     </form>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var element = document.getElementById('multiselect-basic');
+            var choices = new Choices(element, {
+                removeItemButton: true,
+                searchEnabled: true,
+                searchChoices: true,
+                searchFloor: 1,
+                searchResultLimit: 5,
+                renderChoiceLimit: -1
+            });
+        });
+    </script>
     <!-- Modal -->
 
     <!-- end modal -->

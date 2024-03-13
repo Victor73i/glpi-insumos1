@@ -84,11 +84,9 @@
                                         <li class="nav-item">
                                             <a href="<?php echo e(route('logs.index')); ?>" class="nav-link"><?php echo app('translator')->get('Lista de Logs'); ?></a>
                                         </li>
+
                                         <li class="nav-item">
-                                            <a href="apps-projects-overview" class="nav-link"><?php echo app('translator')->get('Show LOGS'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route('logs.create')); ?>" class="nav-link"><?php echo app('translator')->get('Create LOGS'); ?></a>
+                                            <a href="<?php echo e(route('logs.create')); ?>" class="nav-link"><?php echo app('translator')->get('Crear LOGS'); ?></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -286,9 +284,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="apps-api-key" class="nav-link"> <span><?php echo app('translator')->get('translation.api-key'); ?></span> <span class="badge badge-pill bg-success"><?php echo app('translator')->get('translation.new'); ?></span></a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>
