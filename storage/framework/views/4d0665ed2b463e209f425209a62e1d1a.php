@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('Crear Log '); ?>
 <?php $__env->stopSection(); ?>

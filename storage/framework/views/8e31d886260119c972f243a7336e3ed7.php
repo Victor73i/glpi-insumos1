@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', $tarea->nombre); ?>
 
 <?php $__env->startSection('content'); ?>

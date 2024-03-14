@@ -76,7 +76,7 @@
                                                 Editar</a>
                                             <div class="dropdown-divider"></div>
 
-                                            <a class="dropdown-item" href="{{route('logs.destroy',['log' =>$log->id])}}}}" data-bs-toggle="modal"
+                                            <a class="dropdown-item"  data-bs-toggle="modal"
                                                data-bs-target="#removeProjectModal"><i
                                                     class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
                                                 Remove</a>
@@ -161,7 +161,12 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn w-sm btn-danger" id="remove-project">Si, Borralo!</button>
+                        <form action="{{route('logs.destroy',['log' =>$log->id])}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn w-sm btn-danger"  id="remove-project">Si, Borralo!</button>
+
+                        </form>
                     </div>
                 </div>
 

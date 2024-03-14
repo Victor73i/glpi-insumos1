@@ -92,7 +92,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarTasks" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTasks">@lang('translation.tasks')
+                                <a href="#sidebarTasks" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTasks">@lang('Tarea')
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarTasks">
                                     <ul class="nav nav-sm flex-column">
@@ -100,10 +100,10 @@
                                             <a href="apps-tasks-kanban" class="nav-link">@lang('translation.kanbanboard')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-list-view" class="nav-link">@lang('translation.list-view')</a>
+                                            <a href="apps-tasks-list-view" class="nav-link">@lang('Lista de Tarea')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-details" class="nav-link">@lang('translation.task-details')</a>
+                                            <a href="apps-tasks-details" class="nav-link">@lang('Detalles Tareas')</a>
                                         </li>
                                     </ul>
                                 </div>

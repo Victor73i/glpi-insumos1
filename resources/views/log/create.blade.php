@@ -89,7 +89,7 @@
                                             name="id_glpi_locations" id="id_glpi_locations"
                                             @class(['border-red-500' => $errors->has('id_glpi_locations')])
                                             value="{{old('id_glpi_locations')}}" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione una Ubicacion</option>
 
                                     @foreach ($id_glpi_locations as $id_glpi_location)
                                             <option value="{{$id_glpi_location->id}}">{{ $id_glpi_location->id }}: {{$id_glpi_location->name}}</option>
@@ -107,7 +107,7 @@
                                             name="id_glpi_tickets" id="id_glpi_tickets"
                                             @class(['border-red-500' => $errors->has('id_glpi_tickets')])
                                             value="{{old('id_glpi_tickets')}}" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione una Ticket</option>
 
                                     @foreach ($id_glpi_tickets as $id_glpi_ticket)
                                             <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
@@ -125,7 +125,7 @@
                                             name="id_glpi_users" id="id_glpi_users"
                                             @class(['border-red-500' => $errors->has('id_glpi_users')])
                                             value="{{old('id_glpi_users')}}" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione un Usuario</option>
 
                                     @foreach ($id_glpi_users as $id_glpi_user)
                                             <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
