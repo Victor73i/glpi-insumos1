@@ -9,4 +9,4 @@ class GlpiTickets extends Model
 {
     use HasFactory;
     protected $table = 'glpi_tickets';
-    protected $fillable = ['id','nombre','descripcion','created_at','updated_at'];}
+    protected $fillable = ['id','name','descripcion','created_at','updated_at'];}

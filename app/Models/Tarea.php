@@ -22,7 +22,7 @@ class Tarea extends Model
     }
     public function glpi_users()
     {
-        return $this->belongsTo(GlpiUsers::class, 'id_glpi_tickets', 'id');
+        return $this->belongsTo(GlpiUsers::class, 'id_glpi_users', 'id');
     }
     public function toggleComplete()
     {

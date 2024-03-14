@@ -211,6 +211,7 @@ Lista de Tareas
                         </thead>
                         <tbody class="list form-check-all">
                         @foreach($tareas as $tarea)
+
                             <tr>
                                 <th scope="row">
                                     <div class="form-check">
@@ -220,13 +221,14 @@ Lista de Tareas
                                 <td class="">
 
                                     <div class="d-flex">
-                                        <a href="{{route('tareas.show', ['tarea'=>$tarea->id])}}"
-                                            @class(['line-through' =>$tarea->completado])>{{$tarea->id}}</a>
+                                        <a href="{{route('tareas.show', ['tarea'=>$tarea])}}" class="flex-grow-1">{{$tarea->id}}</a>
                                         <div class="flex-shrink-0 ms-4">
                                             <ul class="list-inline tasks-list-menu mb-0">
-                                                <li class="list-inline-item"><a href="{{route('tareas.show', ['tarea'=>$tarea->id])}}"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
+                                                <li class="list-inline-item"><a href="apps-tasks-details"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                 </li>
-                                                <li class="list-inline-item"><a class="edit-item-btn" href="{{route('#editModal', ['tarea' =>$tarea->id])}}" data-bs-toggle="modal"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i></a>
+                                                <li class="list-inline-item"> <a class="edit-item-btn" href="#editModal" data-bs-toggle="modal" data-bs-target="#editModal" data-tarea-id="{{ $tarea->id }}">
+                                                        <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                    </a>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <a class="remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
@@ -237,27 +239,22 @@ Lista de Tareas
                                         </div>
                                     </div>
                                 </td>
-                                <td class=""><a href="" class="fw-medium link-primary">Velzon - v1.0.0</a></td>
+                                <td class=""><a href="apps-projects-overview" class="fw-medium link-primary">{{$tarea->glpi_users->name}}</a></td>
                                 <td>
                                     <div class="d-flex">
-                                        <div class="flex-grow-1">{{$tareas->glpi_user_name}}</div>
+                                        <div class="flex-grow-1">{{$tarea->nombre}}</div>
 
                                     </div>
                                 </td>
-                                <td class="">{{$tareas->tarea_nombre}}</td>
-                                <td class="assignedto">
-                                    <div class="avatar-group">
-                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Frank">
-                                            <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}" alt="" class="rounded-circle avatar-xxs" />
-                                        </a>
-                                        <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Anna">
-                                            <img src="{{ URL::asset('build/images/users/avatar-1.jpg') }}" alt="" class="rounded-circle avatar-xxs" />
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="">25 Jan, 2022</td>
-                                <td class="status"><span class="badge badge-soft-secondary text-uppercase">Inprogress</span></td>
-                                <td class="priority"><span class="badge bg-danger text-uppercase">High</span>
+                                <td class="">{{$tarea->descripcion}}</td>
+
+                                <td class="">{{$tarea->fecha_asignacion}}</td>
+                                <td class="">{{$tarea->fecha_aproximada}}</td>
+                                <td class="">{{$tarea->fecha_terminado}}</td>
+                                <td class="status"><span class="badge badge-soft-secondary text-uppercase">{{$tarea->estado}}</span></td>
+                                <td class="priority"><span class="badge bg-danger text-uppercase">{{$tarea->prioridad}}</span>
+                                <td class="">{{$tarea->glpi_tickets->name}}</td>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -273,15 +270,22 @@ Lista de Tareas
                 </div>
 
             </div>
-            @endforeach
             <!--end card-body-->
         </div>
         <!--end card-->
     </div>
+    @endforeach
     <!--end col-->
 </div>
 <!--end row-->
+<div class="col-sm-6">
+    @if($tareas->count())
+        <nav  class="mt-4">
+            {{$tareas->links()}}
+        </nav>
 
+    @endif
+</div><!-- end col -->
 <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -292,7 +296,13 @@ Lista de Tareas
                     <p class="text-muted fs-14 mb-4">Borrar Esta Tarea podra Remover toda esa informacion de la Base de Datos.</p>
                     <div class="hstack gap-2 justify-content-center remove">
                         <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal" id="deleteRecord-close"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
-                        <button class="btn btn-danger" id="delete-record">Si, Borralo</button>
+                        <form action="{{route('tareas.destroy',['tarea' =>$tarea->id])}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" id="delete-record">Si, Borralo</button>
+
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -450,18 +460,20 @@ Lista de Tareas
                 <h5 class="modal-title" id="exampleModalLabel">Editar Tarea</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
             </div>
-            <form method="POST" class="tablelist-form" action="{{route('tareas.store')}}" autocomplete="off">
+            <form method="POST" class="tablelist-form" action="{{route('tareas.update')}}" autocomplete="off">
                 @csrf
+                @method('PUT')
                 <div class="modal-body">
                     <input type="hidden" id="tasksId" />
                     <div class="row g-3">
                         <div class="col-lg-12">
+                            <input type="hidden" id="tareaId" name="tarea_id" value="">
+
                             <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
                             <select class="form-select" data-choices data-choices-search-false
                                     name="id_glpi_users" id="id_glpi_users"
                                     @class(['border-red-500' => $errors->has('id_glpi_users')])
-                                    value="{{old('id_glpi_users')}}" >
-                                <option value="">Seleccione un Usuario</option>
+                                    value="{{$tarea->id_glpi_users}}" >
 
                                 @foreach ($id_glpi_users as $id_glpi_user)
                                     <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
@@ -477,7 +489,7 @@ Lista de Tareas
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el Nombre" required
                                        @class(['border-red-500' => $errors->has('nombre')])
-                                       value="{{ old('nombre')}}"/>
+                                       value="{{$tarea->nombre}}"/>
                                 @error('nombre')
                                 <p class="error">{{$message}}</p>
                                 @enderror
@@ -488,7 +500,7 @@ Lista de Tareas
                             <label for="descripcion" class="form-label">Descripcion</label>
                             <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Ingrese Descripcion" required
                                    @class(['border-red-500' => $errors->has('descripcion')])
-                                   value="{{ old('descripcion')}}"/>
+                                   value="{{ $tarea->descripcion}}"/>
                             @error('descripcion')
                             <p class="error">{{$message}}</p>
                             @enderror
@@ -498,7 +510,7 @@ Lista de Tareas
                             <label for="fecha_asignacion" class="form-label">Fecha Asignacion</label>
                             <input type="date" name="fecha_asignacion" id="fecha_asignacion" class="form-control"
                                    @class(['border-red-500' => $errors->has('fecha_asignacion')])
-                                   value="{{old('fecha_asignacion')}}"/>
+                                   value="{{$tarea->fecha_asignacion}}"/>
                             @error('fecha_asignacion')
                             <p class="error">{{$message}}</p>
                             @enderror
@@ -507,7 +519,7 @@ Lista de Tareas
                             <label for="fecha_aproximada" class="form-label">Fecha Aproximada</label>
                             <input type="date" name="fecha_aproximada" id="fecha_aproximada" class="form-control"
                                    @class(['border-red-500' => $errors->has('fecha_aproximada')])
-                                   value="{{old('fecha_aproximada')}}"/>
+                                   value="{{$tarea->fecha_aproximada}}"/>
                             @error('fecha_aproximada')
                             <p class="error">{{$message}}</p>
                             @enderror
@@ -516,7 +528,7 @@ Lista de Tareas
                             <label for="fecha_terminado" class="form-label">Fecha Terminado</label>
                             <input type="date" name="fecha_terminado" id="fecha_terminado" class="form-control"
                                    @class(['border-red-500' => $errors->has('fecha_terminado')])
-                                   value="{{old('fecha_terminado')}}"/>
+                                   value="{{$tarea->fecha_terminado}}"/>
                             @error('fecha_terminado')
                             <p class="error">{{$message}}</p>
                             @enderror
@@ -524,8 +536,8 @@ Lista de Tareas
                         <!--end col-->
                         <div class="col-lg-6">
                             <label for="estado" class="form-label">Estado</label>
-                            <select required name="estado" class="form-control" data-choices data-choices-search-false id="estado">
-                                <option value="">Estado</option>
+                            <select required name="estado" class="form-control" data-choices data-choices-search-false id="estado" value="{{$tarea->estado}}">
+
                                 <option value="nuevo">nuevo</option>
                                 <option value="en proceso">en proceso</option>
                                 <option value="en espera">en espera</option>
@@ -535,7 +547,7 @@ Lista de Tareas
                         <!--end col-->
                         <div class="col-lg-6">
                             <label for="prioridad" class="form-label">Prioridad</label>
-                            <select required name="prioridad" class="form-control" data-choices data-choices-search-false id="prioridad">
+                            <select required name="prioridad" class="form-control" data-choices data-choices-search-false id="prioridad" value="{{$tarea->prioridad}}">
                                 <option value="">Prioridad</option>
                                 <option value="baja">Baja</option>
                                 <option value="media">Media</option>
@@ -547,7 +559,7 @@ Lista de Tareas
                             <label for="observacion" class="form-label">Observacion</label>
                             <input type="text" name="observacion" id="observacion" class="form-control" placeholder="Ingrese Observacion" required
                                    @class(['border-red-500' => $errors->has('observacion')])
-                                   value="{{ old('observacion')}}"/>
+                                   value="{{ $tarea->observacion}}"/>
                             @error('observacion')
                             <p class="error">{{$message}}</p>
                             @enderror
@@ -558,8 +570,7 @@ Lista de Tareas
                             <select class="form-select" data-choices data-choices-search-false
                                     name="id_glpi_tickets" id="id_glpi_tickets"
                                     @class(['border-red-500' => $errors->has('id_glpi_tickets')])
-                                    value="{{old('id_glpi_tickets')}}" >
-                                <option value="">Seleccione una ticket</option>
+                                    value="{{$tarea->id_glpi_tickets}}" >
 
                                 @foreach ($id_glpi_tickets as $id_glpi_ticket)
                                     <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
@@ -584,6 +595,15 @@ Lista de Tareas
         </div>
     </div>
 </div>
+<script>
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botón que disparó el modal
+        var tareaId = button.data('tarea-id'); // Extrae el ID de la tarea
+        var modal = $(this);
+        modal.find('#tareaId').val(tareaId); // Asigna el ID de la tarea al input oculto en el modal
+    });
+</script>
+
 <!--end modal-->
 @endsection
 @section('script')

@@ -9,4 +9,4 @@ class GlpiUsers extends Model
 {
     use HasFactory;
     protected $table = 'glpi_users';
-    protected $fillable = ['id','nombre','descripcion','created_at','updated_at'];}
+    protected $fillable = ['id','name','descripcion','created_at','updated_at'];}

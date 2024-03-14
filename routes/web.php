@@ -68,5 +68,4 @@ Route::put('tipo_documentacions/{tipo_documentacion}/toogle-complete', [TipoDocu
 Route::put('tasks/{task}/toggle-complete', [TaskController::class, 'toggle'])->name('tasks.toggle-complete');
 //CATEGORIA DOCUMENTACION
 Route::put('categoria_documentacions/{categoria_documentacion}/toggle-complete', [CategoriaDocumentacionController::class, 'toggle'])->name('categoria_documentacions.toggle-complete');
-Route::put('tareas/{tarea}/toggle-complete', [TareaController::class, 'toggle'])->name('tareas.toggle-complete');
 Route::put('reporte_insumo_consumibles/{reporte_insumo_consumible}/toggle-complete', [ReporteInsumoConsumibleController::class, 'toggle'])->name('reporte_insumo_consumibles.toggle-complete');

@@ -11,10 +11,31 @@ use Illuminate\Support\Facades\DB;
 
 class TareaController extends Controller
 {
-    public function index() {
-        return view('tarea.index',[
-            'tareas'=> Tarea::latest()->paginate(10)]);
+    public function index(Request $request) {
+        $query = Tarea::query();
+
+        // Filtrado por búsqueda general
+        if ($searchTerm = $request->input('search')) {
+            $query->where(function($query) use ($searchTerm) {
+                $query->where('nombre', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('descripcion', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('estado', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('prioridad', 'LIKE', "%{$searchTerm}%");
+                // Agrega aquí más campos si es necesario
+            });
+        }
+
+        $tareas = $query->latest()->paginate(10);
+        $id_glpi_users = GlpiUsers::all();
+        $id_glpi_tickets = GlpiTickets::all();
+
+        return view('tarea.index', compact('tareas', 'id_glpi_users', 'id_glpi_tickets'));
     }
+
+
+
+
+
 
     public function index1() {
         return view('index',[
@@ -23,39 +44,40 @@ class TareaController extends Controller
     //CREATE
     public function create()
     {
-        $glpi_tickets = GlpiTickets::all(); // Obtener todos los usuarios de GLPI
-        $glpi_users = GlpiUsers::all(); // Obtener todos los usuarios de GLPI
-        return view('tarea.create', compact('glpi_users','glpi_tickets'));
+        $id_glpi_users = GlpiUsers::all();
+        $id_glpi_tickets = GlpiTickets::all();
+        return view('tarea.index',
+
+        [
+            'id_glpi_users' => $id_glpi_users,
+            'id_glpi_tickets' => $id_glpi_tickets,
+        ]);
     }
     //edit
     public function edit(String $id){
-        $tarea = Tarea::find($id);
-        $glpi_users = GlpiUsers::all();
-        $glpi_tickets = GlpiTickets::all();
-        return view('tarea.edit', [
-            'tarea'=>\App\Models\Tarea::findOrFail($id)
-        ], compact('glpi_users', 'tarea','glpi_tickets'));
+        $id_glpi_users = GlpiUsers::all();
+        $id_glpi_tickets = GlpiTickets::all();
+
+        return view('tarea.index', [
+            'tarea'=>\App\Models\Tarea::findOrFail($id),
+            'id_glpi_users' => $id_glpi_users,
+            'id_glpi_tickets' => $id_glpi_tickets,
+        ]);
     }
     //show
-    public  function show(string $id){
-        $tareas = DB::table('tarea as t')
-            ->join('glpi_users as g', 't.id_glpi_users', '=', 'g.id')
-            ->join('glpi_tickets as gt', 't.id_glpi_tickets', '=', 'gt.id')
-            ->select('t.id as tarea_id', 't.nombre as tarea_nombre','t.descripcion as tarea_descripcion','t.fecha_asignacion as tarea_fecha_asignacion','t.fecha_aproximada as tarea_fecha_aproximada',
-                't.fecha_terminado as tarea_fecha_terminado','t.observacion as tarea_observacion', 'g.name as glpi_user_name','gt.name as glpi_ticket_name', 'gt.id as glpi_ticket_id')
-            ->where('t.id', '=', $id)
-            ->first();
+    public  function show(Tarea $tarea){
+
 
 
         return view('tarea.show', [
-            'tarea'=> Tarea::findOrFail($id), 'tareas'=>$tareas]);
+            'tarea'=> $tarea]);
 
     }
     //STORE
     public function store(TareaRequest $request){
 
         $tarea = Tarea::create($request->validated());
-        return redirect()-> route('tareas.show', [$tarea->id])
+        return redirect()-> route('tareas.index')
             ->with('success', 'Tarea create Successfully!');
     }
     //UPDATED
@@ -68,7 +90,7 @@ class TareaController extends Controller
         //$ubicacion->save();
         $tarea = Tarea::findOrFail($id);
         $tarea->update($request->validated());
-        return redirect()-> route('tareas.show', [$tarea->id])
+        return redirect()-> route('tareas.index')
             ->with('success', 'Tarea update Successfully!');
     }
     //delete
