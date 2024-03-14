@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'La Lista de Reporte Insumo Fungible'); ?>
 
 

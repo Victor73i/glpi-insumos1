@@ -239,7 +239,7 @@ Lista de Tareas
                                 <td>
                                     <div class="d-flex">
                                         <div class="flex-grow-1">Profile Page Satructure</div>
-                                        
+
                                     </div>
                                 </td>
                                 <td class="">Robert McMahon</td>

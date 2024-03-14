@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.advanced'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="<?php echo e(URL::asset('build/libs/multi.js/multi.min.css')); ?>" rel="stylesheet">

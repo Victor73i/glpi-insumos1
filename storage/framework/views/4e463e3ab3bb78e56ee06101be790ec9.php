@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.select2'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" type="text/css" />

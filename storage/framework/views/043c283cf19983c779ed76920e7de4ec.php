@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> Job Dashboard <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <!-- jsvectormap css -->

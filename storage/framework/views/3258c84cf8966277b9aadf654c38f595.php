@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.analytics'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 

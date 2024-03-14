@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.validation'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 <div class="row">

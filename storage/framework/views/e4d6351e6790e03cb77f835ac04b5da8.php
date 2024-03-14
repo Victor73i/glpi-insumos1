@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('Crear Log '); ?>
 <?php $__env->stopSection(); ?>
@@ -123,7 +124,7 @@ unset($__errorArgs, $__bag); ?>
                                             name="id_glpi_locations" id="id_glpi_locations"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_locations')]); ?>"
                                             value="<?php echo e(old('id_glpi_locations')); ?>" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione una Ubicacion</option>
 
                                     <?php $__currentLoopData = $id_glpi_locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($id_glpi_location->id); ?>"><?php echo e($id_glpi_location->id); ?>: <?php echo e($id_glpi_location->name); ?></option>
@@ -148,7 +149,7 @@ unset($__errorArgs, $__bag); ?>
                                             name="id_glpi_tickets" id="id_glpi_tickets"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_tickets')]); ?>"
                                             value="<?php echo e(old('id_glpi_tickets')); ?>" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione una Ticket</option>
 
                                     <?php $__currentLoopData = $id_glpi_tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($id_glpi_ticket->id); ?>"><?php echo e($id_glpi_ticket->id); ?>: <?php echo e($id_glpi_ticket->name); ?></option>
@@ -173,7 +174,7 @@ unset($__errorArgs, $__bag); ?>
                                             name="id_glpi_users" id="id_glpi_users"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_users')]); ?>"
                                             value="<?php echo e(old('id_glpi_users')); ?>" >
-                                        <option value="">Seleccione un Estado</option>
+                                        <option value="">Seleccione un Usuario</option>
 
                                     <?php $__currentLoopData = $id_glpi_users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($id_glpi_user->id); ?>"><?php echo e($id_glpi_user->id); ?>: <?php echo e($id_glpi_user->name); ?></option>

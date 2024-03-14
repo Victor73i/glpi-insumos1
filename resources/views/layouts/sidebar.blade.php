@@ -39,18 +39,18 @@
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link">@lang('Reporte Consumible')</a>
+                                <a href="dashboard-projects" class="nav-link">@lang('Reporte Consumible')</a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm" class="nav-link">@lang('Documentacion')</a>
+                                <a href="dashboard-projects" class="nav-link">@lang('Documentacion')</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link">@lang('Equipo IT')</a>
+                                <a href="dashboard-projects" class="nav-link">@lang('Equipo IT')</a>
                             </li><li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link">@lang('Reporte Inventariado')</a>
+                                <a href="dashboard-projects" class="nav-link">@lang('Reporte Inventariado')</a>
                             </li><li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link">@lang('Reporte Fungible')</a>
+                                <a href="dashboard-projects" class="nav-link">@lang('Reporte Fungible')</a>
                             </li>
                             <li class="nav-item">
                                 <a href="dashboard-projects" class="nav-link">@lang('Log')</a>

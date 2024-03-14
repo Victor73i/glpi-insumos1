@@ -39,18 +39,18 @@
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="dashboard-analytics" class="nav-link"><?php echo app('translator')->get('Reporte Consumible'); ?></a>
+                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Reporte Consumible'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a href="dashboard-crm" class="nav-link"><?php echo app('translator')->get('Documentacion'); ?></a>
+                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Documentacion'); ?></a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link"><?php echo app('translator')->get('Equipo IT'); ?></a>
+                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Equipo IT'); ?></a>
                             </li><li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link"><?php echo app('translator')->get('Reporte Inventariado'); ?></a>
+                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Reporte Inventariado'); ?></a>
                             </li><li class="nav-item">
-                                <a href="dashboard-crypto" class="nav-link"><?php echo app('translator')->get('Reporte Fungible'); ?></a>
+                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Reporte Fungible'); ?></a>
                             </li>
                             <li class="nav-item">
                                 <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Log'); ?></a>
