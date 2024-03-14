@@ -210,6 +210,7 @@ Lista de Tareas
                             </tr>
                         </thead>
                         <tbody class="list form-check-all">
+                        @foreach($tareas as $tarea)
                             <tr>
                                 <th scope="row">
                                     <div class="form-check">
@@ -219,12 +220,13 @@ Lista de Tareas
                                 <td class="">
 
                                     <div class="d-flex">
-                                        <a href="apps-tasks-details" class="flex-grow-1">#VLZ501</a>
+                                        <a href="{{route('tareas.show', ['tarea'=>$tarea->id])}}"
+                                            @class(['line-through' =>$tarea->completado])>{{$tarea->id}}</a>
                                         <div class="flex-shrink-0 ms-4">
                                             <ul class="list-inline tasks-list-menu mb-0">
-                                                <li class="list-inline-item"><a href="apps-tasks-details"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
+                                                <li class="list-inline-item"><a href="{{route('tareas.show', ['tarea'=>$tarea->id])}}"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                 </li>
-                                                <li class="list-inline-item"><a class="edit-item-btn" href="#editModal" data-bs-toggle="modal"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i></a>
+                                                <li class="list-inline-item"><a class="edit-item-btn" href="{{route('#editModal', ['tarea' =>$tarea->id])}}" data-bs-toggle="modal"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i></a>
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <a class="remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
@@ -235,14 +237,14 @@ Lista de Tareas
                                         </div>
                                     </div>
                                 </td>
-                                <td class=""><a href="apps-projects-overview" class="fw-medium link-primary">Velzon - v1.0.0</a></td>
+                                <td class=""><a href="" class="fw-medium link-primary">Velzon - v1.0.0</a></td>
                                 <td>
                                     <div class="d-flex">
-                                        <div class="flex-grow-1">Profile Page Satructure</div>
+                                        <div class="flex-grow-1">{{$tareas->glpi_user_name}}</div>
 
                                     </div>
                                 </td>
-                                <td class="">Robert McMahon</td>
+                                <td class="">{{$tareas->tarea_nombre}}</td>
                                 <td class="assignedto">
                                     <div class="avatar-group">
                                         <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Frank">
@@ -271,6 +273,7 @@ Lista de Tareas
                 </div>
 
             </div>
+            @endforeach
             <!--end card-body-->
         </div>
         <!--end card-->
