@@ -377,7 +377,7 @@
                                     <option value="nuevo">nuevo</option>
                                     <option value="en proceso">en proceso</option>
                                     <option value="en espera">en espera</option>
-                                    <option value="completado">completado</option>
+                                    <option value="finalizado">Finalizado</option>
                                 </select>
                             </div>
                             <!--end col-->
@@ -523,7 +523,7 @@
                                     <option value="nuevo" {{ $tarea->estado == 'nuevo' ? 'selected' : '' }}>nuevo</option>
                                     <option value="en espera" {{ $tarea->estado == 'en espera' ? 'selected' : '' }}>en espera</option>
                                     <option value="en proceso" {{ $tarea->estado == 'en proceso' ? 'selected' : '' }}>en proceso</option>
-                                    <option value="completado" {{ $tarea->estado == 'completado' ? 'selected' : '' }}>completado</option>
+                                    <option value="finalizado" {{ $tarea->estado == 'finalizado' ? 'selected' : '' }}>completado</option>
                                     <option value="borrado" {{ $tarea->estado == 'borrado' ? 'selected' : '' }}>borrado</option>
                                 </select>
                             </div>

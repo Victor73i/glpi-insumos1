@@ -1,6 +1,6 @@
 
 <?php $__env->startSection('title'); ?>
-    <?php echo app('translator')->get('Crear Log '); ?>
+    <?php echo app('translator')->get('Editar Log '); ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
     <link href="<?php echo e(URL::asset('build/libs/dropzone/dropzone.css')); ?>" rel="stylesheet">
@@ -11,7 +11,7 @@
             Log
         <?php $__env->endSlot(); ?>
         <?php $__env->slot('title'); ?>
-            Crear Log
+            Editar Log
         <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
 
@@ -94,15 +94,17 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="row">
                             <div class="col-lg-4">
+
                                 <div class="mb-3 mb-lg-0">
                                     <label  class="form-label" for="id_estado_log">Estado</label>
                                     <select class="form-select" data-choices data-choices-search-true
                                             name="id_estado_log" id="id_estado_log">
 
                                         class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_estado_log')]); ?>"
-                                        value="<?php echo e($log->id_estado_log); ?>" >
+                                         >
                                         <?php $__currentLoopData = $id_estado_logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_estado_log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($id_estado_log->id); ?>"><?php echo e($id_estado_log->id); ?>: <?php echo e($id_estado_log->nombre); ?></option>
+                                            <option value="<?php echo e($id_estado_log->id); ?>" <?php echo e($log->id_estado_log == $id_estado_log->id ? 'selected' : ''); ?>>
+                                                <?php echo e($id_estado_log->id); ?>: <?php echo e($id_estado_log->nombre); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php $__errorArgs = ['id_estado_log'];
@@ -123,10 +125,10 @@ unset($__errorArgs, $__bag); ?>
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_locations" id="id_glpi_locations"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_locations')]); ?>"
-                                            value="<?php echo e($log->id_glpi_locations); ?>" >
+                                             >
 
                                         <?php $__currentLoopData = $id_glpi_locations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_location): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($id_glpi_location->id); ?>"><?php echo e($id_glpi_location->id); ?>: <?php echo e($id_glpi_location->name); ?></option>
+                                            <option value="<?php echo e($id_glpi_location->id); ?>" <?php echo e($log->id_glpi_locations == $id_glpi_location->id ? 'selected' : ''); ?>><?php echo e($id_glpi_location->id); ?>: <?php echo e($id_glpi_location->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php $__errorArgs = ['id_glpi_locations'];
@@ -147,10 +149,10 @@ unset($__errorArgs, $__bag); ?>
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_tickets" id="id_glpi_tickets"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_tickets')]); ?>"
-                                            value="<?php echo e($log->id_glpi_tickets); ?>" >
+                                             >
 
                                         <?php $__currentLoopData = $id_glpi_tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($id_glpi_ticket->id); ?>"><?php echo e($id_glpi_ticket->id); ?>: <?php echo e($id_glpi_ticket->name); ?></option>
+                                            <option value="<?php echo e($id_glpi_ticket->id); ?>" <?php echo e($log->id_glpi_tickets == $id_glpi_ticket->id ? 'selected' : ''); ?>><?php echo e($id_glpi_ticket->id); ?>: <?php echo e($id_glpi_ticket->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php $__errorArgs = ['id_glpi_tickets'];
@@ -171,10 +173,10 @@ unset($__errorArgs, $__bag); ?>
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_users" id="id_glpi_users"
                                             class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_users')]); ?>"
-                                            value="<?php echo e($log->id_glpi_users); ?>" >
+                                    >
 
                                         <?php $__currentLoopData = $id_glpi_users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($id_glpi_user->id); ?>"><?php echo e($id_glpi_user->id); ?>: <?php echo e($id_glpi_user->name); ?></option>
+                                            <option value="<?php echo e($id_glpi_user->id); ?>" <?php echo e($log->id_glpi_users == $id_glpi_user->id ? 'selected' : ''); ?>><?php echo e($id_glpi_user->id); ?>: <?php echo e($id_glpi_user->name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
 

@@ -420,7 +420,7 @@ unset($__errorArgs, $__bag); ?>
                                     <option value="nuevo">nuevo</option>
                                     <option value="en proceso">en proceso</option>
                                     <option value="en espera">en espera</option>
-                                    <option value="completado">completado</option>
+                                    <option value="finalizado">Finalizado</option>
                                 </select>
                             </div>
                             <!--end col-->
@@ -500,12 +500,12 @@ unset($__errorArgs, $__bag); ?>
                 <form method="POST" class="tablelist-form" action="<?php echo e(route('tareas.update' , ['tarea'=>$tarea])); ?>" autocomplete="off">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
-                    <input type="hidden" name="tarea_id" id="tareaId" value="" />
 
                     <div class="modal-body">
                         <input type="hidden" id="tasksId" />
                         <div class="row g-3">
                             <div class="col-lg-12">
+                                <input type="text" name="tarea_id" id="tareaId" value="<?php echo e($tarea->id); ?>" />
 
                                 <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
                                 <select class="form-select" data-choices data-choices-search-false
@@ -623,7 +623,7 @@ unset($__errorArgs, $__bag); ?>
                                     <option value="nuevo" <?php echo e($tarea->estado == 'nuevo' ? 'selected' : ''); ?>>nuevo</option>
                                     <option value="en espera" <?php echo e($tarea->estado == 'en espera' ? 'selected' : ''); ?>>en espera</option>
                                     <option value="en proceso" <?php echo e($tarea->estado == 'en proceso' ? 'selected' : ''); ?>>en proceso</option>
-                                    <option value="completado" <?php echo e($tarea->estado == 'completado' ? 'selected' : ''); ?>>completado</option>
+                                    <option value="finalizado" <?php echo e($tarea->estado == 'finalizado' ? 'selected' : ''); ?>>completado</option>
                                     <option value="borrado" <?php echo e($tarea->estado == 'borrado' ? 'selected' : ''); ?>>borrado</option>
                                 </select>
                             </div>

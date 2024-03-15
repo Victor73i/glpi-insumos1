@@ -100,10 +100,9 @@
                                             <a href="apps-tasks-kanban" class="nav-link"><?php echo app('translator')->get('translation.kanbanboard'); ?></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-list-view" class="nav-link"><?php echo app('translator')->get('Lista de Tarea'); ?></a>
+                                            <a href="<?php echo e(route('tareas.index')); ?>" class="nav-link"><?php echo app('translator')->get('Lista de Tarea'); ?></a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-details" class="nav-link"><?php echo app('translator')->get('Detalles Tareas'); ?></a>
                                         </li>
                                     </ul>
                                 </div>

@@ -100,10 +100,9 @@
                                             <a href="apps-tasks-kanban" class="nav-link">@lang('translation.kanbanboard')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-list-view" class="nav-link">@lang('Lista de Tarea')</a>
+                                            <a href="{{route('tareas.index')}}" class="nav-link">@lang('Lista de Tarea')</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="apps-tasks-details" class="nav-link">@lang('Detalles Tareas')</a>
                                         </li>
                                     </ul>
                                 </div>

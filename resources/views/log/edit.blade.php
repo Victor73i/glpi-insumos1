@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    @lang('Crear Log ')
+    @lang('Editar Log ')
 @endsection
 @section('css')
     <link href="{{ URL::asset('build/libs/dropzone/dropzone.css') }}" rel="stylesheet">
@@ -11,7 +11,7 @@
             Log
         @endslot
         @slot('title')
-            Crear Log
+            Editar Log
         @endslot
     @endcomponent
 
@@ -66,15 +66,17 @@
 
                         <div class="row">
                             <div class="col-lg-4">
+
                                 <div class="mb-3 mb-lg-0">
                                     <label  class="form-label" for="id_estado_log">Estado</label>
                                     <select class="form-select" data-choices data-choices-search-true
                                             name="id_estado_log" id="id_estado_log">
 
                                         @class(['border-red-500' => $errors->has('id_estado_log')])
-                                        value="{{$log->id_estado_log}}" >
+                                         >
                                         @foreach ($id_estado_logs as $id_estado_log)
-                                            <option value="{{$id_estado_log->id}}">{{ $id_estado_log->id }}: {{$id_estado_log->nombre}}</option>
+                                            <option value="{{$id_estado_log->id}}" {{ $log->id_estado_log == $id_estado_log->id ? 'selected' : '' }}>
+                                                {{$id_estado_log->id}}: {{$id_estado_log->nombre}}</option>
                                         @endforeach
                                     </select>
                                     @error('id_estado_log')
@@ -88,10 +90,10 @@
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_locations" id="id_glpi_locations"
                                             @class(['border-red-500' => $errors->has('id_glpi_locations')])
-                                            value="{{$log->id_glpi_locations}}" >
+                                             >
 
                                         @foreach ($id_glpi_locations as $id_glpi_location)
-                                            <option value="{{$id_glpi_location->id}}">{{ $id_glpi_location->id }}: {{$id_glpi_location->name}}</option>
+                                            <option value="{{$id_glpi_location->id}}" {{ $log->id_glpi_locations == $id_glpi_location->id ? 'selected' : '' }}>{{ $id_glpi_location->id }}: {{$id_glpi_location->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('id_glpi_locations')
@@ -105,10 +107,10 @@
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_tickets" id="id_glpi_tickets"
                                             @class(['border-red-500' => $errors->has('id_glpi_tickets')])
-                                            value="{{$log->id_glpi_tickets}}" >
+                                             >
 
                                         @foreach ($id_glpi_tickets as $id_glpi_ticket)
-                                            <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
+                                            <option value="{{$id_glpi_ticket->id}}" {{ $log->id_glpi_tickets == $id_glpi_ticket->id ? 'selected' : '' }}>{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('id_glpi_tickets')
@@ -122,10 +124,10 @@
                                     <select class="form-select" data-choices data-choices-search-false
                                             name="id_glpi_users" id="id_glpi_users"
                                             @class(['border-red-500' => $errors->has('id_glpi_users')])
-                                            value="{{$log->id_glpi_users}}" >
+                                    >
 
                                         @foreach ($id_glpi_users as $id_glpi_user)
-                                            <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
+                                            <option value="{{$id_glpi_user->id}}" {{ $log->id_glpi_users == $id_glpi_user->id ? 'selected' : '' }}>{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
                                         @endforeach
                                     </select>
 
