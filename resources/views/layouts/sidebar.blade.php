@@ -221,10 +221,10 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-file-manager" class="nav-link"> <span>@lang('translation.file-manager')</span></a>
+                                <a href="apps-file-manager" class="nav-link"> <span>@lang('Archivos')</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-todo" class="nav-link"> <span>@lang('translation.to-do')</span></a>
+                                <a href="apps-todo" class="nav-link"> <span>@lang('Documentacion')</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="#sidebarjobs" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarjobs"> <span>@lang('translation.jobs')</span> <span class="badge badge-pill bg-success">@lang('translation.new')</span></a>

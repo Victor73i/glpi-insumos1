@@ -28,3 +28,8 @@
 @endsection
 {{-- @endif --}}
 
+<div class="col-lg-auto">
+    <button class="btn btn-primary createTask" type="button" data-bs-toggle="modal" data-bs-target="#createTask">
+        <i class="ri-add-fill align-bottom"></i> Agregar Documento
+    </button>
+</div>

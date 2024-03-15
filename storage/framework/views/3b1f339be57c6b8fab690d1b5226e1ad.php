@@ -221,10 +221,10 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-file-manager" class="nav-link"> <span><?php echo app('translator')->get('translation.file-manager'); ?></span></a>
+                                <a href="apps-file-manager" class="nav-link"> <span><?php echo app('translator')->get('Archivos'); ?></span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-todo" class="nav-link"> <span><?php echo app('translator')->get('translation.to-do'); ?></span></a>
+                                <a href="apps-todo" class="nav-link"> <span><?php echo app('translator')->get('Documentacion'); ?></span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="#sidebarjobs" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarjobs"> <span><?php echo app('translator')->get('translation.jobs'); ?></span> <span class="badge badge-pill bg-success"><?php echo app('translator')->get('translation.new'); ?></span></a>

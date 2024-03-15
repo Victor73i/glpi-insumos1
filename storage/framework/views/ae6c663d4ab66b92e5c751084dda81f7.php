@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.datatables'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <!--datatable css-->
@@ -2594,7 +2593,7 @@
                 <h5 class="card-title mb-0">Buttons Datatables</h5>
             </div>
             <div class="card-body">
-                <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
+                <table  class="display table table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th>Name</th>
