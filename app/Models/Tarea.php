@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class Tarea extends Model
 {
@@ -29,4 +31,19 @@ class Tarea extends Model
         $this->completado = !$this->completado;
         $this->save();
     }
+    public function getDiasRestantesAttribute()
+    {
+        $fechaActual = Carbon::now();
+        $fechaAsignacion = Carbon::parse($this->fecha_asignacion);
+        $fechaAproximada = Carbon::parse($this->fecha_aproximada);
+
+        // Verifica si la fecha actual es mayor a la fecha aproximada
+        if ($fechaActual->gt($fechaAproximada) && !$this->completado) {
+            return 'No Completado a Tiempo';
+        }
+
+        // Si la tarea está completada o aún estamos en el rango de fechas, calcula la diferencia
+        return $fechaAsignacion->diffInDays($fechaAproximada, false) . ' días restantes';
+    }
+
 }

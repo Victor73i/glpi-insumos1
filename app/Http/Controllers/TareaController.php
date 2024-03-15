@@ -46,7 +46,7 @@ class TareaController extends Controller
     {
         $id_glpi_users = GlpiUsers::all();
         $id_glpi_tickets = GlpiTickets::all();
-        return view('tarea.index',
+        return view('tarea.create',
 
         [
             'id_glpi_users' => $id_glpi_users,
@@ -70,7 +70,7 @@ class TareaController extends Controller
 
 
         return view('tarea.show', [
-            'tareas'=> $tarea]);
+            'tarea'=> $tarea]);
 
     }
     //STORE

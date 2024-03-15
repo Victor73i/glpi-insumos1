@@ -12,12 +12,12 @@
                                    colors="primary:#405189,secondary:#02a8b5" style="width:90px;height:90px">
                         </lord-icon>
                     </div>
-                    <h3 class="mb-1">9 hrs 13 min</h3>
-                    <h5 class="fs-14 mb-4">HORA POR TERMINAR</h5>
+                    <h3 class="mb-1">{{ $tarea->dias_restantes }} </h3>
+                    <h5 class="fs-14 mb-4">DIA POR TERMINAR</h5>
                     <div class="hstack gap-2 justify-content-center">
                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#removeProjectModal"><i class="ri-stop-circle-line align-bottom me-1"></i> Borrar</button>
-                        <a class="btn btn-success btn-sm" href="{{route('tareas.edit', [$tareas->id])}}"><i class="ri-play-circle-line align-bottom me-1"></i> Editar</a>
+                        <a class="btn btn-success btn-sm" href="{{route('tareas.edit', [$tarea->id])}}"><i class="ri-play-circle-line align-bottom me-1"></i> Editar</a>
                     </div>
                 </div>
             </div><!--end card-->
@@ -37,30 +37,30 @@
                             <tbody>
                             <tr>
                                 <td class="fw-medium">No. Tarea</td>
-                                <td>{{$tareas->id}}</td>
+                                <td>{{$tarea->id}}</td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Nombre Tarea</td>
-                                <td>{{$tareas->nombre}}</td>
+                                <td>{{$tarea->nombre}}</td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Fecha Asignacion</td>
-                                <td>{{$tareas->fecha_asignacion}}</td>
+                                <td>{{$tarea->fecha_asignacion}}</td>
                             </tr><tr>
                                 <td class="fw-medium">Fecha Aproximada</td>
-                                <td>{{$tareas->fecha_aproximada}}</td>
+                                <td>{{$tarea->fecha_aproximada}}</td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Prioridad</td>
-                                <td><span class="badge badge-soft-danger">{{$tareas->prioridad}}</span></td>
+                                <td><span class="badge badge-soft-danger">{{$tarea->prioridad}}</span></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Estado</td>
-                                <td><span class="badge badge-soft-secondary">{{$tareas->estado}}</span></td>
+                                <td><span class="badge badge-soft-secondary">{{$tarea->estado}}</span></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Fecha Terminada</td>
-                                <td>{{$tareas->fecha_terminado}}</td>
+                                <td>{{$tarea->fecha_terminado}}</td>
                             </tr>
                             </tbody>
                         </table><!--end table-->
@@ -81,12 +81,12 @@
                         <li>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <h6 class="mb-1"><a href="">{{$tareas->glpi_users->id}}</a></h6>
+                                    <h6 class="mb-1"><a href="">{{$tarea->glpi_users->id}}</a></h6>
 
                                 </div>
                                 <div class="flex-grow-1 ms-2">
-                                    <h6 class="mb-1"><a href="">{{$tareas->glpi_users->name}}</a></h6>
-                                    <p class="text-muted mb-0">{{$tareas->glpi_users->name}}</p>
+                                    <h6 class="mb-1"><a href="">{{$tarea->glpi_users->name}}</a></h6>
+                                    <p class="text-muted mb-0">{{$tarea->glpi_users->name}}</p>
                                 </div>
 
                             </div>
@@ -201,7 +201,7 @@
                 <div class="card-body">
                     <div class="text-muted">
                         <h6 class="mb-3 fw-semibold text-uppercase">Descripcion</h6>
-                        <p>{{$tareas->descripcion}}</p>
+                        <p>{{$tarea->descripcion}}</p>
 
                         <h6 class="mb-3 fw-semibold text-uppercase">Observacion</h6>
                         <ul class=" ps-3 list-unstyled vstack gap-2">
@@ -209,7 +209,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="productTask">
                                     <label class="form-check-label" for="productTask">
-                                        {{$tareas->observacion}}
+                                        {{$tarea->observacion}}
                                     </label>
                                 </div>
                             </li>
@@ -219,8 +219,8 @@
                         <div class="pt-3 border-top border-top-dashed mt-4">
                             <h6 class="mb-3 fw-semibold text-uppercase">Historico</h6>
                             <div class="hstack flex-wrap gap-2 fs-15">
-                                <div class="badge fw-medium badge-soft-info">Creado {{$tareas->created_at->diffForHumans()}}</div>
-                                <div class="badge fw-medium badge-soft-info">Actualizado {{$tareas->updated_at->diffForHumans()}}</div>
+                                <div class="badge fw-medium badge-soft-info">Creado {{$tarea->created_at->diffForHumans()}}</div>
+                                <div class="badge fw-medium badge-soft-info">Actualizado {{$tarea->updated_at->diffForHumans()}}</div>
                             </div>
                         </div>
                     </div>
@@ -375,7 +375,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
-                        <form action="{{route('tareas.destroy',['tarea' =>$tareas->id])}}" method="POST">
+                        <form action="{{route('tareas.destroy',['tarea' =>$tarea->id])}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn w-sm btn-danger"  id="remove-project">Si, Borralo!</button>

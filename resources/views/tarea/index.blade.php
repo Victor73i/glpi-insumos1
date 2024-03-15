@@ -301,7 +301,6 @@
                 <form method="POST" class="tablelist-form" action="{{route('tareas.store')}}" autocomplete="off">
                     @csrf
                     <div class="modal-body">
-                        <input type="hidden" id="tasksId" />
                         <div class="row g-3">
                             <div class="col-lg-12">
                                 <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
@@ -591,6 +590,7 @@
             var modal = $(this);
             modal.find('#tareaId').val(tareaId); // Actualiza el campo oculto con el ID de la tarea
         });
+
     </script>
 
     <!--end modal-->

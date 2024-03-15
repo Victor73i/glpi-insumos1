@@ -302,7 +302,6 @@
                 <form method="POST" class="tablelist-form" action="<?php echo e(route('tareas.store')); ?>" autocomplete="off">
                     <?php echo csrf_field(); ?>
                     <div class="modal-body">
-                        <input type="hidden" id="tasksId" />
                         <div class="row g-3">
                             <div class="col-lg-12">
                                 <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
@@ -500,12 +499,12 @@ unset($__errorArgs, $__bag); ?>
                 <form method="POST" class="tablelist-form" action="<?php echo e(route('tareas.update' , ['tarea'=>$tarea])); ?>" autocomplete="off">
                     <?php echo csrf_field(); ?>
                     <?php echo method_field('PUT'); ?>
+                    <input type="hidden" name="tarea_id" id="tareaId" value="" />
 
                     <div class="modal-body">
                         <input type="hidden" id="tasksId" />
                         <div class="row g-3">
                             <div class="col-lg-12">
-                                <input type="text" name="tarea_id" id="tareaId" value="<?php echo e($tarea->id); ?>" />
 
                                 <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
                                 <select class="form-select" data-choices data-choices-search-false
@@ -706,6 +705,7 @@ unset($__errorArgs, $__bag); ?>
             var modal = $(this);
             modal.find('#tareaId').val(tareaId); // Actualiza el campo oculto con el ID de la tarea
         });
+
     </script>
 
     <!--end modal-->
