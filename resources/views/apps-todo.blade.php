@@ -40,23 +40,30 @@
                     <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Fecha Creacion</th>
+                            <th>Archivo</th>
+                            <th>Estado </th>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Usuario</th>
                             <th>Accion</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                        @foreach($documentacions as $documentacion)
+
+                            <tr>
+                            <td>{{$documentacion->nombre}}</td>
+                            <td>{{$documentacion->descripcion}}</td>
+                            <td>{{$documentacion->fecha_creacion}}</td>
+                            <td>{{$documentacion->archivo}}</td>
+                            <td>{{$documentacion->estado_documentacion->nombre}}</td>
+                            <td>{{$documentacion->tipo_documentacion->nombre}}</td>
+                            <td>{{$documentacion->categoria_documentacion->nombre}}</td>
+                            <td>{{$documentacion->glpi_users->name}}</td>
+
                         </tr>
 
                     </table>

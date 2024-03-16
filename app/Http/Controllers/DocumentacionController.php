@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DocumentacionRequest;
 use App\Models\CategoriaDocumentacion;
 use App\Models\EstadoDocumentacion;
+use App\Models\GlpiTickets;
 use App\Models\GlpiUsers;
 use App\Models\TipoDocumentacion;
 use Illuminate\Http\Request;
@@ -16,53 +17,85 @@ class DocumentacionController extends Controller
 {
     //index
     public function index() {
+        $id_glpi_users = GlpiUsers::all();
+        $id_estado_documentacion = EstadoDocumentacion::all();
+        $id_categoria_documentacion = CategoriaDocumentacion::all();
+        $id_tipo_documentacion = TipoDocumentacion::all();
         return view('documentacion.index',[
-            'documentacions'=> Documentacion::latest()->paginate(10)]);
+            'documentacions'=> Documentacion::latest()->paginate(10),
+            'id_glpi_users' => $id_glpi_users,
+            'id_estado_documentacion' => $id_estado_documentacion,
+            'id_categoria_documentacion' => $id_categoria_documentacion,
+            'id_tipo_documentacion' => $id_tipo_documentacion,
+            ]);
+
     }
     //CREATE
     public function create()
     {
-        $estado_documentacions = EstadoDocumentacion::all(); // Obtener todos los estados
-        $glpi_users = GlpiUsers::all(); // Obtener todos los usuarios de GLPI
-        $tipo_documentacions = TipoDocumentacion::all(); // Obtener todos las tipos
-        $categoria_documentacions = CategoriaDocumentacion::all(); // Obtener todos las categorias
-        return view('documentacion.create', compact('estado_documentacions','glpi_users','tipo_documentacions','categoria_documentacions'));
+
+        $id_glpi_users = GlpiUsers::all();
+        $id_estado_documentacion = EstadoDocumentacion::all();
+        $id_tipo_documentacion = TipoDocumentacion::all();
+        $id_categoria_documentacion = CategoriaDocumentacion::all();
+
+
+        return view('documentacion.create',[
+            'id_glpi_users' => $id_glpi_users,
+            'id_estado_documentacion' => $id_estado_documentacion,
+            'id_tipo_documentacion' => $id_tipo_documentacion,
+            'id_categoria_documentacion' => $id_categoria_documentacion,
+        ]);
     }
     //edit
     public function edit(String $id){
-        $documentacion = Documentacion::find($id);
-        $estado_documentacions = EstadoDocumentacion::all();
-        $glpi_users = GlpiUsers::all();
-        $tipo_documentacions = TipoDocumentacion::all();
-        $categoria_documentacions = CategoriaDocumentacion::all();
+        $id_glpi_users = GlpiUsers::all();
+        $id_estado_documentacion = EstadoDocumentacion::all();
+        $id_tipo_documentacion = EstadoDocumentacion::all();
+        $id_categoria_documentacion = CategoriaDocumentacion::all();
         return view('documentacion.edit', [
-            'documentacion'=>\App\Models\Documentacion::findOrFail($id)
-        ], compact('estado_documentacions','glpi_users','tipo_documentacions','categoria_documentacions', 'documentacion'));
+            'documentacion'=>\App\Models\Documentacion::findOrFail($id),
+            'id_glpi_users' => $id_glpi_users,
+            'id_estado_documentacion' => $id_estado_documentacion,
+            'id_tipo_documentacion' => $id_tipo_documentacion,
+            'id_categoria_documentacion' => $id_categoria_documentacion,
+        ]);
     }
     //show
-    public  function show(string $id){
-        $documentacions = DB::table('documentacion as d')
-            ->join('estado_documentacion as e', 'd.id_estado_documentacion', '=', 'e.id')
-            ->join('glpi_users as gu', 'd.id_glpi_users', '=', 'gu.id')
-            ->join('tipo_documentacion as t', 'd.id_tipo_documentacion', '=', 't.id')
-            ->join('categoria_documentacion as c', 'd.id_categoria_documentacion', '=', 'c.id')
-            ->select('d.id as documentacion_id', 'd.nombre as documentacion_nombre','d.descripcion as documentacion_descripcion','d.fecha_creacion as documentacion_fecha_creacion',
-                'd.archivo as documentacion_archivo','e.nombre as estado_documentacion_nombre', 'gu.name as glpi_user_name','t.nombre as tipo_documentacion_nombre','c.nombre as categoria_documentacion_nombre')
-            ->where('d.id', '=', $id)
-            ->first();
+    public  function show(Documentacion $documentacion){
+
 
 
         return view('documentacion.show', [
-            'documentacion'=> Documentacion::findOrFail($id), 'documentacions'=>$documentacions]);
+            'documentacion' => $documentacion]);
 
     }
     //STORE
-    public function store(DocumentacionRequest $request){
+    public function store(DocumentacionRequest $request)
+    {
+        $validatedData = $request->validated();
+        $filenames = [];
 
-        $documentacion = Documentacion::create($request->validated());
-        return redirect()-> route('documentacions.show', [$documentacion->id])
-            ->with('success', 'Documentacion creado Satisfactoriamente!');
+        if ($request->hasFile('archivo')) {
+            $files = $request->file('archivo');
+
+            foreach ($files as $file) {
+                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('documentacion/archivo'), $filename);
+                $filenames[] = $filename;
+            }
+
+            // Guarda los nombres de archivo como una cadena separada por comas o como un array serializado
+            $validatedData['archivo'] = implode(',', $filenames); // Como cadena separada por comas
+            // O puedes guardar como JSON
+            // $validatedData['archivo'] = json_encode($filenames);
+        }
+
+        $documentacion = Documentacion::create($validatedData);
+        return redirect()->route('documentacions.index')->with('success', 'Documentación creada Satisfactoriamente!');
     }
+
+
     //UPDATED
     public function update(DocumentacionRequest $request, string $id){
         //$data = $request->validate();
@@ -73,7 +106,7 @@ class DocumentacionController extends Controller
         //$ubicacion->save();
         $documentacion = Documentacion::findOrFail($id);
         $documentacion->update($request->validated());
-        return redirect()-> route('documentacions.show', [$documentacion->id])
+        return redirect()-> route('documentacions.index')
             ->with('success', 'Documentacion Actualizado Satisfactoriamente!');
     }
     //delete

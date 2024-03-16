@@ -41,6 +41,18 @@ class EstadoDocumentacionController extends Controller
         return redirect()-> route('estado_documentacions.show', [$estado_documentacion->id])
             ->with('success', 'Estado Creado Satisfactoriamente!');
     }
+    public function store1(EstadoDocumentacionRequest $request)
+    {
+        //    $data = $request->validate();
+        //
+        //    $estado_log = new \App\Models\Estado_log;
+        //    $estado_log->nombre = $data['nombre'];
+        //    $estado_log->descripcion = $data['descripcion'];
+        //    $estado_log->save();
+        $estado_documentacion = EstadoDocumentacion::create($request->validated());
+        return redirect()-> route('documentacions.index')
+            ->with('success', 'Estado Creado Satisfactoriamente!');
+    }
 
     /**
      * Display the specified resource.

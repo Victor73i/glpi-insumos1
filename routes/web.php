@@ -41,7 +41,9 @@ Route::resource('/equipo_its', EquipoItController::class)->only(['index', 'show'
 Auth::routes();
 //Language Translation
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
-
+Route::post('/estado_documentacions', [App\Http\Controllers\EstadoDocumentacionController::class, 'store1'] )->name('estado_documentacions.store1');
+Route::post('/tipo_documentacions', [App\Http\Controllers\TipoDocumentacionController::class, 'store1'] )->name('tipo_documentacions.store1');
+Route::post('/categoria_documentacions', [App\Http\Controllers\CategoriaDocumentacionController::class, 'store1'] )->name('categoria_documentacions.store1');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 

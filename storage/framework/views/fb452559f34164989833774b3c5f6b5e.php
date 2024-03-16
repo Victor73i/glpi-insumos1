@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
 <?php echo app('translator')->get('Documentacion'); ?>
 <?php $__env->stopSection(); ?>
@@ -39,22 +40,30 @@
                     <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Fecha Creacion</th>
+                            <th>Archivo</th>
+                            <th>Estado </th>
+                            <th>Tipo</th>
+                            <th>Categoria</th>
+                            <th>Usuario</th>
+                            <th>Accion</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
+                        <?php $__currentLoopData = $documentacions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentacion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                            <tr>
+                            <td><?php echo e($documentacion->nombre); ?></td>
+                            <td><?php echo e($documentacion->descripcion); ?></td>
+                            <td><?php echo e($documentacion->fecha_creacion); ?></td>
+                            <td><?php echo e($documentacion->archivo); ?></td>
+                            <td><?php echo e($documentacion->estado_documentacion->nombre); ?></td>
+                            <td><?php echo e($documentacion->tipo_documentacion->nombre); ?></td>
+                            <td><?php echo e($documentacion->categoria_documentacion->nombre); ?></td>
+                            <td><?php echo e($documentacion->glpi_users->name); ?></td>
+
                         </tr>
 
                     </table>

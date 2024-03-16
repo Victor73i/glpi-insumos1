@@ -38,6 +38,18 @@ class CategoriaDocumentacionController extends Controller
         return redirect()-> route('categoria_documentacions.show', [$categoria_documentacion->id])
             ->with('success', 'Categoria Creado Satisfactoriamente!');
     }
+    public function store1(CategoriaDocumentacionRequest $request)
+    {
+        //    $data = $request->validate();
+        //
+        //    $estado_log = new \App\Models\Estado_log;
+        //    $estado_log->nombre = $data['nombre'];
+        //    $estado_log->descripcion = $data['descripcion'];
+        //    $estado_log->save();
+        $categoria_documentacion = CategoriaDocumentacion::create($request->validated());
+        return redirect()-> route('documentacions.index')
+            ->with('success', 'Categoria Creado Satisfactoriamente!');
+    }
 
     /**
      * Display the specified resource.

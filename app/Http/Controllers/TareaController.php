@@ -77,7 +77,7 @@ class TareaController extends Controller
     public function store(TareaRequest $request){
 
         $tarea = Tarea::create($request->validated());
-        return redirect()-> route('tareas.index')
+        return redirect()-> route('tareas.index',)
             ->with('success', 'Tarea create Successfully!');
     }
     //UPDATED
@@ -98,7 +98,7 @@ class TareaController extends Controller
         $tarea = Tarea::findOrFail($id);
         $tarea->delete();
         return redirect()-> route('tareas.index')
-            ->with('success', 'Tarea Deleted Successfully');
+            ->with('success', 'Tarea Borrado con Exito');
     }
     //toggle-complete
     public function toggle(Tarea $tarea){

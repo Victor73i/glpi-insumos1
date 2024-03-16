@@ -41,6 +41,18 @@ class TipoDocumentacionController extends Controller
         return redirect()-> route('tipo_documentacions.show', [$tipo_documentacion->id])
             ->with('success', 'Tipo Creado Satisfactoriamente!');
     }
+    public function store1(TipoDocumentacionRequest $request)
+    {
+        //    $data = $request->validate();
+        //
+        //    $estado_log = new \App\Models\Estado_log;
+        //    $estado_log->nombre = $data['nombre'];
+        //    $estado_log->descripcion = $data['descripcion'];
+        //    $estado_log->save();
+        $tipo_documentacion = TipoDocumentacion::create($request->validated());
+        return redirect()-> route('documentacions.index')
+            ->with('success', 'Tipo Creado Satisfactoriamente!');
+    }
 
     /**
      * Display the specified resource.
