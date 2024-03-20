@@ -99,6 +99,34 @@
                                 Fecha Inicio <?php echo e($log->fecha_inicio); ?> -
                                 Fecha Finalizacion <?php echo e($log->fecha_finalizacion); ?> -
                             </div>
+                            <div class="mt-2 text-center">
+                                <h4 class="card-title mb-0 flex-grow-1">Archivo</h4>
+
+                            </div>
+                            <hr>
+                            <div class="text-muted">
+                                <?php if($log->archivo): ?>
+                                    <?php
+                                        $archivos = explode(',', $log->archivo);
+                                    ?>
+
+                                    <?php $__currentLoopData = $archivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $archivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if(pathinfo($archivo, PATHINFO_EXTENSION) === 'pdf'): ?>
+                                            <a href="<?php echo e(asset('log/archivo/' . $archivo)); ?>" target="_blank">Ver PDF</a>
+                                        <?php elseif(in_array(pathinfo($archivo, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif'])): ?>
+                                            <!-- Utilizamos data-bs-toggle y data-bs-target para activar el modal -->
+                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#imagenZoomModal" onclick="showImage('<?php echo e(asset('log/archivo/' . $archivo)); ?>')">
+                                                <img src="<?php echo e(asset('log/archivo/' . $archivo)); ?>" alt="archivo" width="50px" height="50px">
+                                            </a>
+                                        <?php else: ?>
+                                            <a href="<?php echo e(asset('log/archivo/' . $archivo)); ?>" >No hay archivo</a>
+                                        <?php endif; ?>
+                                        <br>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </div>
+
+
                             
                             
                         </div>
@@ -159,6 +187,8 @@
                             <h4>Estas Seguro ?</h4>
                             <p class="text-muted mx-4 mb-0">Estas Seguro que Quieres Eliminar Este Log ?</p>
                         </div>
+
+
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
@@ -174,6 +204,26 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <div class="modal fade" id="imagenZoomModal" tabindex="-1" aria-labelledby="imagenZoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- Aquí se mostrará la imagen -->
+                    <img id="imagenZoom" src="" class="img-fluid" alt="Zoom Imagen">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showImage(src) {
+            // Configura el src de la imagen en el modal
+            document.getElementById('imagenZoom').src = src;
+            // Puedes agregar aquí más lógica si necesitas
+        }
+    </script>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('build/js/pages/project-list.init.js')); ?>"></script>

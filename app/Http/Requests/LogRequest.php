@@ -23,6 +23,7 @@ class LogRequest extends FormRequest
     {
         return [
             'titulo' => 'required',
+            'archivo' => 'required',
             'observaciones' => 'required',
             'id_estado_log' => 'required',
             'fecha_inicio' => 'required',

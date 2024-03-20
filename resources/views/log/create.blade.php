@@ -173,48 +173,11 @@
                             <h5 class="card-title mb-0">Archivo</h5>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted">Agregar Histórico.</p>
-                            <div class="dropzone">
-                                <div class="fallback">
-                            <input name="archivo" type="file" class="form-control" multiple="multiple">
+                            <div class="mb-3">
 
-
-                                    </div>
-                                    <div class="dz-message needsclick">
-                                        <div class="mb-3">
-                                            <i class="display-4 text-muted ri-upload-cloud-2-fill"></i>
-                                        </div>
-
-                                        <h5>Click Para subir Historico.</h5>
-                                    </div>
-                                </div>
-
-                                <ul class="list-unstyled mb-0" id="dropzone-preview">
-                                    <li class="mt-2" id="dropzone-preview-list">
-                                        <!-- This is used as the file preview template -->
-                                        <div class="border rounded">
-                                            <div class="d-flex p-2">
-                                                <div class="flex-shrink-0 me-3">
-                                                    <div class="avatar-sm bg-light rounded">
-                                                        <img src="#" alt="Project-Image" data-dz-thumbnail
-                                                             class="img-fluid rounded d-block" />
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <div class="pt-1">
-                                                        <h5 class="fs-14 mb-1" data-dz-name>&nbsp;</h5>
-                                                        <p class="fs-13 text-muted mb-0" data-dz-size></p>
-                                                        <strong class="error text-danger" data-dz-errormessage></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-shrink-0 ms-3">
-                                                    <button data-dz-remove class="btn btn-sm btn-danger">Borrar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!-- end dropzon-preview -->
+                                <!-- Multiple Files Input Example -->
+                                <label for="archivo" class="form-label">Archivo</label>
+                                <input class="form-control" type="file" name="archivo[]" id="archivo" multiple>
                             </div>
                         </div>
                     </div>

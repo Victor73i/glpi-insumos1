@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\EquipoIt;
+use Illuminate\Support\Arr;
+
 use App\Models\EstadoLog;
 use App\Models\GlpiLocations;
 use App\Models\GlpiTickets;
@@ -81,21 +83,31 @@ class LogController extends Controller
         ]);
     }
     //edit
-    public function edit(string $id){
+    public function edit(string $id) {
+        // Obtén el log y sus archivos
+        $log = Log::findOrFail($id);
+        $existingFiles = explode(',', $log->archivo);
+
         $equiposIt = EquipoIt::all();
         $id_glpi_users = GlpiUsers::all();
         $id_glpi_locations = GlpiLocations::all();
         $id_glpi_tickets = GlpiTickets::all();
         $id_estado_logs = EstadoLog::all();
+
+        // Pasa los archivos existentes y otros datos necesarios a la vista
         return view('log.edit', [
-            'log'=> Log::findOrFail($id),
+            'log' => $log,
+            'existingFiles' => $existingFiles,
             'equipos_it' => $equiposIt,
             'id_glpi_users' => $id_glpi_users,
             'id_glpi_locations' => $id_glpi_locations,
             'id_glpi_tickets' => $id_glpi_tickets,
-            'id_estado_logs' => $id_estado_logs
+            'id_estado_logs' => $id_estado_logs,
+            // Agregar cualquier otro dato que necesites pasar a la vista...
         ]);
     }
+
+
     //show
     public function show(Log $log){
         return view('log.show', [
@@ -103,66 +115,98 @@ class LogController extends Controller
         ]);
     }
     //STORE
-    public function store(LogRequest $request){
-        //    $data = $request->validate();
-        //    $log = new \App\Models\Log;
-        //    $log-> observaciones = $data['observaciones'];
-        //    $log-> id_estado_log = $data['id_estado_log'];
-        //    $log-> fecha_inicio = $data['fecha_inicio'];
-        //    $log-> fecha_finalizacion = $data['fecha_finalizacion'];
-        //    $log-> id_equipo_computo = $data['id_equipo_computo'];
-        //    $log-> id_ubicacion = $data['id_ubicacion'];
-        //    $log->save();
+    public function store(LogRequest $request) {
+        // Valida y obtiene todos los datos del formulario excepto los archivos
+        $validatedData = $request->validated();
 
-        //info(dump($request->validated('id_equipo_computo')));
-        //return;
-        $ids_equipo_it = $request->validated('id_equipo_computo');
+        // Manejo de la subida de archivos
+        $filenames = [];
+        if ($request->hasFile('archivo')) {
+            foreach ($request->file('archivo') as $file) {
+                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('log/archivo'), $filename);
+                $filenames[] = $filename;
+            }
+        }
 
-        $log = Log::create($request->validated());
+        // Si hay archivos, los almacena como una cadena de nombres de archivo separados por comas
+        if (!empty($filenames)) {
+            $validatedData['archivo'] = implode(',', $filenames);
+        } else {
+            $validatedData['archivo'] = null; // O manejar de otra forma si es necesario
+        }
 
-        foreach ($ids_equipo_it as $id_equipo_it){
-            $log_equipo_it = new LogEquipoIt;
+        // Crea el log con los datos validados
+        $log = Log::create($validatedData);
+
+        // Asocia equipos de IT si se enviaron
+        $ids_equipo_it = $request->input('id_equipo_computo', []);
+        foreach ($ids_equipo_it as $id_equipo_it) {
+            $log_equipo_it = new LogEquipoIt();
             $log_equipo_it->id_log = $log->id;
             $log_equipo_it->id_equipo_it = $id_equipo_it;
-
             $log_equipo_it->save();
         }
 
-        return redirect()-> route('logs.show', [$log->id])
-            ->with('success', 'Logs create Successfully!')->with('debug', $request->validated());
+        return redirect()->route('logs.show', [$log->id])
+            ->with('success', 'Log creado correctamente.');
     }
+
+
+
     //UPDATE
-    public function update(LogRequest $request, string $id){
-        //$data = $request->validate();
-        //$log = \App\Models\Log::findOrFail($id);
-        //$log-> observaciones = $data['observaciones'];
-        //$log-> id_estado_log = $data['id_estado_log'];
-        //$log-> fecha_inicio = $data['fecha_inicio'];
-        //$log-> fecha_finalizacion = $data['fecha_finalizacion'];
-        //$log-> id_equipo_computo = $data['id_equipo_computo'];
-        //$log-> id_ubicacion = $data['id_ubicacion'];
-        //$log->save();
-
-
-        $ids_equipo_it = $request->validated('id_equipo_computo');
-
+    public function update(LogRequest $request, string $id) {
         $log = Log::findOrFail($id);
-        $log->update($request->validated());
 
-        foreach ($log->equiposIt as $equipoIt){
-            $logEquipoIt = LogEquipoIt::where('id_log', '=', $log->id)->where('id_equipo_it', '=', $equipoIt->id)->delete();
+        // Valida y obtiene todos los datos del formulario excepto los archivos
+        $validatedData = $request->validated();
+
+        // Manejo de la subida de archivos
+        $filenames = $log->archivo ? explode(',', $log->archivo) : [];
+        if ($request->hasFile('archivo')) {
+            foreach ($request->file('archivo') as $file) {
+                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('log/archivo'), $filename);
+                $filenames[] = $filename;
+            }
         }
 
-        foreach ($ids_equipo_it as $id_equipo_it){
-            $log_equipo_it = new LogEquipoIt;
-            $log_equipo_it->id_log = $log->id;
-            $log_equipo_it->id_equipo_it = $id_equipo_it;
+        // Si hay nuevos archivos, actualiza la propiedad 'archivo' con los nombres de archivo
+        $validatedData['archivo'] = implode(',', $filenames);
 
-            $log_equipo_it->save();
+        // Actualiza el log con los nuevos datos
+        $logData = Arr::except($validatedData, ['id_equipo_computo']);
+        $log->update($logData);
+
+        // Actualiza la relación de equipos de IT si se enviaron
+        $log->equiposIt()->sync($request->input('id_equipo_computo', []));
+
+        return redirect()->route('logs.show', [$log->id])
+            ->with('success', 'Log actualizado correctamente.');
+    }
+
+    public function destroyFile($id, Request $request)
+    {
+        $log = Log::findOrFail($id); // Obtén el log por su id
+        $existingFiles = explode(',', $log->archivo); // Convierte la cadena en un array
+        $fileToDelete = $request->input('file'); // El nombre del archivo a eliminar
+
+        // Verifica si el archivo existe en el array
+        if (($key = array_search($fileToDelete, $existingFiles)) !== false) {
+            unset($existingFiles[$key]); // Elimina el archivo del array
+
+            // Elimina el archivo del sistema de archivos si existe
+            $file_path = public_path('log/archivo/' . $fileToDelete);
+            if (file_exists($file_path)) {
+                @unlink($file_path);
+            }
+
+            // Actualiza la lista de archivos en el modelo y guarda
+            $log->archivo = implode(',', $existingFiles);
+            $log->save();
         }
 
-        return redirect()-> route('logs.show', [$log->id])
-            ->with('success', 'Logs update Successfully!');
+        return back()->with('success', 'Archivo eliminado correctamente.');
     }
     //delete
     public function destroy(string $id){

@@ -36,6 +36,7 @@ Route::resource('/reporte_insumo_fungibles', ReporteInsumoFungibleController::cl
 Route::resource('/reporte_insumo_consumibles', ReporteInsumoConsumibleController::class);
 Route::resource('/tareas', TareaController::class);
 Route::resource('/equipo_its', EquipoItController::class)->only(['index', 'show']);
+Route::delete('/archivo/{id}', [LogController::class, 'create'])->name('archivos.destroy');
 
 
 Auth::routes();

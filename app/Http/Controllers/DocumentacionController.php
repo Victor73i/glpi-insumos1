@@ -98,12 +98,26 @@ class DocumentacionController extends Controller
 
     //UPDATED
     public function update(DocumentacionRequest $request, string $id){
-        //$data = $request->validate();
-        //$ubicacion = \App\Models\Ubicacion::findOrFail($id);
-        //$ubicacion-> nombre = $data['nombre'];
-        //$ubicacion-> id_area = $data['id_area'];
-        //$ubicacion-> descripcion = $data['descripcion'];
-        //$ubicacion->save();
+
+        $validatedData = $request->validated();
+        $filenames = [];
+
+        if ($request->hasFile('archivo')) {
+            $files = $request->file('archivo');
+
+            foreach ($files as $file) {
+                $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('documentacion/archivo'), $filename);
+                $filenames[] = $filename;
+            }
+
+            // Guarda los nombres de archivo como una cadena separada por comas o como un array serializado
+            $validatedData['archivo'] = implode(',', $filenames); // Como cadena separada por comas
+            // O puedes guardar como JSON
+            // $validatedData['archivo'] = json_encode($filenames);
+        }
+
+
         $documentacion = Documentacion::findOrFail($id);
         $documentacion->update($request->validated());
         return redirect()-> route('documentacions.index')

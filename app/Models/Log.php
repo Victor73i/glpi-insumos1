@@ -12,6 +12,10 @@ class Log extends Model
     protected $fillable = ['id','titulo','observaciones','fecha_inicio', 'fecha_finalizacion','completado','id_glpi_locations','id_glpi_tickets','id_glpi_users','archivo','id_estado_log','id_tipo_equipo_it',
         'created_at','updated_at'];
 
+
+    protected $casts = [
+        'archivo' => 'array',
+    ];
     public function estado_log()
     {
         return $this->belongsTo(EstadoLog::class, 'id_estado_log', 'id');

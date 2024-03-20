@@ -156,7 +156,26 @@
                                                                 </div>
                                                             </div>
                                                             <div class="flex-grow-1 overflow-hidden">
-                                                                <h5 class="fs-13 mb-1"><?php echo e($log->glpi_tickets->name); ?></h5>
+                                                                <?php if($log->archivo): ?>
+                                                                    <?php
+                                                                        $archivos = explode(',', $log->archivo);
+                                                                    ?>
+
+                                                                    <?php $__currentLoopData = $archivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $archivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                        <?php if(pathinfo($archivo, PATHINFO_EXTENSION) === 'pdf'): ?>
+                                                                            <a href="<?php echo e(asset('log/archivo/' . $archivo)); ?>" target="_blank">Ver PDF</a>
+                                                                        <?php elseif(in_array(pathinfo($archivo, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif'])): ?>
+                                                                            <!-- Utilizamos data-bs-toggle y data-bs-target para activar el modal -->
+                                                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#imagenZoomModal" onclick="showImage('<?php echo e(asset('log/archivo/' . $archivo)); ?>')">
+                                                                                <img src="<?php echo e(asset('log/archivo/' . $archivo)); ?>" alt="archivo" width="50px" height="50px">
+                                                                            </a>
+                                                                        <?php else: ?>
+                                                                            <a href="<?php echo e(asset('log/archivo/' . $archivo)); ?>" >No hay archivo</a>
+                                                                        <?php endif; ?>
+                                                                        <br>
+                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php endif; ?>
+
                                                             </div>
                                                             <div class="flex-shrink-0 ms-2">
                                                                 <div class="d-flex gap-1">
@@ -302,8 +321,29 @@
 
             <!-- end modal-content -->
         </div>
+
         <!-- modal-dialog -->
     </div>
+    <div class="modal fade" id="imagenZoomModal" tabindex="-1" aria-labelledby="imagenZoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- Aquí se mostrará la imagen -->
+                    <img id="imagenZoom" src="" class="img-fluid" alt="Zoom Imagen">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showImage(src) {
+            // Configura el src de la imagen en el modal
+            document.getElementById('imagenZoom').src = src;
+            // Puedes agregar aquí más lógica si necesitas
+        }
+    </script>
     <?php if(isset($debug)): ?>
         echo("<script>console.log('PHP: " . <?php echo e($debug); ?> . "');</script>");
     <?php endif; ?>
