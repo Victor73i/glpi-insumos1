@@ -61,7 +61,7 @@ Route::get('equipo_its/{search}', [EquipoItController::class, 'filter']);
 
 
 //DOCUMENTACION
-Route::put('documentacions/{documentacions}/toggle-complete', [DocumentacionController::class, 'toggle'])->name('documentacions.toggle-complete');
+Route::put('documentacions/{documentacion}/toggle-complete', [DocumentacionController::class, 'toggle'])->name('documentacions.toggle-complete');
 //ESTADO_LOG
 Route::put('estado_logs/{estado_log}/toggle-complete', [EstadoLogController::class, 'toggle'])->name('estado_logs.toggle-complete');
 //LOG

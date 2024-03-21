@@ -239,7 +239,7 @@
                                             <div class="d-flex align-items-center">
 
                                                 <div class="flex-grow-1">
-                                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block"><?php echo e($log->glpi_users->firtname); ?> * <?php echo e($log->glpi_users->realname); ?></a></h5>
+                                                    <h5 class="fs-13 mb-0"><a href="#" class="text-body d-block"><?php echo e($log->glpi_users->firstname); ?> * <?php echo e($log->glpi_users->realname); ?></a></h5>
                                                 </div>
                                                 <div class="flex-shrink-0">
                                                     <div class="d-flex align-items-center gap-1">
