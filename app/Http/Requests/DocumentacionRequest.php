@@ -25,11 +25,17 @@ class DocumentacionRequest extends FormRequest
             'nombre' => 'required',
             'descripcion' => 'required',
             'fecha_creacion' => 'required',
-            'archivo' => 'required',
             'id_estado_documentacion' => 'required',
             'id_tipo_documentacion' => 'required',
             'id_glpi_users' => 'required',
             'id_categoria_documentacion' => 'required',
         ];
+        if ($this->isMethod('post')) { // Si es una creación
+            $rules['archivo'] = 'required|file'; // Aquí puedes ajustar según necesites validar el archivo
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) { // Si es una actualización
+            // Para la actualización, el archivo no es obligatorio, pero si se envía, se valida
+            $rules['archivo'] = 'nullable|file';
+        }
+        return $rules;
     }
 }

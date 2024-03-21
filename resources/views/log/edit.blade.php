@@ -177,15 +177,19 @@
                         </div>
                         <div class="card-body">
                             {{-- Lista los archivos existentes --}}
-                            @if (!empty($existingFiles))
+                            @if (!empty($existingFiles) && count($existingFiles) > 0 && $existingFiles[0] != '')
                                 <ul>
                                     @foreach ($existingFiles as $index => $file)
+                                        @if ($file != '') {{-- Verifica que el nombre del archivo no esté vacío --}}
                                         <li>
                                             {{ $file }} -
                                             <a href="{{ asset('log/archivo/' . $file) }}" target="_blank">Ver</a>
-                                            {{-- Botón para eliminar el archivo --}}
-                                           
+                                            <!-- Botón que dispara el modal -->
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteOrder" data-file="{{ $file }}">
+                                                Eliminar
+                                            </button>
                                         </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                             @else
@@ -197,7 +201,6 @@
                                 <label for="archivo" class="form-label">Agregar más archivos</label>
                                 <input class="form-control" type="file" name="archivo[]" id="archivo" multiple>
                             </div>
-
                         </div>
                     </div>
 
@@ -205,6 +208,10 @@
                 </div>
                 <!-- end card -->
                 <div class="text-end mb-4">
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteOrder1">
+                        Eliminar Log
+                    </button>
                     <a href="{{route('logs.index')}}" class="btn btn-secondary w-sm">Cancel</a>
                     <button type="submit" class="btn btn-success w-sm">Editar</button>
                 </div>
@@ -214,7 +221,72 @@
             <!-- end row -->
         </div>
         </div>
+
     </form>
+    <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <div class="modal-body p-5 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                        <div class="mt-4 text-center">
+                            <h4>Estas Seguro de Borrar Esta Tarea ?</h4>
+                            <p class="text-muted fs-14 mb-4">Borrar Esta Tarea podra Remover toda esa informacion de la Base de Datos.</p>
+                    <div class="hstack gap-2 justify-content-center remove">
+                        <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
+                        <!-- Formulario de eliminación -->
+                        <form action="{{ route('logs.remove-file', ['id' => $log->id]) }}" method="POST" id="deleteFileForm">
+                            @csrf
+                            <input type="hidden" name="file_to_remove" id="fileToRemove">
+                            <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade flip" id="deleteOrder1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <div class="modal-body p-5 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                        <div class="mt-4 text-center">
+                            <h4>Estas Seguro de Borrar Esta Tarea ?</h4>
+                            <p class="text-muted fs-14 mb-4">Borrar Esta Tarea podra Remover toda esa informacion de la Base de Datos.</p>
+                    <div class="hstack gap-2 justify-content-center remove">
+                        <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
+                        <!-- Formulario de eliminación -->
+                        <form action="{{ route('logs.destroy', $log->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Eliminar Log</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteModal = document.getElementById('deleteOrder');
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                // Botón que dispara el modal
+                var button = event.relatedTarget;
+                // Extrae la información del atributo data-file
+                var file = button.getAttribute('data-file');
+                // Actualiza el formulario con la información del archivo
+                var input = deleteModal.querySelector('#fileToRemove');
+                input.value = file;
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var element = document.getElementById('multiselect-basic');

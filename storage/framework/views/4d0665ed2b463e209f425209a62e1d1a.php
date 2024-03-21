@@ -240,15 +240,19 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="card-body">
                             
-                            <?php if(!empty($existingFiles)): ?>
+                            <?php if(!empty($existingFiles) && count($existingFiles) > 0 && $existingFiles[0] != ''): ?>
                                 <ul>
                                     <?php $__currentLoopData = $existingFiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $file): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($file != ''): ?> 
                                         <li>
                                             <?php echo e($file); ?> -
                                             <a href="<?php echo e(asset('log/archivo/' . $file)); ?>" target="_blank">Ver</a>
-                                            
-                                           
+                                            <!-- Botón que dispara el modal -->
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteOrder" data-file="<?php echo e($file); ?>">
+                                                Eliminar
+                                            </button>
                                         </li>
+                                        <?php endif; ?>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             <?php else: ?>
@@ -260,7 +264,6 @@ unset($__errorArgs, $__bag); ?>
                                 <label for="archivo" class="form-label">Agregar más archivos</label>
                                 <input class="form-control" type="file" name="archivo[]" id="archivo" multiple>
                             </div>
-
                         </div>
                     </div>
 
@@ -268,6 +271,10 @@ unset($__errorArgs, $__bag); ?>
                 </div>
                 <!-- end card -->
                 <div class="text-end mb-4">
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteOrder1">
+                        Eliminar Log
+                    </button>
                     <a href="<?php echo e(route('logs.index')); ?>" class="btn btn-secondary w-sm">Cancel</a>
                     <button type="submit" class="btn btn-success w-sm">Editar</button>
                 </div>
@@ -277,7 +284,72 @@ unset($__errorArgs, $__bag); ?>
             <!-- end row -->
         </div>
         </div>
+
     </form>
+    <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <div class="modal-body p-5 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                        <div class="mt-4 text-center">
+                            <h4>Estas Seguro de Borrar Esta Tarea ?</h4>
+                            <p class="text-muted fs-14 mb-4">Borrar Esta Tarea podra Remover toda esa informacion de la Base de Datos.</p>
+                    <div class="hstack gap-2 justify-content-center remove">
+                        <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
+                        <!-- Formulario de eliminación -->
+                        <form action="<?php echo e(route('logs.remove-file', ['id' => $log->id])); ?>" method="POST" id="deleteFileForm">
+                            <?php echo csrf_field(); ?>
+                            <input type="hidden" name="file_to_remove" id="fileToRemove">
+                            <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade flip" id="deleteOrder1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body p-5 text-center">
+                    <div class="modal-body p-5 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px"></lord-icon>
+                        <div class="mt-4 text-center">
+                            <h4>Estas Seguro de Borrar Esta Tarea ?</h4>
+                            <p class="text-muted fs-14 mb-4">Borrar Esta Tarea podra Remover toda esa informacion de la Base de Datos.</p>
+                    <div class="hstack gap-2 justify-content-center remove">
+                        <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
+                        <!-- Formulario de eliminación -->
+                        <form action="<?php echo e(route('logs.destroy', $log->id)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
+                            <button type="submit" class="btn btn-danger">Eliminar Log</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteModal = document.getElementById('deleteOrder');
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                // Botón que dispara el modal
+                var button = event.relatedTarget;
+                // Extrae la información del atributo data-file
+                var file = button.getAttribute('data-file');
+                // Actualiza el formulario con la información del archivo
+                var input = deleteModal.querySelector('#fileToRemove');
+                input.value = file;
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var element = document.getElementById('multiselect-basic');

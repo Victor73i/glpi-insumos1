@@ -24,6 +24,9 @@ use App\Http\Controllers\EquipoItController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('/logs/{id}/remove-file', [App\Http\Controllers\LogController::class, 'removeFile'])->name('logs.remove-file');
+Route::post('/documentacions/{id}/remove-file', [App\Http\Controllers\DocumentacionController::class, 'removeFile'])->name('documentacions.remove-file');
+
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
 Route::resource('/estado_logs',EstadoLogController::class);
@@ -36,7 +39,6 @@ Route::resource('/reporte_insumo_fungibles', ReporteInsumoFungibleController::cl
 Route::resource('/reporte_insumo_consumibles', ReporteInsumoConsumibleController::class);
 Route::resource('/tareas', TareaController::class);
 Route::resource('/equipo_its', EquipoItController::class)->only(['index', 'show']);
-Route::delete('/archivo/{id}', [LogController::class, 'create'])->name('archivos.destroy');
 
 
 Auth::routes();

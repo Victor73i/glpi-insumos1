@@ -17,6 +17,7 @@ class DocumentacionController extends Controller
 {
     //index
     public function index() {
+
         $id_glpi_users = GlpiUsers::all();
         $id_estado_documentacion = EstadoDocumentacion::all();
         $id_categoria_documentacion = CategoriaDocumentacion::all();
@@ -49,18 +50,23 @@ class DocumentacionController extends Controller
     }
     //edit
     public function edit(String $id){
+        $documentacion = Documentacion::findOrFail($id);
+        $existingFiles = explode(',', $documentacion->archivo ?? '');
         $id_glpi_users = GlpiUsers::all();
         $id_estado_documentacion = EstadoDocumentacion::all();
-        $id_tipo_documentacion = EstadoDocumentacion::all();
+        $id_tipo_documentacion = TipoDocumentacion::all();
         $id_categoria_documentacion = CategoriaDocumentacion::all();
+
         return view('documentacion.edit', [
-            'documentacion'=>\App\Models\Documentacion::findOrFail($id),
+            'documentacion' => $documentacion,
+            'existingFiles' => $existingFiles, // Asegúrate de que esta variable se pasa correctamente a la vista
             'id_glpi_users' => $id_glpi_users,
             'id_estado_documentacion' => $id_estado_documentacion,
             'id_tipo_documentacion' => $id_tipo_documentacion,
             'id_categoria_documentacion' => $id_categoria_documentacion,
         ]);
     }
+
     //show
     public  function show(Documentacion $documentacion){
 
@@ -131,6 +137,31 @@ class DocumentacionController extends Controller
             ->with('success', 'Documentacion Borrado Satisfactoriamente');
     }
     //toggle-complete
+    public function removeFile(Request $request, $id) {
+        $documentacion = Documentacion::findOrFail($id);
+
+        // Separar la cadena de archivos en un array
+        $existingFiles = explode(',', $documentacion->archivo ?? '');
+
+        // Eliminar el archivo del array si existe
+        $fileToRemove = $request->input('file_to_remove');
+        if (($key = array_search($fileToRemove, $existingFiles)) !== false) {
+            // Eliminar el archivo del servidor si existe
+            $filePath = public_path('documentacion/archivo/' . $fileToRemove);
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+            // Eliminar el archivo del array y reindexar
+            array_splice($existingFiles, $key, 1);
+        }
+
+        // Filtrar el array para remover entradas vacías y convertirlo a cadena
+        $existingFiles = array_filter($existingFiles, function($file) { return trim($file) !== ''; });
+        $documentacion->archivo = implode(',', $existingFiles);
+        $documentacion->save();
+
+        return back()->with('success', 'Documentacion eliminado correctamente.');
+    }
     public function toggle(Documentacion $documentacion){
         $documentacion->toggleComplete();
         if ($documentacion->completado) {
@@ -140,4 +171,5 @@ class DocumentacionController extends Controller
             // Si la tarea no está completada, puedes elegir mantener al usuario en la misma página
             return back()->with('success', 'Documentacion Marcado como no completado.');
         }}
+
 }

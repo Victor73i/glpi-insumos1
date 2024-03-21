@@ -150,12 +150,7 @@
 
 <br><br>
                                                 <div>
-                                                <form action="{{route('logs.destroy',['log' =>$log->id])}}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-soft-danger w-100" id="btn-new-event"><i
-                                                            class="mdi mdi-plus"></i> Borrar</button>
-                                                </form>
+
 </div>
                                             </div>
                                         </div>

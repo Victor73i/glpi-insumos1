@@ -184,36 +184,47 @@ class LogController extends Controller
         return redirect()->route('logs.show', [$log->id])
             ->with('success', 'Log actualizado correctamente.');
     }
+    public function removeFile(Request $request, $id) {
+        $log = Log::findOrFail($id);
 
-    public function destroyFile($id, Request $request)
-    {
-        $log = Log::findOrFail($id); // Obtén el log por su id
-        $existingFiles = explode(',', $log->archivo); // Convierte la cadena en un array
-        $fileToDelete = $request->input('file'); // El nombre del archivo a eliminar
+        // Separar la cadena de archivos en un array
+        $existingFiles = explode(',', $log->archivo ?? '');
 
-        // Verifica si el archivo existe en el array
-        if (($key = array_search($fileToDelete, $existingFiles)) !== false) {
-            unset($existingFiles[$key]); // Elimina el archivo del array
-
-            // Elimina el archivo del sistema de archivos si existe
-            $file_path = public_path('log/archivo/' . $fileToDelete);
-            if (file_exists($file_path)) {
-                @unlink($file_path);
+        // Eliminar el archivo del array si existe
+        $fileToRemove = $request->input('file_to_remove');
+        if (($key = array_search($fileToRemove, $existingFiles)) !== false) {
+            // Eliminar el archivo del servidor si existe
+            $filePath = public_path('log/archivo/' . $fileToRemove);
+            if (file_exists($filePath)) {
+                @unlink($filePath);
             }
-
-            // Actualiza la lista de archivos en el modelo y guarda
-            $log->archivo = implode(',', $existingFiles);
-            $log->save();
+            // Eliminar el archivo del array y reindexar
+            array_splice($existingFiles, $key, 1);
         }
+
+        // Filtrar el array para remover entradas vacías y convertirlo a cadena
+        $existingFiles = array_filter($existingFiles, function($file) { return trim($file) !== ''; });
+        $log->archivo = implode(',', $existingFiles);
+        $log->save();
 
         return back()->with('success', 'Archivo eliminado correctamente.');
     }
+
+
+
+
+
     //delete
     public function destroy(string $id){
         $log = Log::findOrFail($id);
+
+        // Primero, elimina todas las referencias de este log en la tabla log_equipo_it
+        LogEquipoIt::where('id_log', $log->id)->delete();
+
+        // Ahora puedes eliminar el log de manera segura
         $log->delete();
-        return redirect()-> route('logs.index')
-            ->with('success', 'Log Deleted Successfully');
+
+        return redirect()->route('logs.index')->with('success', 'Log Deleted Successfully');
     }
     //toggle-complete
     public function toggle(Log $log){

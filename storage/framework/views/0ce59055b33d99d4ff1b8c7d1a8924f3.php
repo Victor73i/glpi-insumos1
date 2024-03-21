@@ -93,7 +93,25 @@
                                     <td><?php echo e($documentacion->tipo_documentacion->nombre); ?></td>
                                     <td><?php echo e($documentacion->categoria_documentacion->nombre); ?></td>
                                     <td><?php echo e($documentacion->glpi_users->name); ?></td>
-                                    <td><?php echo e($documentacion->glpi_users->name); ?></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton<?php echo e($documentacion->id); ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Acciones
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<?php echo e($documentacion->id); ?>">
+                                                <li><a class="dropdown-item" href="<?php echo e(route('documentacions.show', ['documentacion'=>$documentacion->id])); ?>"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> Ver</a></li>
+                                                <li><a class="dropdown-item" href="<?php echo e(route('documentacions.edit', [$documentacion->id])); ?>"><i
+                                                        class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                    Editar</a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeProjectModal" data-log-id="<?php echo e($documentacion->id); ?>">
+                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Eliminar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div></td>
 
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -121,6 +139,31 @@
     </div>
     <!-- End Create Project Modal -->
 
+
+    <script>
+        $(document).ready(function() {
+            $('#editModal').on('hidden.bs.modal', function () {
+                window.history.pushState({}, document.title, window.location.pathname);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Limpia la URL después de cerrar el modal de edición
+            $('#editModal').on('hidden.bs.modal', function () {
+                window.history.pushState({}, document.title, window.location.pathname);
+            });
+
+            // Limpia la URL después de cerrar el modal de creación
+            $('#showModal').on('hidden.bs.modal', function () {
+                window.history.pushState({}, document.title, window.location.pathname);
+            });
+
+            // Opcional: Limpia la URL después de una operación de creación exitosa
+            // Esto dependerá de cómo manejes la respuesta de la creación
+            // Si recargas la página o rediriges al usuario, puedes incluir la lógica aquí
+        });
+    </script>
 
 
 
@@ -305,30 +348,37 @@ unset($__errorArgs, $__bag); ?>
     <!--end create taks-->
 <!-- Modal -->
 
-
-    <!-- removeFileItemModal -->
-    <div id="removeTaskItemModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+    <div id="removeProjectModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-removetodomodal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            id="close-modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mt-2 text-center">
-                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                        <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                                   colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                            <h4>Are you sure ?</h4>
-                            <p class="text-muted mx-4 mb-0">Are you sure you want to remove this task ?</p>
+                            <h4>Estas Seguro ?</h4>
+                            <p class="text-muted mx-4 mb-0">Estas Seguro que Quieres Eliminar Esta Documentacion ?</p>
                         </div>
-                    </div>
-                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger" id="remove-todoitem">Yes, Delete It!</button>
+
+
+                    </div>                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
+                        <!-- Nota: La acción del formulario se establecerá dinámicamente -->
+                        <<form action="<?php echo e(route('documentacions.destroy', $documentacion->id)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
+                            <button type="submit" class="btn w-sm btn-danger">Si, Borralo!</button>
+                        </form>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    <!-- removeFileItemModal -->
+
     <!--end delete modal -->
     <div class="modal fade zoomIn" id="createTipoModal" tabindex="-1" aria-labelledby="createEstadoModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

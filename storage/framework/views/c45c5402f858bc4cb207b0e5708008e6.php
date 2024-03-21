@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title', $log->titulo); ?>
 <?php echo app('translator')->get('translation.overview'); ?>
 <?php $__env->startSection('content'); ?>
@@ -131,12 +132,7 @@
 
 <br><br>
                                                 <div>
-                                                <form action="<?php echo e(route('logs.destroy',['log' =>$log->id])); ?>" method="POST">
-                                                    <?php echo csrf_field(); ?>
-                                                    <?php echo method_field('DELETE'); ?>
-                                                    <button class="btn btn-soft-danger w-100" id="btn-new-event"><i
-                                                            class="mdi mdi-plus"></i> Borrar</button>
-                                                </form>
+
 </div>
                                             </div>
                                         </div>

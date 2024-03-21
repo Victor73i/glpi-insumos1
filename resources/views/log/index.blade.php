@@ -76,10 +76,9 @@
                                                 Editar</a>
                                             <div class="dropdown-divider"></div>
 
-                                            <a class="dropdown-item"  data-bs-toggle="modal"
-                                               data-bs-target="#removeProjectModal"><i
-                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                Remove</a>
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#removeProjectModal" data-log-id="{{ $log->id }}">
+                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Remove
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -89,10 +88,8 @@
                             {{-- Aquí iría el contenido de la tarjeta, como nombre del proyecto, estado, etc. --}}
                             <h5 class="mb-1 fs-15">
 
-                                <a href="{{route('logs.show', ['log'=>$log])}}" class="text-dark">{{ $log->titulo }}</a> -
-                                <a href="{{route('logs.show', ['log'=>$log])}}" class="text-dark">{{ $log->observaciones }}</a>
+                                <a href="{{route('logs.show', ['log'=>$log])}}" class="text-dark">{{ $log->titulo }}</a>
                             </h5>
-                            <p class="text-muted text-truncate-two-lines mb-3"> {{ $log->archivo }}</p>
                             {{-- Fecha de asignación y aproximada (asegúrate de formatear las fechas como desees) --}}
                             <div class="text-muted">
                                 <i class="ri-calendar-event-fill me-1 align-bottom"></i>
@@ -188,21 +185,19 @@
                         </div>
 
 
-                    </div>
-                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                        <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
-                        <form action="{{route('logs.destroy',['log' =>$log->id])}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn w-sm btn-danger"  id="remove-project">Si, Borralo!</button>
-
-                        </form>
-                    </div>
+                    </div>                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
+                    <!-- Nota: La acción del formulario se establecerá dinámicamente -->
+                    <form id="deleteForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn w-sm btn-danger">Si, Borralo!</button>
+                    </form>
                 </div>
+            </div>
+        </div>
+    </div>
 
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
     <div class="modal fade" id="imagenZoomModal" tabindex="-1" aria-labelledby="imagenZoomModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
@@ -223,7 +218,22 @@
             // Puedes agregar aquí más lógica si necesitas
         }
     </script>
-@endsection
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var removeProjectModal = document.getElementById('removeProjectModal');
+                removeProjectModal.addEventListener('show.bs.modal', function (event) {
+                    // Botón que dispara el modal
+                    var button = event.relatedTarget;
+                    // Extrae el ID del log
+                    var logId = button.getAttribute('data-log-id');
+                    // Encuentra el formulario dentro del modal y actualiza su acción
+                    var form = document.getElementById('deleteForm');
+                    form.action = `/logs/${logId}`;
+                });
+            });
+        </script>
+
+        @endsection
 @section('script')
     <script src="{{ URL::asset('build/js/pages/project-list.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
