@@ -58,18 +58,50 @@
                             <div class="col-lg-4">
 
                                 <div class="mb-3 mb-lg-0">
-                                    <label  class="form-label" for="id_estado_log">Estado</label>
+                                    <label  class="form-label" for="id_estado_documentacion">Estado</label>
                                     <select class="form-select" data-choices data-choices-search-true
                                             name="id_estado_documentacion" id="id_estado_documentacion">
 
                                         @class(['border-red-500' => $errors->has('id_estado_documentacion')])
                                         >
-                                        @foreach ($id_estado_documentacions as $id_estado_documentacion)
-                                            <option value="{{$id_estado_documentacion->id}}" {{ $documentacion->id_estado_documentacion == $id_estado_documentacion->id ? 'selected' : '' }}>
-                                                {{$id_estado_documentacion->id}}: {{$id_estado_documentacion->nombre}}</option>
+                                        @foreach ($id_estado_documentacion as $id_estado_documentacions)
+                                            <option value="{{$id_estado_documentacions->id}}" {{ $documentacion->id_estado_documentacion == $id_estado_documentacions->id ? 'selected' : '' }}>
+                                                {{$id_estado_documentacions->id}}: {{$id_estado_documentacions->nombre}}</option>
                                         @endforeach
                                     </select>
                                     @error('id_estado_documentacion')
+                                    <p class="error">{{$message}}</p>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 mb-lg-0">
+                                    <label  class="form-label" for="id_tipo_documentacion">Tipo</label>
+                                    <select class="form-select" data-choices data-choices-search-true
+                                            name="id_tipo_documentacion" id="id_tipo_documentacion">
+
+                                        @class(['border-red-500' => $errors->has('id_tipo_documentacion')])
+                                        >
+                                        @foreach ($id_tipo_documentacion as $id_tipo_documentacions)
+                                            <option value="{{$id_tipo_documentacions->id}}" {{ $documentacion->id_tipo_documentacion == $id_tipo_documentacions->id ? 'selected' : '' }}>
+                                                {{$id_tipo_documentacions->id}}: {{$id_tipo_documentacions->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_tipo_documentacion')
+                                    <p class="error">{{$message}}</p>
+                                    @enderror
+                                </div>
+                                <div class="mb-3 mb-lg-0">
+                                    <label  class="form-label" for="id_categoria_documentacion">Categoria</label>
+                                    <select class="form-select" data-choices data-choices-search-true
+                                            name="id_categoria_documentacion" id="id_categoria_documentacion">
+
+                                        @class(['border-red-500' => $errors->has('id_categoria_documentacion')])
+                                        >
+                                        @foreach ($id_categoria_documentacion as $id_categoria_documentacions)
+                                            <option value="{{$id_categoria_documentacions->id}}" {{ $documentacion->id_categoria_documentacion == $id_categoria_documentacions->id ? 'selected' : '' }}>
+                                                {{$id_categoria_documentacions->id}}: {{$id_categoria_documentacions->nombre}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_categoria_documentacion')
                                     <p class="error">{{$message}}</p>
                                     @enderror
                                 </div>
@@ -145,7 +177,7 @@
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteOrder1">
                         Eliminar Log
                     </button>
-                    <a href="{{route('logs.index')}}" class="btn btn-secondary w-sm">Cancel</a>
+                    <a href="{{route('documentacions.index')}}" class="btn btn-secondary w-sm">Cancel</a>
                     <button type="submit" class="btn btn-success w-sm">Editar</button>
                 </div>
             </div>
@@ -168,7 +200,7 @@
                             <div class="hstack gap-2 justify-content-center remove">
                                 <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
                                 <!-- Formulario de eliminación -->
-                                <form action="{{ route('logs.remove-file', ['id' => $log->id]) }}" method="POST" id="deleteFileForm">
+                                <form action="{{ route('documentacions.remove-file', ['id' => $documentacion->id]) }}" method="POST" id="deleteFileForm">
                                     @csrf
                                     <input type="hidden" name="file_to_remove" id="fileToRemove">
                                     <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
@@ -193,10 +225,10 @@
                             <div class="hstack gap-2 justify-content-center remove">
                                 <button class="btn btn-link btn-ghost-success fw-medium text-decoration-none" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</button>
                                 <!-- Formulario de eliminación -->
-                                <form action="{{ route('logs.destroy', $log->id) }}" method="POST">
+                                <form action="{{ route('documentacions.destroy', $documentacion->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Eliminar Log</button>
+                                    <button type="submit" class="btn btn-danger">Eliminar Documentacion</button>
                                 </form>
                             </div>
                         </div>

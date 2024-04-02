@@ -34,6 +34,9 @@
         .error{
           @apply text-red-500 text-sm
         }
+        .card-body {
+            padding-right: 0 !important; /* Elimina el padding a la derecha */
+        }
     </style>
     
     <?php echo $__env->yieldContent('styles'); ?>

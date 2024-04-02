@@ -1,5 +1,8 @@
 @yield('css')
 <!-- Layout config Js -->
+<style>
+
+</style>
 <script src="{{ URL::asset('build/js/layout.js') }}"></script>
 <!-- Bootstrap Css -->
 <link href="{{ URL::asset('build/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />

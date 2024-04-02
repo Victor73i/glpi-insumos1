@@ -66,7 +66,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-apps-2-line"></i> <span>@lang('translation.apps')</span>
+                        <i class="ri-apps-2-line"></i> <span>@lang('Aplicaciones')</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
@@ -103,17 +103,19 @@
                                             <a href="{{route('tareas.index')}}" class="nav-link">@lang('Lista de Tarea')</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a href="{{route('tareas.create')}}" class="nav-link">@lang('Crear Tarea')</a>
+
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a href="#sidebarCRM" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCRM">@lang('translation.crm')
+                                <a href="#sidebarCRM" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCRM">@lang('Equipo IT')
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarCRM">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-crm-contacts" class="nav-link">@lang('translation.contacts')</a>
+                                            <a href="apps-crm-contacts" class="nav-link">@lang('Lista de Equipo It')</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="apps-crm-companies" class="nav-link">@lang('translation.companies')</a>
@@ -153,23 +155,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="#sidebarInvoices" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarInvoices">@lang('translation.invoices')
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarInvoices">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="apps-invoices-list" class="nav-link">@lang('translation.list-view')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-invoices-details" class="nav-link">@lang('translation.details')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-invoices-create" class="nav-link">@lang('translation.create-invoice')</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+
                             <li class="nav-item">
                                 <a href="#sidebarTickets" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTickets">@lang('translation.supprt-tickets')
                                 </a>
@@ -184,42 +170,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="#sidebarnft" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarnft">
-                                    @lang('translation.nft-marketplace')
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarnft">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="apps-nft-marketplace" class="nav-link"> @lang('translation.marketplace') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-explore" class="nav-link"> @lang('translation.explore-now') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-auction" class="nav-link"> @lang('translation.live-auction') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-item-details" class="nav-link"> @lang('translation.item-details') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-collections" class="nav-link"> @lang('translation.collections') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-creators" class="nav-link"> @lang('translation.creators') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-ranking" class="nav-link"> @lang('translation.ranking') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-wallet" class="nav-link"> @lang('translation.wallet-connect') </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-nft-create" class="nav-link"> @lang('translation.create-nft') </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+
                             <li class="nav-item">
                                 <a href="apps-file-manager" class="nav-link"> <span>@lang('Archivos')</span></a>
                             </li>

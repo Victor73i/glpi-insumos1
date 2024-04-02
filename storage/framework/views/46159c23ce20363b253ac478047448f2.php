@@ -1,5 +1,8 @@
 <?php echo $__env->yieldContent('css'); ?>
 <!-- Layout config Js -->
+<style>
+
+</style>
 <script src="<?php echo e(URL::asset('build/js/layout.js')); ?>"></script>
 <!-- Bootstrap Css -->
 <link href="<?php echo e(URL::asset('build/css/bootstrap.min.css')); ?>" id="bootstrap-style" rel="stylesheet" type="text/css" />

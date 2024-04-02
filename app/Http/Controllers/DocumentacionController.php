@@ -103,31 +103,26 @@ class DocumentacionController extends Controller
 
 
     //UPDATED
-    public function update(DocumentacionRequest $request, string $id){
-
+    public function update(DocumentacionRequest $request, string $id)
+    {
+        $documentacion = Documentacion::findOrFail($id);
         $validatedData = $request->validated();
-        $filenames = [];
 
         if ($request->hasFile('archivo')) {
-            $files = $request->file('archivo');
+            $filenames = explode(',', $documentacion->archivo ?? ''); // Obtiene los archivos existentes
 
-            foreach ($files as $file) {
+            foreach ($request->file('archivo') as $file) {
                 $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('documentacion/archivo'), $filename);
                 $filenames[] = $filename;
             }
 
-            // Guarda los nombres de archivo como una cadena separada por comas o como un array serializado
-            $validatedData['archivo'] = implode(',', $filenames); // Como cadena separada por comas
-            // O puedes guardar como JSON
-            // $validatedData['archivo'] = json_encode($filenames);
+            $validatedData['archivo'] = implode(',', $filenames); // Actualiza el listado de archivos
         }
 
+        $documentacion->update($validatedData);
 
-        $documentacion = Documentacion::findOrFail($id);
-        $documentacion->update($request->validated());
-        return redirect()-> route('documentacions.index')
-            ->with('success', 'Documentacion Actualizado Satisfactoriamente!');
+        return redirect()->route('documentacions.index')->with('success', 'Documentación actualizada satisfactoriamente.');
     }
     //delete
     public function destroy(string $id){

@@ -9,7 +9,9 @@
 <?php $__env->startSection('content'); ?>
 
     <div class="chat-wrapper d-lg-flex gap-1 mx-n4 mt-n4 p-1">
+
         <div class="file-manager-sidebar">
+
             <div class="p-4 d-flex flex-column h-100">
                 <div class="mb-3">
                     <button class="btn btn-success w-100" data-bs-target="#createEstadoModal" data-bs-toggle="modal"><i class="ri-add-line align-bottom"></i> Agregar Estado</button>
@@ -30,6 +32,8 @@
             </div>
         </div>
         <!--end side content-->
+        <div class="container-fluid">
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -43,6 +47,8 @@
                     </div>
 
                     <div class="card-body">
+                        <div class="table-responsive">
+
                         <table id="buttons-datatables" class="display table table-bordered" style="width:100%">
                             <thead>
                             <tr>
@@ -116,9 +122,11 @@
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-@lang('translation.list-view')
+@lang('Lista Equipo IT')
 @endsection
 @section('css')
 <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -9,10 +9,10 @@
 @section('content')
 @component('components.breadcrumb')
 @slot('li_1')
-invoices
+Equipo IT
 @endslot
 @slot('title')
-list view
+Lista Equipo IT
 @endslot
 @endcomponent
 <div class="row">
@@ -22,7 +22,7 @@ list view
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-uppercase fw-medium text-muted mb-0">Invoices Sent</p>
+                        <p class="text-uppercase fw-medium text-muted mb-0">Impresoras</p>
                     </div>
                     <div class="flex-shrink-0">
                         <h5 class="text-success fs-14 mb-0">
@@ -34,7 +34,7 @@ list view
                     <div>
                         <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="559.25">0</span>k</h4>
                         <span class="badge bg-warning me-1">2,258</span> <span class="text-muted">
-                            Invoices sent</span>
+                            Impresoras Registradas</span>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
                         <span class="avatar-title bg-light rounded fs-3">
@@ -52,7 +52,7 @@ list view
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-uppercase fw-medium text-muted mb-0">Paid Invoices</p>
+                        <p class="text-uppercase fw-medium text-muted mb-0">Computadoras</p>
                     </div>
                     <div class="flex-shrink-0">
                         <h5 class="text-danger fs-14 mb-0">
@@ -64,7 +64,7 @@ list view
                     <div>
                         <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="409.66">0</span>k</h4>
                         <span class="badge bg-warning me-1">1,958</span> <span class="text-muted">
-                            Paid by clients</span>
+                            Computadoras Registradas</span>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
                         <span class="avatar-title bg-light rounded fs-3">
@@ -82,7 +82,7 @@ list view
             <div class="card-body">
                 <div class="d-flex align-items-center">
                     <div class="flex-grow-1">
-                        <p class="text-uppercase fw-medium text-muted mb-0">Unpaid Invoices</p>
+                        <p class="text-uppercase fw-medium text-muted mb-0">UPS</p>
                     </div>
                     <div class="flex-shrink-0">
                         <h5 class="text-danger fs-14 mb-0">
@@ -94,7 +94,7 @@ list view
                     <div>
                         <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="136.98">0</span>k</h4>
                         <span class="badge bg-warning me-1">338</span> <span class="text-muted">
-                            Unpaid by clients</span>
+                            UPS Registrados</span>
                     </div>
                     <div class="avatar-sm flex-shrink-0">
                         <span class="avatar-title bg-light rounded fs-3">
@@ -106,35 +106,7 @@ list view
         </div><!-- end card -->
     </div><!-- end col -->
 
-    <div class="col-xl-3 col-md-6">
-        <!-- card -->
-        <div class="card card-animate">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1">
-                        <p class="text-uppercase fw-medium text-muted mb-0">Cancelled Invoices</p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <h5 class="text-success fs-14 mb-0">
-                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +7.55 %
-                        </h5>
-                    </div>
-                </div>
-                <div class="d-flex align-items-end justify-content-between mt-4">
-                    <div>
-                        <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="84.20">0</span>k</h4>
-                        <span class="badge bg-warning me-1">502</span> <span class="text-muted">
-                            Cancelled by clients</span>
-                    </div>
-                    <div class="avatar-sm flex-shrink-0">
-                        <span class="avatar-title bg-light rounded fs-3">
-                            <i data-feather="x-octagon" class="text-success icon-dual-success"></i>
-                        </span>
-                    </div>
-                </div>
-            </div><!-- end card body -->
-        </div><!-- end card -->
-    </div><!-- end col -->
+
 </div> <!-- end row-->
 
 <div class="row">
@@ -142,13 +114,8 @@ list view
         <div class="card" id="invoiceList">
             <div class="card-header border-0">
                 <div class="d-flex align-items-center">
-                    <h5 class="card-title mb-0 flex-grow-1">Invoices</h5>
-                    <div class="flex-shrink-0">
-                        <div class="d-flex gap-2 flex-wrap">
-                            <button class="btn btn-primary" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                            <a href="apps-invoices-create" class="btn btn-danger"><i class="ri-add-line align-bottom me-1"></i> Create Invoice</a>
-                        </div>
-                    </div>
+                    <h5 class="card-title mb-0 flex-grow-1">EQUIPO IT</h5>
+
                 </div>
             </div>
             <div class="card-body bg-soft-light border border-dashed border-start-0 border-end-0">
@@ -156,7 +123,7 @@ list view
                     <div class="row g-3">
                         <div class="col-xxl-5 col-sm-12">
                             <div class="search-box">
-                                <input type="text" class="form-control search bg-light border-light" placeholder="Search for customer, email, country, status or something...">
+                                <input type="text" class="form-control search bg-light border-light" placeholder="Buscar...">
                                 <i class="ri-search-line search-icon"></i>
                             </div>
                         </div>
@@ -168,12 +135,10 @@ list view
                         <div class="col-xxl-3 col-sm-4">
                             <div class="input-light">
                                 <select class="form-control" data-choices data-choices-search-false name="choices-single-default" id="idStatus">
-                                    <option value="">Status</option>
-                                    <option value="all" selected>All</option>
-                                    <option value="Unpaid">Unpaid</option>
-                                    <option value="Paid">Paid</option>
-                                    <option value="Cancel">Cancel</option>
-                                    <option value="Refund">Refund</option>
+                                    <option value="all" selected>Todo</option>
+                                    <option value="impreo">Impresora</option>
+                                    <option value="Paid">Computadora</option>
+                                    <option value="Cancel">UPS</option>
                                 </select>
                             </div>
                         </div>
@@ -200,20 +165,15 @@ list view
                                             <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                         </div>
                                     </th>
-                                    <th class="sort text-uppercase" data-sort="invoice_id">ID</th>
-                                    <th class="sort text-uppercase" data-sort="customer_name">
-                                        Customer</th>
-                                    <th class="sort text-uppercase" data-sort="email">Email</th>
-                                    <th class="sort text-uppercase" data-sort="country">Country</th>
-                                    <th class="sort text-uppercase" data-sort="date">Date</th>
-                                    <th class="sort text-uppercase" data-sort="invoice_amount">
-                                        Amount</th>
-                                    <th class="sort text-uppercase" data-sort="status">Payment
-                                        Status</th>
+                                    <th class="sort text-uppercase" data-sort="ID">ID</th>
+                                    <th class="sort text-uppercase" data-sort="nombre_equipo_it">
+                                        Nombre</th>
+                                    <th class="sort text-uppercase" data-sort="tipo">Tipo</th>
+
                                     <th class="sort text-uppercase" data-sort="action">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="list form-check-all" id="invoice-list-data">
+                            <tbody class="list form-check-all" id="">
 
                             </tbody>
                         </table>
@@ -241,30 +201,7 @@ list view
                     </div>
                 </div>
 
-                <!-- Modal -->
-                <div class="modal fade flip" id="deleteOrder" tabindex="-1" aria-labelledby="deleteOrderLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-body p-5 text-center">
-                                <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop" colors="primary:#405189,secondary:#f06548" style="width:90px;height:90px">
-                                </lord-icon>
-                                <div class="mt-4 text-center">
-                                    <h4>You are about to delete a order ?</h4>
-                                    <p class="text-muted fs-15 mb-4">Deleting your order will remove
-                                        all of
-                                        your information from our database.</p>
-                                    <div class="hstack gap-2 justify-content-center remove">
-                                        <button class="btn btn-link link-success fw-medium text-decoration-none" data-bs-dismiss="modal" id="deleteRecord-close"><i class="ri-close-line me-1 align-middle"></i>
-                                            Close</button>
-                                        <button class="btn btn-danger" id="delete-record">Yes,
-                                            Delete It</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--end modal -->
+
             </div>
         </div>
 

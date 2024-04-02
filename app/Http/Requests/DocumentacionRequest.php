@@ -30,12 +30,14 @@ class DocumentacionRequest extends FormRequest
             'id_glpi_users' => 'required',
             'id_categoria_documentacion' => 'required',
         ];
+        // Ajusta las reglas específicas para la creación o la actualización
         if ($this->isMethod('post')) { // Si es una creación
             $rules['archivo'] = 'required|file'; // Aquí puedes ajustar según necesites validar el archivo
         } elseif ($this->isMethod('put') || $this->isMethod('patch')) { // Si es una actualización
             // Para la actualización, el archivo no es obligatorio, pero si se envía, se valida
             $rules['archivo'] = 'nullable|file';
         }
+
         return $rules;
     }
 }
