@@ -2,8 +2,8 @@
 @section('title') @lang('translation.details') @endsection
 @section('content')
 @component('components.breadcrumb')
-@slot('li_1') invoices @endslot
-@slot('title') Invoice Details @endslot
+@slot('li_1') EQUIPO IT @endslot
+@slot('title') DETALLE EQUIPO IT @endslot
 @endcomponent
 
 <div class="row justify-content-center">
@@ -14,8 +14,7 @@
                     <div class="card-header border-bottom-dashed p-4">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <img src="{{ URL::asset('build/images/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="17">
-                                <img src="{{ URL::asset('build/images/logo-light.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
+                                <img src="{{ URL::asset('build/images/empornac.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="100">
                                 <div class="mt-sm-5 mt-4">
                                     <h6 class="text-muted text-uppercase fw-semibold">Address</h6>
                                     <p class="text-muted mb-1" id="address-details">California, United States</p>
@@ -190,10 +189,7 @@
                         <div class="mt-4">
                             <div class="alert alert-info">
                                 <p class="mb-0"><span class="fw-semibold">NOTES:</span>
-                                    <span id="note">All accounts are to be paid within 7 days from receipt of invoice. To be paid by cheque or
-                                        credit card or direct payment online. If account is not paid within 7
-                                        days the credits details supplied as confirmation of work undertaken
-                                        will be charged the agreed quoted fee noted above.
+                                    <span id="note">Tods los EQUIPOS IT que apareceran solo podran ser visualizados y mostrados a detalle de los Equipos Respectivos que tiene registrados actualmente el GLPI
                                     </span>
                                 </p>
                             </div>

@@ -115,43 +115,9 @@
                                 <div class="collapse menu-dropdown" id="sidebarCRM">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-crm-contacts" class="nav-link">@lang('Lista de Equipo It')</a>
+                                            <a href="{{route('equipo_its.index')}}" class="nav-link">@lang('Lista de Equipo It')</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-companies" class="nav-link">@lang('translation.companies')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-deals" class="nav-link">@lang('translation.deals')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-leads" class="nav-link">@lang('translation.leads')</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarCrypto" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrypto">@lang('translation.crypto')
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarCrypto">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-transactions" class="nav-link">@lang('translation.transactions')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-buy-sell" class="nav-link">@lang('translation.buy-sell')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-orders" class="nav-link">@lang('translation.orders')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-wallet" class="nav-link">@lang('translation.my-wallet')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-ico" class="nav-link">@lang('translation.ico-list')</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-kyc" class="nav-link">@lang('translation.kyc-application')</a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </li>
@@ -175,8 +141,20 @@
                                 <a href="apps-file-manager" class="nav-link"> <span>@lang('Archivos')</span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-todo" class="nav-link"> <span>@lang('Documentacion')</span></a>
+                                <a href="#sidebarDocumentacion" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCRM">@lang('Documentacion')
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarDocumentacion">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="{{route('documentacions.index')}}" class="nav-link">@lang('Lista Documentacion')</a>
+                                        </li><li class="nav-item">
+                                            <a href="{{route('documentacions.create')}}" class="nav-link">@lang('Crear Documentacion')</a>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </li>
+
                             <li class="nav-item">
                                 <a href="#sidebarjobs" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarjobs"> <span>@lang('translation.jobs')</span> <span class="badge badge-pill bg-success">@lang('translation.new')</span></a>
                                 <div class="collapse menu-dropdown" id="sidebarjobs">

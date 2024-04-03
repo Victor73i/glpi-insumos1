@@ -115,43 +115,9 @@
                                 <div class="collapse menu-dropdown" id="sidebarCRM">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="apps-crm-contacts" class="nav-link"><?php echo app('translator')->get('Lista de Equipo It'); ?></a>
+                                            <a href="<?php echo e(route('equipo_its.index')); ?>" class="nav-link"><?php echo app('translator')->get('Lista de Equipo It'); ?></a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-companies" class="nav-link"><?php echo app('translator')->get('translation.companies'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-deals" class="nav-link"><?php echo app('translator')->get('translation.deals'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crm-leads" class="nav-link"><?php echo app('translator')->get('translation.leads'); ?></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#sidebarCrypto" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCrypto"><?php echo app('translator')->get('translation.crypto'); ?>
-                                </a>
-                                <div class="collapse menu-dropdown" id="sidebarCrypto">
-                                    <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-transactions" class="nav-link"><?php echo app('translator')->get('translation.transactions'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-buy-sell" class="nav-link"><?php echo app('translator')->get('translation.buy-sell'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-orders" class="nav-link"><?php echo app('translator')->get('translation.orders'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-wallet" class="nav-link"><?php echo app('translator')->get('translation.my-wallet'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-ico" class="nav-link"><?php echo app('translator')->get('translation.ico-list'); ?></a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="apps-crypto-kyc" class="nav-link"><?php echo app('translator')->get('translation.kyc-application'); ?></a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </li>
@@ -175,8 +141,20 @@
                                 <a href="apps-file-manager" class="nav-link"> <span><?php echo app('translator')->get('Archivos'); ?></span></a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-todo" class="nav-link"> <span><?php echo app('translator')->get('Documentacion'); ?></span></a>
+                                <a href="#sidebarDocumentacion" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarCRM"><?php echo app('translator')->get('Documentacion'); ?>
+                                </a>
+                                <div class="collapse menu-dropdown" id="sidebarDocumentacion">
+                                    <ul class="nav nav-sm flex-column">
+                                        <li class="nav-item">
+                                            <a href="<?php echo e(route('documentacions.index')); ?>" class="nav-link"><?php echo app('translator')->get('Lista Documentacion'); ?></a>
+                                        </li><li class="nav-item">
+                                            <a href="<?php echo e(route('documentacions.create')); ?>" class="nav-link"><?php echo app('translator')->get('Crear Documentacion'); ?></a>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </li>
+
                             <li class="nav-item">
                                 <a href="#sidebarjobs" class="nav-link" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarjobs"> <span><?php echo app('translator')->get('translation.jobs'); ?></span> <span class="badge badge-pill bg-success"><?php echo app('translator')->get('translation.new'); ?></span></a>
                                 <div class="collapse menu-dropdown" id="sidebarjobs">

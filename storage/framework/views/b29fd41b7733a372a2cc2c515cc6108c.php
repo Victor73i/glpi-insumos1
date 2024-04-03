@@ -21,18 +21,20 @@
         <div class="col-sm">
             <div class="d-flex justify-content-sm-end gap-2">
                 <div class="search-box ms-2">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <i class="ri-search-line search-icon"></i>
+                    <form id="search-form" class="search-box ms-2">
+                        <input type="text" class="form-control" placeholder="Buscar" id="search" name="search" value="<?php echo e(request('search')); ?>">
+                        <i class="ri-search-line search-icon"></i>
+                    </form>
                 </div>
 
-                <select class="form-control w-md" data-choices data-choices-search-false>
-                    <option value="All">All</option>
-                    <option value="Today">Today</option>
-                    <option value="Yesterday" selected>Yesterday</option>
-                    <option value="Last 7 Days">Last 7 Days</option>
-                    <option value="Last 30 Days">Last 30 Days</option>
-                    <option value="This Month">This Month</option>
-                    <option value="Last Year">Last Year</option>
+                <select class="form-control w-md" name="filter_date" id="filter-date" data-choices data-choices-search-false>
+                    <option value="" selected>Todos</option>
+                    <option value="Today" <?php echo e(request('filter_date') == 'Today' ? 'selected' : ''); ?>>Hoy</option>
+                    <option value="Yesterday" <?php echo e(request('filter_date') == 'Yesterday' ? 'selected' : ''); ?> >Ayer</option>
+                    <option value="Last 7 Days" <?php echo e(request('filter_date') == 'Last 7 Days' ? 'selected' : ''); ?> >Ultimos 7 Dias</option>
+                    <option value="Last 30 Days" <?php echo e(request('filter_date') == 'Last 30 Days' ? 'selected' : ''); ?>>Ultimos 30 Dias</option>
+                    <option value="This Month" <?php echo e(request('filter_date') == 'This Month' ? 'selected' : ''); ?>>Este Mes</option>
+                    <option value="Last Year" <?php echo e(request('filter_date') == 'Last Year' ? 'selected' : ''); ?>>Este Año</option>
                 </select>
             </div>
         </div>
@@ -112,7 +114,8 @@
                                             <a href="<?php echo e(asset('log/archivo/' . $archivo)); ?>" target="_blank">Ver PDF</a>
                                         <?php elseif(in_array(pathinfo($archivo, PATHINFO_EXTENSION), ['png', 'jpg', 'jpeg', 'gif'])): ?>
                                             <!-- Utilizamos data-bs-toggle y data-bs-target para activar el modal -->
-                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#imagenZoomModal" onclick="showImage('<?php echo e(asset('log/archivo/' . $archivo)); ?>')">
+
+                                            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#imagenZoomModal"  onclick="showImage('<?php echo e(asset('log/archivo/' . $archivo)); ?>')">
                                                 <img src="<?php echo e(asset('log/archivo/' . $archivo)); ?>" alt="archivo" width="50px" height="50px">
                                             </a>
                                         <?php else: ?>
@@ -155,16 +158,13 @@
     <!-- end row -->
 
         <!-- end col -->
+<div>
+    <?php if($logs->count()): ?>
+        <div class="mt-4">
+            <?php echo e($logs->appends(['search' => request('search'), 'filter_date' => request('filter_date')])->links('vendor.pagination.bootstrap-4')); ?>
 
-        <div class="col-sm-6">
-            <?php if($logs->count()): ?>
-                <nav  class="mt-4">
-                    <?php echo e($logs->links()); ?>
-
-                </nav>
-
-            <?php endif; ?>
-        </div><!-- end col -->
+        </div>
+        <?php endif; ?>
     </div><!-- end row -->
 
     <!-- END layout-wrapper -->
@@ -198,26 +198,25 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="imagenZoomModal" tabindex="-1" aria-labelledby="imagenZoomModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <!-- Aquí se mostrará la imagen -->
-                    <img id="imagenZoom" src="" class="img-fluid" alt="Zoom Imagen">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    </div>
+        <div class="modal fade" id="imagenZoomModal" tabindex="-1" aria-labelledby="imagenZoomModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <!-- Aquí se mostrará la imagen -->
+                        <img id="imagenZoom" src="" class="img-fluid" alt="Zoom Imagen">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <script>
         function showImage(src) {
-            // Configura el src de la imagen en el modal
             document.getElementById('imagenZoom').src = src;
-            // Puedes agregar aquí más lógica si necesitas
         }
+    </script>
     </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -232,8 +231,46 @@
                     form.action = `/logs/${logId}`;
                 });
             });
-        </script>
 
+
+        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('filter-date').addEventListener('change', function() {
+                var filterValue = this.value;
+                var url = new URL(window.location.href);
+                url.searchParams.set('filter_date', filterValue);
+                window.location.href = url;
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchInput = document.getElementById('search');
+
+            searchInput.addEventListener('input', debounce(function(e) {
+                var searchValue = e.target.value;
+                if (searchValue.length >= 3 || searchValue.length === 0) {
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('search', searchValue);
+                    window.location.href = url;
+                }
+            }, 500)); // Espera 500ms después de que el usuario deja de escribir para realizar la búsqueda
+
+            function debounce(func, wait, immediate) {
+                var timeout;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        timeout = null;
+                        if (!immediate) func.apply(context, args);
+                    }, wait);
+                    if (immediate && !timeout) func.apply(context, args);
+                };
+            };
+        });
+    </script>
         <?php $__env->stopSection(); ?>
 <?php $__env->startSection('script'); ?>
     <script src="<?php echo e(URL::asset('build/js/pages/project-list.init.js')); ?>"></script>

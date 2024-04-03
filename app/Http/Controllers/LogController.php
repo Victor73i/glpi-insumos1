@@ -54,13 +54,49 @@ use App\Http\Requests\Tipo_equipo_computoRequest;
 use App\Http\Requests\Tipo_mantenimiento_equipoRequest;
 use App\Http\Requests\UbicacionRequest;
 use App\Http\Requests\UsuarioRequest;
+use Carbon\Carbon;
+
 class LogController extends Controller
 {
 
     //index
-    public function index() {
-        return view('log.index',[
-            'logs'=> Log::latest()->paginate(10)]);
+    public function index(Request $request) {
+        $query = Log::query();
+
+        // Revisa si el request tiene búsqueda por título
+        if ($request->filled('search')) {
+            $query->where('titulo', 'like', '%' . $request->search . '%');
+            // Asegúrate de agregar más campos si quieres buscar en más columnas
+        }
+        // Revisa si el request tiene un filtro de fecha
+        if ($request->filled('filter_date')) {
+            switch ($request->filter_date) {
+                case 'Today':
+                    $query->whereDate('fecha_inicio', Carbon::today());
+                    break;
+                case 'Yesterday':
+                    $query->whereDate('fecha_inicio', Carbon::yesterday());
+                    break;
+                case 'Last 7 Days':
+                    $query->whereDate('fecha_inicio', '>=', Carbon::today()->subDays(7));
+                    break;
+                case 'Last 30 Days':
+                    $query->whereDate('fecha_inicio', '>=', Carbon::today()->subDays(30));
+                    break;
+                case 'This Month':
+                    $query->whereMonth('fecha_inicio', Carbon::today()->month);
+                    break;
+                case 'This Year':
+                    $query->whereYear('fecha_iniciot', Carbon::now()->year);
+                    break;
+                case 'All':
+                    // No es necesario añadir ningún filtro
+                    break;
+            }
+        }
+
+        $logs = $query->latest()->paginate(10);
+        return view('log.index', compact('logs'));
     }
     public function index1() {
         return view('apps-projects-list',[
