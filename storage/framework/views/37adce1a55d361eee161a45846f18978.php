@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', $equipoIt->nombre); ?>
 
 <?php $__env->startSection('content'); ?>

@@ -1,5 +1,5 @@
 
-<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('translation.contacts'); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('Lista Equipo IT '); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('css'); ?>
 <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
 
@@ -8,34 +8,30 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <?php $__env->startComponent('components.breadcrumb'); ?>
-        <?php $__env->slot('li_1'); ?> CRM <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Contacts <?php $__env->endSlot(); ?>
+        <?php $__env->slot('li_1'); ?> Equipo IT <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?> Lista Equipo IT <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center flex-wrap gap-2">
-                        <div class="flex-grow-1">
-                            <button class="btn btn-info add-btn" data-bs-toggle="modal"
-                                data-bs-target="#showModal"><i
-                                    class="ri-add-fill me-1 align-bottom"></i> Add Contacts</button>
-                        </div>
+
                         <div class="flex-shrink-0">
                             <div class="hstack text-nowrap gap-2">
                                 <button class="btn btn-soft-danger" id="remove-actions" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#addmembers"><i
-                                        class="ri-filter-2-line me-1 align-bottom"></i> Filters</button>
-                                <button class="btn btn-soft-success">Import</button>
+                                        class="ri-filter-2-line me-1 align-bottom"></i> Filtrar</button>
+                                <button class="btn btn-soft-success">Importar</button>
                                 <button type="button" id="dropdownMenuLink1" data-bs-toggle="dropdown"
                                     aria-expanded="false" class="btn btn-soft-info"><i
-                                        class="ri-more-2-fill"></i></button>
+                                        class="ri-more-2-fill"></i>Action</button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                    <li><a class="dropdown-item" href="#">All</a></li>
-                                    <li><a class="dropdown-item" href="#">Last Week</a></li>
-                                    <li><a class="dropdown-item" href="#">Last Month</a></li>
-                                    <li><a class="dropdown-item" href="#">Last Year</a></li>
+                                    <li><a class="dropdown-item" href="#">Todo</a></li>
+                                    <li><a class="dropdown-item" href="#">Ultima Semana</a></li>
+                                    <li><a class="dropdown-item" href="#">Ultimo Mes</a></li>
+                                    <li><a class="dropdown-item" href="#">Ultimo Año</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -57,12 +53,12 @@
                         </div>
                         <div class="col-md-auto ms-auto">
                             <div class="d-flex align-items-center gap-2">
-                                <span class="text-muted">Sort by: </span>
+                                <span class="text-muted">Filtrar por: </span>
                                 <select class="form-control mb-0" data-choices data-choices-search-false
                                     id="choices-single-default">
-                                    <option value="Name">Name</option>
-                                    <option value="Company">Company</option>
-                                    <option value="Lead">Lead</option>
+                                    <option value="Name">Nombre</option>
+                                    <option value="Company">Tipo</option>
+                                    <option value="Lead">Equipo</option>
                                 </select>
                             </div>
                         </div>

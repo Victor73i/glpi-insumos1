@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('Editar Documentacion '); ?>
 <?php $__env->stopSection(); ?>

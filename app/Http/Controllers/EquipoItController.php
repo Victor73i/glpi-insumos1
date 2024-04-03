@@ -11,10 +11,31 @@ class EquipoItController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() {
+        $equiposIt = EquipoIt::latest()->get(); // Usa get() en lugar de paginate()
+        return view('equipo_it.index', [
+            'equiposIt' => $equiposIt
+        ]);
+    }
+
+    public function detalles($id)
     {
-        return view('equipo_it.index',[
-            'equiposIt'=> EquipoIt::latest()->paginate(10)]);
+        $equipoIt = EquipoIt::with(['glpiComputers', 'glpiPdus', 'glpiPrinters'])->findOrFail($id);
+        $nombre_equipo = '';
+
+        if ($equipoIt->glpiComputers) {
+            $nombre_equipo = $equipoIt->glpiComputers->name;
+        } elseif ($equipoIt->glpiPdus) {
+            $nombre_equipo = $equipoIt->glpiPdus->name;
+        } elseif ($equipoIt->glpiPrinters) {
+            $nombre_equipo = $equipoIt->glpiPrinters->name;
+        }
+
+        return response()->json([
+            'nombre' => $equipoIt->nombre,
+            'type' => $equipoIt->type,
+            'nombre_equipo' => $nombre_equipo,
+        ]);
     }
 
     /**

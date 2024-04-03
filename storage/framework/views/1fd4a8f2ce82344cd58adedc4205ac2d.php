@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title', $documentacion->nombre ); ?>
 <?php echo app('translator')->get('translation.overview'); ?>
 <?php $__env->startSection('content'); ?>
