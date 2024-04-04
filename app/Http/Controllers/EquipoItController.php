@@ -37,7 +37,27 @@ class EquipoItController extends Controller
             'nombre_equipo' => $nombre_equipo,
         ]);
     }
+    public function dashboard() {
+        $conteoComputadoras = EquipoIt::where('type', 'computer')->count();
+        $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
+        $conteoPdus = EquipoIt::where('type', 'pdu')->count();
+        $totalEquiposIT = $conteoComputadoras + $conteoImpresoras + $conteoPdus;
 
+        return view('equipo_it.dashboard', compact('conteoComputadoras', 'conteoImpresoras', 'conteoPdus', 'totalEquiposIT'));
+    }
+
+
+    public function getEquipoItStatus() {
+        $conteoComputadoras = EquipoIt::where('type', 'computer')->count();
+        $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
+        $conteoPdus = EquipoIt::where('type', 'pdu')->count();
+
+        return response()->json([
+            'conteoComputadoras' => $conteoComputadoras,
+            'conteoImpresoras' => $conteoImpresoras,
+            'conteoPdus' => $conteoPdus
+        ]);
+    }
     /**
      * Display the specified resource.
      */

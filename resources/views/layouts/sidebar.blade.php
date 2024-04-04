@@ -46,7 +46,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="dashboard-projects" class="nav-link">@lang('Equipo IT')</a>
+                                <a href="{{route('equipo_its.dashboard')}}" class="nav-link">@lang('Equipo IT')</a>
                             </li><li class="nav-item">
                                 <a href="dashboard-projects" class="nav-link">@lang('Reporte Inventariado')</a>
                             </li><li class="nav-item">

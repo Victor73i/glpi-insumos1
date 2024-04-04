@@ -46,7 +46,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Equipo IT'); ?></a>
+                                <a href="<?php echo e(route('equipo_its.dashboard')); ?>" class="nav-link"><?php echo app('translator')->get('Equipo IT'); ?></a>
                             </li><li class="nav-item">
                                 <a href="dashboard-projects" class="nav-link"><?php echo app('translator')->get('Reporte Inventariado'); ?></a>
                             </li><li class="nav-item">

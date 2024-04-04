@@ -27,6 +27,8 @@ use App\Http\Controllers\EquipoItController;
 Route::post('/logs/{id}/remove-file', [App\Http\Controllers\LogController::class, 'removeFile'])->name('logs.remove-file');
 Route::post('/documentacions/{id}/remove-file', [App\Http\Controllers\DocumentacionController::class, 'removeFile'])->name('documentacions.remove-file');
 Route::get('/equipo_its/detalles/{id}', [EquipoItController::class, 'detalles'])->name('equipo_its.detalles');
+Route::get('/equipo_its/dashboard', [EquipoItController::class, 'dashboard'])->name('equipo_its.dashboard');
+Route::get('/equipo_its/status', [EquipoItController::class, 'getEquipoItStatus'])->name('equipo_its.status');
 
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
