@@ -23,6 +23,7 @@ class EquipoItController extends Controller
         $equipoIt = EquipoIt::with(['glpiComputers', 'glpiPdus', 'glpiPrinters'])->findOrFail($id);
         $nombre_equipo = '';
 
+
         if ($equipoIt->glpiComputers) {
             $nombre_equipo = $equipoIt->glpiComputers->name;
         } elseif ($equipoIt->glpiPdus) {
@@ -42,8 +43,11 @@ class EquipoItController extends Controller
         $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
         $conteoPdus = EquipoIt::where('type', 'pdu')->count();
         $totalEquiposIT = $conteoComputadoras + $conteoImpresoras + $conteoPdus;
+        $equiposIt = EquipoIt::latest()->paginate(10); // Usa get() en lugar de paginate()
+        $ultimosEquiposIt = EquipoIt::latest()->take(5)->get();
 
-        return view('equipo_it.dashboard', compact('conteoComputadoras', 'conteoImpresoras', 'conteoPdus', 'totalEquiposIT'));
+
+        return view('equipo_it.dashboard', compact('conteoComputadoras', 'conteoImpresoras', 'ultimosEquiposIt', 'equiposIt', 'conteoPdus', 'totalEquiposIT'));
     }
 
 

@@ -124,6 +124,29 @@ class DocumentacionController extends Controller
 
         return redirect()->route('documentacions.index')->with('success', 'Documentación actualizada satisfactoriamente.');
     }
+    public function dashboard() {
+        $conteoComputadoras = Documentacion::where('id_tipo_documentacion')->count();
+
+        $totalEquiposIT = $conteoComputadoras;
+        $documentacions = Documentacion::latest()->paginate(10); // Usa get() en lugar de paginate()
+        $ultimosDocumentacion = Documentacion::latest()->take(5)->get();
+
+
+        return view('documentacion.dashboard', compact('conteoComputadoras',  'ultimosDocumentacion', 'documentacions',  'totalEquiposIT'));
+    }
+
+
+    public function getEquipoItStatus() {
+        $conteoComputadoras = EquipoIt::where('type', 'computer')->count();
+        $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
+        $conteoPdus = EquipoIt::where('type', 'pdu')->count();
+
+        return response()->json([
+            'conteoComputadoras' => $conteoComputadoras,
+            'conteoImpresoras' => $conteoImpresoras,
+            'conteoPdus' => $conteoPdus
+        ]);
+    }
     //delete
     public function destroy(string $id){
         $documentacion = Documentacion::findOrFail($id);

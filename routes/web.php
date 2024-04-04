@@ -29,6 +29,8 @@ Route::post('/documentacions/{id}/remove-file', [App\Http\Controllers\Documentac
 Route::get('/equipo_its/detalles/{id}', [EquipoItController::class, 'detalles'])->name('equipo_its.detalles');
 Route::get('/equipo_its/dashboard', [EquipoItController::class, 'dashboard'])->name('equipo_its.dashboard');
 Route::get('/equipo_its/status', [EquipoItController::class, 'getEquipoItStatus'])->name('equipo_its.status');
+Route::get('/documentacions/dashboard', [DocumentacionController::class, 'dashboard'])->name('documentacions.dashboard');
+Route::get('/documentacions/status', [DocumentacionController::class, 'getEquipoItStatus'])->name('documentacions.status');
 
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
