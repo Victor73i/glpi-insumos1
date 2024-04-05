@@ -149,15 +149,12 @@
                         </div><!-- end card header -->
                         <div class="card-body p-0 pb-2">
                             <div>
-                                <div id="projects-overview-chart"
-                                     data-colors='["--vz-primary", "--vz-warning", "--vz-success"]'
-                                     dir="ltr" class="apex-charts"></div>
+                                <!-- Aquí añades tu elemento canvas para Chart.js -->
+                                <canvas id="chart-canvas" width="400" height="400"></canvas>
                             </div>
                         </div><!-- end card body -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-            </div><!-- end row -->
-        </div><!-- end col -->
 
         <div class="col-xxl-4">
             <div class="card">
@@ -323,81 +320,69 @@
             </div><!-- end card -->
         </div><!-- end col -->
 
-        <div class="col-xxl-4 col-lg-6">
+        <div class="col-xl-4">
             <div class="card card-height-100">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Projects Status</h4>
-                    <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                            <a class="dropdown-btn text-muted" href="#" data-bs-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                All Time <i class="mdi mdi-chevron-down ms-1"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">All Time</a>
-                                <a class="dropdown-item" href="#">Last 7 Days</a>
-                                <a class="dropdown-item" href="#">Last 30 Days</a>
-                                <a class="dropdown-item" href="#">Last 90 Days</a>
-                            </div>
-                        </div>
-                    </div>
+                    <h4 class="card-title mb-0 flex-grow-1">Estatus Estado de Documentación</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <div id="prjects-status"
-                         data-colors='["--vz-success", "--vz-primary", "--vz-warning", "--vz-danger"]'
-                         class="apex-charts" dir="ltr"></div>
+                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                        <canvas id="documentacion-status-chart" width="400" height="400"></canvas>
+                    </div>
+                    <div id="total-documentacion" class="text-center">
+                        <!-- El total se actualizará dinámicamente -->
+                        <strong>Total Documentación:</strong> <span id="total-doc-count">0</span> Documentos
+                    </div>
+                    <!-- Contadores para cada estado -->
                     <div class="mt-3">
-                        <div class="d-flex justify-content-center align-items-center mb-4">
-                            <h2 class="me-3 ff-secondary mb-0">258</h2>
-                            <div>
-                                <p class="text-muted mb-0">Total Projects</p>
-                                <p class="text-success fw-medium mb-0">
-                                    <span class="badge badge-soft-success p-1 rounded-circle"><i
-                                            class="ri-arrow-right-up-line"></i></span> +3 New
-                                </p>
-                            </div>
+                        <div id="documentacion-status-counters">
+                            <!-- Se generan dinámicamente con JS -->
                         </div>
-
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <p class="fw-medium mb-0"><i
-                                    class="ri-checkbox-blank-circle-fill text-success align-middle me-2"></i>
-                                Completed</p>
-                            <div>
-                                <span class="text-muted pe-5">125 Projects</span>
-                                <span class="text-success fw-medium fs-12">15870hrs</span>
-                            </div>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <p class="fw-medium mb-0"><i
-                                    class="ri-checkbox-blank-circle-fill text-primary align-middle me-2"></i>
-                                In Progress</p>
-                            <div>
-                                <span class="text-muted pe-5">42 Projects</span>
-                                <span class="text-success fw-medium fs-12">243hrs</span>
-                            </div>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <p class="fw-medium mb-0"><i
-                                    class="ri-checkbox-blank-circle-fill text-warning align-middle me-2"></i>
-                                Yet to Start</p>
-                            <div>
-                                <span class="text-muted pe-5">58 Projects</span>
-                                <span class="text-success fw-medium fs-12">~2050hrs</span>
-                            </div>
-                        </div><!-- end -->
-                        <div class="d-flex justify-content-between py-2">
-                            <p class="fw-medium mb-0"><i
-                                    class="ri-checkbox-blank-circle-fill text-danger align-middle me-2"></i>
-                                Cancelled</p>
-                            <div>
-                                <span class="text-muted pe-5">89 Projects</span>
-                                <span class="text-success fw-medium fs-12">~900hrs</span>
-                            </div>
-                        </div><!-- end -->
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4">
+            <div class="card card-height-100">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Estatus Categoría de Documentación</h4>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                        <canvas id="categoria-documentacion-chart" width="400" height="400"></canvas>
+                    </div>
+                    <div id="total-categoria" class="text-center">
+                        <!-- El total se actualizará dinámicamente -->
+                        <strong>Total Documentación:</strong> <span id="total-cat-count">0</span> Documentos
+                    </div>
+                    <!-- Contadores para cada estado -->
+                    <div class="mt-3">
+                        <div id="documentacion-categorias-counters">
+                            <!-- Se generan dinámicamente con JS -->
+                        </div>
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-4">
+            <div class="card card-height-100">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Estatus Tipo de Documentación</h4>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                        <canvas id="tipo-documentacion-chart" width="400" height="400"></canvas>
+                    </div>
+                    <div id="total-tipo" class="text-center">
+                        <!-- El total se actualizará dinámicamente -->
+                        <strong>Total Documentación:</strong> <span id="total-tip-count">0</span> Documentos
+                    </div>
+                    <!-- Contadores para cada estado -->
+                    <div class="mt-3">
+                        <div id="documentacion-tipos-counters">
+                            <!-- Se generan dinámicamente con JS -->
+                        </div>
                     </div>
                 </div><!-- end cardbody -->
             </div><!-- end card -->
@@ -405,10 +390,170 @@
     </div><!-- end row -->
 
 @endsection
-@section('script')
-    <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
 
-    <script src="{{ URL::asset('build/js/pages/dashboard-projects.init.js') }}"></script>
+@section('script')
+
+    <!-- Cargar Chart.js si aún no se ha cargado -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Script para generar la gráfica -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            fetch('/documentacions/status')
+                .then(response => response.json())
+                .then(data => {
+                    // Total de documentación
+                    const totalDocumentacion = data.estados.reduce((acc, estado) => acc + estado.documentacions_count, 0);
+                    const totalCategorias = data.categorias.reduce((sum, cat) => sum + cat.documentacions_count, 0);
+                    const totalTipos = data.tipos.reduce((sum, tipo) => sum + tipo.documentacions_count, 0);
+
+
+                    // Actualizar el total en la página
+                    document.getElementById('total-doc-count').textContent = totalDocumentacion;
+                    document.getElementById('total-cat-count').textContent = totalCategorias;
+                    document.getElementById('total-tip-count').textContent = totalTipos;
+
+
+                    // Generar gráficas y contadores para cada tipo
+                    generateChartAndCounters('documentacion-status-chart', 'documentacion-status-counters', data.estados);
+                    generateChartAndCounters('categoria-documentacion-chart', 'documentacion-categorias-counters', data.categorias);
+                    generateChartAndCounters('tipo-documentacion-chart', 'documentacion-tipos-counters', data.tipos);
+                })
+                .catch(error => console.error('Error al obtener el estado de la documentación:', error));
+        });
+
+        function generateChartAndCounters(canvasId, countersId, items) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const countersContainer = document.getElementById(countersId);
+
+            // Limpia los contadores existentes
+            countersContainer.innerHTML = '';
+
+            // Datos para la gráfica
+            const labels = items.map(item => item.nombre);
+            const data = items.map(item => item.documentacions_count);
+            const backgroundColor = ['rgba(54, 162, 235, 0.2)', /* otros colores */];
+            const borderColor = ['rgba(54, 162, 235, 1)', /* otros colores */];
+
+            // Crea la gráfica
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Documentación',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Crea y añade los contadores para cada item
+            items.forEach(item => {
+                const counterDiv = document.createElement('div');
+                counterDiv.classList.add('d-flex', 'justify-content-between', 'py-2');
+                counterDiv.innerHTML = `
+            <p class="fw-medium mb-0">${item.nombre}</p>
+            <div>
+                <span class="text-muted">${item.documentacions_count} Documentos</span>
+            </div>
+        `;
+                countersContainer.appendChild(counterDiv);
+            });
+        }
+
+    </script>
+
+                <script>
+                    function generateChart(data) {
+                        const ctx = document.getElementById('projects-overview-chart').getContext('2d');
+                        const labels = []; // Aquí irán las etiquetas de los meses
+                        const dataSets = {}; // Un objeto para mantener los conjuntos de datos por estado
+
+                        // Prepara las etiquetas y los conjuntos de datos
+                        data.forEach(item => {
+                            const monthYear = `${item.mes}/${item.año}`;
+                            if (!labels.includes(monthYear)) {
+                                labels.push(monthYear);
+                            }
+
+                            if (!dataSets[item.id_estado_documentacion]) {
+                                dataSets[item.id_estado_documentacion] = {
+                                    label: `Estado ${item.id_estado_documentacion}`, // Deberías obtener el nombre real del estado aquí
+                                    data: [],
+                                    // Se pueden añadir más propiedades de estilo aquí
+                                };
+                            }
+
+                            dataSets[item.id_estado_documentacion].data.push(item.cantidad);
+                        });
+
+                        if (window.myChart) {
+                            window.myChart.destroy(); // Destruye la instancia anterior de la gráfica si existe
+                        }
+
+                        window.myChart = new Chart(ctx, {
+                            type: 'bar', // Puedes cambiar esto por 'line', 'doughnut', etc.
+                            data: {
+                                labels: labels,
+                                datasets: Object.values(dataSets)
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const allButton = document.getElementById('btn-all');
+                        const oneMonthButton = document.getElementById('btn-1m');
+                        const sixMonthsButton = document.getElementById('btn-6m');
+                        const oneYearButton = document.getElementById('btn-1y');
+
+                        // Asignar eventos a botones
+                        allButton.addEventListener('click', () => fetchDataAndGenerateChart('ALL'));
+                        oneMonthButton.addEventListener('click', () => fetchDataAndGenerateChart('1M'));
+                        sixMonthsButton.addEventListener('click', () => fetchDataAndGenerateChart('6M'));
+                        oneYearButton.addEventListener('click', () => fetchDataAndGenerateChart('1Y'));
+
+                        // Llamada inicial para cargar la gráfica con todos los datos
+                        fetchDataAndGenerateChart('ALL');
+
+                        function fetchDataAndGenerateChart(filter) {
+                            fetch(`/documentacions/status-by-month-and-status?filter=${filter}`)
+                                .then(response => response.json())
+                                .then(data => {
+                                    generateChart(data);
+                                })
+                                .catch(error => console.error('Error:', error));
+                        }
+                    });
+                </script>
+
+
+                <!-- apexcharts -->
+
     <script src="{{ URL::asset('build/js/app.js') }}"></script>
 @endsection

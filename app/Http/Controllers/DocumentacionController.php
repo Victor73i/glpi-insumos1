@@ -125,27 +125,59 @@ class DocumentacionController extends Controller
         return redirect()->route('documentacions.index')->with('success', 'Documentación actualizada satisfactoriamente.');
     }
     public function dashboard() {
-        $conteoComputadoras = Documentacion::where('id_tipo_documentacion')->count();
 
-        $totalEquiposIT = $conteoComputadoras;
         $documentacions = Documentacion::latest()->paginate(10); // Usa get() en lugar de paginate()
         $ultimosDocumentacion = Documentacion::latest()->take(5)->get();
 
 
-        return view('documentacion.dashboard', compact('conteoComputadoras',  'ultimosDocumentacion', 'documentacions',  'totalEquiposIT'));
+        return view('documentacion.dashboard', compact(  'ultimosDocumentacion', 'documentacions',  ));
     }
 
 
-    public function getEquipoItStatus() {
-        $conteoComputadoras = EquipoIt::where('type', 'computer')->count();
-        $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
-        $conteoPdus = EquipoIt::where('type', 'pdu')->count();
+    public function getDocumentacionStatus() {
+        try {
+            $estados = EstadoDocumentacion::withCount('documentacions')->get();
+            $tipos = TipoDocumentacion::withCount('documentacions')->get();
+            $categorias = CategoriaDocumentacion::withCount('documentacions')->get();
+            return response()->json([
+                'estados' => $estados,
+                'tipos' => $tipos,
+                'categorias' => $categorias
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
-        return response()->json([
-            'conteoComputadoras' => $conteoComputadoras,
-            'conteoImpresoras' => $conteoImpresoras,
-            'conteoPdus' => $conteoPdus
-        ]);
+    public function getDocumentacionByMonthAndStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+
+        // Establece la fecha de inicio basada en el filtro
+        $dateStart = now();
+        switch ($filter) {
+            case '1M':
+                $dateStart = now()->subMonth();
+                break;
+            case '6M':
+                $dateStart = now()->subMonths(6);
+                break;
+            case '1Y':
+                $dateStart = now()->subYear();
+                break;
+        }
+
+        $documentaciones = Documentacion::select(
+            DB::raw('MONTH(fecha_creacion) as mes'),
+            DB::raw('YEAR(fecha_creacion) as año'),
+            'id_estado_documentacion',
+            DB::raw('COUNT(*) as cantidad')
+        )
+            ->where('fecha_creacion', '>=', $filter !== 'ALL' ? $dateStart->startOfMonth() : null)
+            ->groupBy('mes', 'año', 'id_estado_documentacion')
+            ->get();
+
+        return response()->json($documentaciones);
     }
     //delete
     public function destroy(string $id){
