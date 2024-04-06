@@ -9,4 +9,8 @@ class EstadoDocumentacion extends Model
 {
     use HasFactory;
     protected $table = 'estado_documentacion';
-    protected $fillable = ['id','nombre','descripcion','created_at','updated_at'];}
+    protected $fillable = ['id','nombre','descripcion','created_at','updated_at'];
+    public function documentacions() {
+        return $this->hasMany(Documentacion::class, 'id_estado_documentacion', 'id');
+    }
+}

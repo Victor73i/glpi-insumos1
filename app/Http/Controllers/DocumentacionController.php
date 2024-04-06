@@ -125,26 +125,82 @@ class DocumentacionController extends Controller
         return redirect()->route('documentacions.index')->with('success', 'Documentación actualizada satisfactoriamente.');
     }
     public function dashboard() {
-        $conteoComputadoras = Documentacion::where('id_tipo_documentacion')->count();
 
-        $totalEquiposIT = $conteoComputadoras;
         $documentacions = Documentacion::latest()->paginate(10); // Usa get() en lugar de paginate()
         $ultimosDocumentacion = Documentacion::latest()->take(5)->get();
 
 
-        return view('documentacion.dashboard', compact('conteoComputadoras',  'ultimosDocumentacion', 'documentacions',  'totalEquiposIT'));
+        return view('documentacion.dashboard', compact(  'ultimosDocumentacion', 'documentacions',  ));
     }
 
 
-    public function getEquipoItStatus() {
-        $conteoComputadoras = EquipoIt::where('type', 'computer')->count();
-        $conteoImpresoras = EquipoIt::where('type', 'impresora')->count();
-        $conteoPdus = EquipoIt::where('type', 'pdu')->count();
+    public function getDocumentacionStatus() {
+        try {
+            $estados = EstadoDocumentacion::withCount('documentacions')->get();
+            $tipos = TipoDocumentacion::withCount('documentacions')->get();
+            $categorias = CategoriaDocumentacion::withCount('documentacions')->get();
+            return response()->json([
+                'estados' => $estados,
+                'tipos' => $tipos,
+                'categorias' => $categorias
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 
+    public function getDocumentacionByMonthAndStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+        $dateStart = now(); // Inicializa $dateStart con la fecha y hora actual.
+
+        $query = Documentacion::select(
+            DB::raw('DAY(fecha_creacion) as dia'),
+            DB::raw('MONTH(fecha_creacion) as mes'),
+            DB::raw('YEAR(fecha_creacion) as año'),
+            'id_estado_documentacion',
+            DB::raw('COUNT(*) as cantidad')
+        )
+            ->join('estado_documentacion', 'estado_documentacion.id', '=', 'documentacion.id_estado_documentacion')
+            ->addSelect('estado_documentacion.nombre as nombre_estado');
+
+        if ($filter !== 'ALL') {
+            $dateStart = now();
+            switch ($filter) {
+                case '1M':
+                    $dateStart = now()->subMonth();
+                    break;
+                case '6M':
+                    $dateStart = now()->subMonths(6);
+                    break;
+                case '1Y':
+                    $dateStart = now()->subYear();
+                    break;
+            }
+            $query->where('fecha_creacion', '>=', $dateStart->startOfMonth());
+        }
+
+        $estados = EstadoDocumentacion::select('id', 'nombre')->get();
+
+        $totalsByDate = Documentacion::select(
+            DB::raw('DAY(fecha_creacion) as dia'),
+            DB::raw('MONTH(fecha_creacion) as mes'),
+            DB::raw('YEAR(fecha_creacion) as año'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->where('fecha_creacion', '>=', $dateStart->startOfMonth())
+            ->groupBy('dia', 'mes', 'año')
+            ->get();
+// Añade los nombres de los estados a las documentaciones
+        $documentaciones = $query->groupBy('dia', 'mes', 'año', 'id_estado_documentacion')->get()->map(function ($item) use ($estados) {
+            $estado = $estados->firstWhere('id', $item->id_estado_documentacion);
+            $item->nombre_estado = $estado ? $estado->nombre : null;
+            return $item;
+        });
         return response()->json([
-            'conteoComputadoras' => $conteoComputadoras,
-            'conteoImpresoras' => $conteoImpresoras,
-            'conteoPdus' => $conteoPdus
+            'documentaciones' => $documentaciones,
+            'totalsByDate' => $totalsByDate, // Asegúrate de agregar esto
+            'estados' => $estados
         ]);
     }
     //delete

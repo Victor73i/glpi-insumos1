@@ -14,4 +14,7 @@ class TipoDocumentacion extends Model
     {
         $this->completado = !$this->completado;
         $this->save();
+    }
+    public function documentacions() {
+        return $this->hasMany(Documentacion::class, 'id_tipo_documentacion', 'id');
     }}

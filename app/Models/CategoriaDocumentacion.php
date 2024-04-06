@@ -14,4 +14,8 @@ class CategoriaDocumentacion extends Model
     {
         $this->completado = !$this->completado;
         $this->save();
-    }}
+    }
+    public function documentacions() {
+        return $this->hasMany(Documentacion::class, 'id_categoria_documentacion', 'id');
+    }
+}
