@@ -301,6 +301,8 @@
                                     </div>
 
                                     <div class="mt-2 text-center">
+                                        <a href="javascript:window.print()" class="btn btn-success"><i class="ri-printer-line align-bottom me-1"></i> IMPRIMIR</a>
+
                                         <a href="<?php echo e(route('logs.edit', [$log->id])); ?>" type="button" class="btn btn-success">EDITAR</a>
                                     </div>
                                 </div>

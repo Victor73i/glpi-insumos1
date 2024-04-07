@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title') @lang('translation.projects') @endsection
+@section('title') @lang('Documentacion') @endsection
 @section('content')
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Projects @endslot
+        @slot('title') Documentacion @endslot
     @endcomponent
     <div class="row project-wrapper">
         <div class="col-xxl-8">
@@ -22,10 +22,12 @@
                 <div class="col-xl-7">
                     <div class="card">
                         <div class="card-header border-0 align-items-center d-flex justify-content-between">
-                            <h4 class="card-title mb-0 flex-grow-1">Projects Overview</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Documentacion</h4>
                             <div class="button-group" role="group" aria-label="Basic example">
                                 <!-- Añade la clase .filter-btn a cada botón -->
                                 <button type="button" class="btn btn-outline-primary filter-btn" data-filter="ALL">ALL</button>
+                                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1D">1D</button>
+                                <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1S">1S</button>
                                 <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1M">1M</button>
                                 <button type="button" class="btn btn-outline-primary filter-btn" data-filter="6M">6M</button>
                                 <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1Y">1Y</button>
@@ -377,6 +379,7 @@
                     document.addEventListener("DOMContentLoaded", function() {
                         const filterButtons = document.querySelectorAll(".filter-btn");
 
+
                         // Generar un mapa de colores para cada estado
                         let colorMap = new Map();
 
@@ -472,7 +475,7 @@
                             fetch(`/documentacions/status-by-month-and-status?filter=${filter}`)
                                 .then(response => response.json())
                                 .then(data => {
-                                    drawChart(data.documentaciones, data.totalsByDate);
+                                    drawChart(data.documentaciones, data.totalsByDate); // Asegúrate de pasar data.totalsByDate aquí
                                 })
                                 .catch(error => console.error('Error:', error));
                         }
@@ -484,6 +487,7 @@
                             });
                         });
 
+                        // Llama al filtro por defecto para cargar inicialmente los datos del día actual
                         fetchDataAndGenerateChart('ALL');
                     });
                 </script>
