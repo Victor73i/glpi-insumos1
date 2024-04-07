@@ -182,13 +182,14 @@ class DocumentacionController extends Controller
 
         $estados = EstadoDocumentacion::select('id', 'nombre')->get();
 
+
+
         $totalsByDate = Documentacion::select(
             DB::raw('DAY(fecha_creacion) as dia'),
             DB::raw('MONTH(fecha_creacion) as mes'),
             DB::raw('YEAR(fecha_creacion) as año'),
             DB::raw('COUNT(*) as total')
         )
-            ->where('fecha_creacion', '>=', $dateStart->startOfMonth())
             ->groupBy('dia', 'mes', 'año')
             ->get();
 // Añade los nombres de los estados a las documentaciones

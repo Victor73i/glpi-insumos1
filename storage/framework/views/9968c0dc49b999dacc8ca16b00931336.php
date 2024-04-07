@@ -9,85 +9,13 @@
     <div class="row project-wrapper">
         <div class="col-xxl-8">
             <div class="row">
-                <div class="col-xl-4">
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <span
-                                        class="avatar-title bg-soft-primary text-primary rounded-2 fs-2">
-                                        <i data-feather="briefcase" class="text-primary"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden ms-3">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
-                                        Active Projects</p>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h4 class="fs-4 flex-grow-1 mb-0"><span class="counter-value"
-                                                                                data-target="825">0</span></h4>
-                                        <span class="badge badge-soft-danger fs-12"><i
-                                                class="ri-arrow-down-s-line fs-13 align-middle me-1"></i>5.02
-                                            %</span>
-                                    </div>
-                                    <p class="text-muted text-truncate mb-0">Projects this month</p>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
 
-                <div class="col-xl-4">
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <span
-                                        class="avatar-title bg-soft-warning text-warning rounded-2 fs-2">
-                                        <i data-feather="award" class="text-warning"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-medium text-muted mb-3">New Leads</p>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h4 class="fs-4 flex-grow-1 mb-0"><span class="counter-value"
-                                                                                data-target="7522">0</span></h4>
-                                        <span class="badge badge-soft-success fs-12"><i
-                                                class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>3.58
-                                            %</span>
-                                    </div>
-                                    <p class="text-muted mb-0">Leads this month</p>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
 
-                <div class="col-xl-4">
-                    <div class="card card-animate">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0">
-                                    <span class="avatar-title bg-soft-info text-info rounded-2 fs-2">
-                                        <i data-feather="clock" class="text-info"></i>
-                                    </span>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden ms-3">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
-                                        Total Hours</p>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <h4 class="fs-4 flex-grow-1 mb-0"><span class="counter-value"
-                                                                                data-target="168">0</span>h <span class="counter-value"
-                                                                                                                  data-target="40">0</span>m</h4>
-                                        <span class="badge badge-soft-danger fs-12"><i
-                                                class="ri-arrow-down-s-line fs-13 align-middle me-1"></i>10.35
-                                            %</span>
-                                    </div>
-                                    <p class="text-muted text-truncate mb-0">Work this month</p>
-                                </div>
-                            </div>
-                        </div><!-- end card body -->
-                    </div>
-                </div><!-- end col -->
+                <div id="estados-container" class="row">
+                    <!-- Aquí se insertarán las tarjetas de estado dinámicamente -->
+                </div>
+
+
             </div><!-- end row -->
 
             <div class="row">
@@ -470,13 +398,12 @@
                                 label: 'Total',
                                 data: totalsByDate.map(total => ({
                                     x: `${total.dia}/${total.mes}/${total.año}`,
-                                    y: total.total
+                                    y: total.total ? total.total : 0
                                 })),
                                 backgroundColor: totalColor,
                                 borderColor: totalColor,
                                 borderWidth: 2,
                                 type: 'bar', // Esto crea una línea en el gráfico
-                                yAxisID: 'y-axis-total',
                             });
 
                             // Crea datasets para cada estado.
@@ -485,19 +412,22 @@
                                 if (!colorMap.has(estado)) {
                                     colorMap.set(estado, generateRandomColor());
                                 }
-                                let estadoData = documentaciones.filter(d => d.nombre_estado === estado);
-                                datasets.push({
-                                    label: estado,
-                                    data: estadoData.map(d => ({
-                                        x: `${d.dia}/${d.mes}/${d.año}`,
-                                        y: d.cantidad
-                                    })),
-                                    backgroundColor: colorMap.get(estado),
-                                    borderColor: colorMap.get(estado),
-                                    borderWidth: 1,
-                                    type: 'bar', // Esto crea barras en el gráfico
-                                    yAxisID: 'y-axis-estados',
-                                });
+                                // Filtrar sólo las documentaciones que tienen una cantidad para este estado
+                                let estadoData = documentaciones.filter(d => d.nombre_estado === estado && d.cantidad);
+                                if (estadoData.length > 0) {
+                                    datasets.push({
+                                        label: estado,
+                                        data: estadoData.map(d => ({
+                                            x: `${d.dia}/${d.mes}/${d.año}`,
+                                            y: d.cantidad
+                                        })),
+                                        backgroundColor: colorMap.get(estado),
+                                        borderColor: colorMap.get(estado),
+                                        borderWidth: 1,
+                                        barThickness: 20, // Ajusta el grosor de la barra como necesites
+                                        type: 'bar',
+                                    });
+                                }
                             });
 
                             // Crea el gráfico.
@@ -510,24 +440,20 @@
                                             stacked: false
                                         },
                                         y: {
+                                            beginAtZero: true,
                                             stacked: false,
-                                            beginAtZero: true
+                                            // Asegúrate de que solo se muestren enteros en la escala Y
+                                            ticks: {
+                                                stepSize: 1, // Esto hará que la escala de ticks vaya en incrementos de uno
+                                                callback: function(value) {
+                                                    if (value % 1 === 0) { // Solo muestra valores enteros
+                                                        return value;
+                                                    }
+                                                },
+                                            }
                                         },
                                         // Definir múltiples ejes Y para diferentes datasets si es necesario
-                                        'y-axis-total': {
-                                            type: 'linear',
-                                            display: true,
-                                            position: 'left',
-                                        },
-                                        'y-axis-estados': {
-                                            type: 'linear',
-                                            display: true,
-                                            position: 'right',
-                                            // grid line settings
-                                            grid: {
-                                                drawOnChartArea: false, // only want the grid lines for one axis to show up
-                                            },
-                                        },
+                                        // ...
                                     },
                                     plugins: {
                                         legend: {
@@ -561,7 +487,66 @@
                         fetchDataAndGenerateChart('ALL');
                     });
                 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener la información de estado del backend
+        fetch('/documentacions/status')
+            .then(response => response.json())
+            .then(data => {
+                const estadosContainer = document.querySelector('#estados-container');
+                estadosContainer.innerHTML = '';
+                let totalDocumentos = 0;
 
+                data.estados.forEach(estado => {
+                    totalDocumentos += estado.documentacions_count; // Sumar el contador de cada estado para obtener el total
+                    const cardHTML = `
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <!-- Contenido de la tarjeta para cada estado -->
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
+                                    Estado: ${estado.nombre}
+                                </p>
+                                <h4 class="fs-4 flex-grow-1 mb-0">
+                                    <span class="counter-value" data-target="${estado.documentacions_count}">
+                                        ${estado.documentacions_count}
+                                    </span> Documentos
+                                </h4>
+                            </div><!-- end card body -->
+                        </div>
+                    </div><!-- end col -->
+                `;
+                    estadosContainer.insertAdjacentHTML('beforeend', cardHTML);
+                });
+
+                // Crear y añadir la tarjeta para el total de documentaciones
+                const totalCardHTML = `
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card card-animate bg-soft-primary text-white">
+                        <div class="card-body">
+                            <!-- Contenido de la tarjeta para el total -->
+                            <p class="text-uppercase fw-medium text-truncate mb-3">Total Documentos</p>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <span class="counter-value" data-target="${totalDocumentos}">
+                                    ${totalDocumentos}
+                                </span>
+                            </h4>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+            `;
+                estadosContainer.insertAdjacentHTML('afterbegin', totalCardHTML);
+
+                // Re-inicializar Feather Icons si se están utilizando
+                if (window.feather) {
+                    feather.replace();
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener los estados:', error);
+            });
+    });
+   </script>
                 <!-- apexcharts -->
 
 <?php $__env->stopSection(); ?>
