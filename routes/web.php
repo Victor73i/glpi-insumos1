@@ -32,6 +32,9 @@ Route::get('/equipo_its/status', [EquipoItController::class, 'getEquipoItStatus'
 Route::get('/documentacions/dashboard', [DocumentacionController::class, 'dashboard'])->name('documentacions.dashboard');
 Route::get('/documentacions/status', [DocumentacionController::class, 'getDocumentacionStatus'])->name('documentacions.status');
 Route::get('/documentacions/status-by-month-and-status', [DocumentacionController::class, 'getDocumentacionByMonthAndStatus'])->name('documentacions.getDocumentacionByMonthAndStatus');
+Route::get('/logs/dashboard', [LogController::class, 'dashboard'])->name('logs.dashboard');
+Route::get('/logs/status', [LogController::class, 'getLogStatus'])->name('logs.status');
+Route::get('/logs/status-by-month-and-status', [LogController::class, 'getLogByMonthAndStatus'])->name('logs.getLogByMonthAndStatus');
 
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
