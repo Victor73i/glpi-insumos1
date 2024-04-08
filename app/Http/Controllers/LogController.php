@@ -33,6 +33,7 @@ use App\Models\Tipo_mantenimiento_equipo;
 use App\Models\Ubicacion;
 use App\Models\Usuario;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Requests\TaskRequest;
 use App\Http\Requests\AreaRequest;
@@ -249,7 +250,102 @@ class LogController extends Controller
 
 
 
+    public function dashboard() {
 
+    $logs = Log::latest()->paginate(10); // Usa get() en lugar de paginate()
+    $ultimosLog = Log::latest()->take(5)->get();
+
+
+    return view('log.dashboard', compact(  'ultimosLog', 'logs'  ));
+}
+
+
+    public function getLogStatus() {
+        try {
+            $estados = EstadoLog::withCount('logs')->get();
+            return response()->json([
+                'estados' => $estados,
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getLogByMonthAndStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+        $dateEnd = now(); // La fecha de finalización siempre será "ahora".
+        $dateStart = now()->startOfDay(); // Por defecto establece la fecha de inicio al comienzo del día actual.
+
+        $query = Log::select(
+            DB::raw('DAY(fecha_finalizacion) as dia'),
+            DB::raw('MONTH(fecha_finalizacion) as mes'),
+            DB::raw('YEAR(fecha_finalizacion) as año'),
+            'id_estado_log',
+            DB::raw('COUNT(*) as cantidad')
+        )
+            ->join('estado_log', 'estado_log.id', '=', 'log.id_estado_log')
+            ->addSelect('estado_log.nombre as nombre_estado');
+
+        if ($filter !== 'ALL') {
+            $dateEnd = now(); // Define la fecha de fin como la fecha y hora actual
+
+            switch ($filter) {
+                case '1D':
+                    $dateStart = now()->startOfDay(); // Inicia en el comienzo del día actual.
+                    break;
+                case '1S':
+                    $dateStart = now()->subDays(7)->startOfDay(); // Resta 7 días para obtener la semana.
+                    break;
+                case '1M':
+                    $dateStart = now()->subMonth()->startOfMonth();
+                    break;
+                case '6M':
+                    $dateStart = now()->subMonths(6)->startOfMonth();
+                    break;
+                case '1Y':
+                    $dateStart = now()->subYear()->startOfDay();
+                    break;
+                // Asegúrate de tener una opción predeterminada en caso de que `$filter` no coincida con ninguno de los casos.
+                default:
+                    $dateStart = now()->startOfDay();
+                    break;
+            }
+            $query->where('fecha_finalizacion', '>=', $dateStart)->where('fecha_finalizacion', '<=', $dateEnd);
+        }
+
+        $estados = EstadoLog::select('id', 'nombre')->get();
+
+
+        $totalsByDate = clone $query;
+        $totalsByDate = $totalsByDate->select(
+            DB::raw('DAY(fecha_finalizacion) as dia'),
+            DB::raw('MONTH(fecha_finalizacion) as mes'),
+            DB::raw('YEAR(fecha_finalizacion) as año'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->groupBy('dia', 'mes', 'año')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get();
+// Añade los nombres de los estados a los logs
+        $loges = $query->groupBy('dia', 'mes', 'año', 'id_estado_log')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get()->map(function ($item) use ($estados) {
+                $estado = $estados->firstWhere('id', $item->id_estado_log);
+                $item->nombre_estado = $estado ? $estado->nombre : null;
+                return $item;
+            });
+        return response()->json([
+            'loges' => $loges,
+            'totalsByDate' => $totalsByDate, // Asegúrate de agregar esto
+            'estados' => $estados
+        ]);
+    }
     //delete
     public function destroy(string $id){
         $log = Log::findOrFail($id);

@@ -301,6 +301,7 @@
                                     </div>
 
                                     <div class="mt-2 text-center">
+
                                         <a href="<?php echo e(route('logs.edit', [$log->id])); ?>" type="button" class="btn btn-success">EDITAR</a>
                                     </div>
                                 </div>

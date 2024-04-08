@@ -17,5 +17,4 @@ class TipoDocumentacion extends Model
     }
     public function documentacions() {
         return $this->hasMany(Documentacion::class, 'id_tipo_documentacion', 'id');
-    }
-}
+    }}

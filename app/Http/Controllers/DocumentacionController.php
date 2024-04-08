@@ -152,32 +152,76 @@ class DocumentacionController extends Controller
     public function getDocumentacionByMonthAndStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');
+        $dateEnd = now(); // La fecha de finalización siempre será "ahora".
+        $dateStart = now()->startOfDay(); // Por defecto establece la fecha de inicio al comienzo del día actual.
 
-        // Establece la fecha de inicio basada en el filtro
-        $dateStart = now();
-        switch ($filter) {
-            case '1M':
-                $dateStart = now()->subMonth();
-                break;
-            case '6M':
-                $dateStart = now()->subMonths(6);
-                break;
-            case '1Y':
-                $dateStart = now()->subYear();
-                break;
-        }
-
-        $documentaciones = Documentacion::select(
+        $query = Documentacion::select(
+            DB::raw('DAY(fecha_creacion) as dia'),
             DB::raw('MONTH(fecha_creacion) as mes'),
             DB::raw('YEAR(fecha_creacion) as año'),
             'id_estado_documentacion',
             DB::raw('COUNT(*) as cantidad')
         )
-            ->where('fecha_creacion', '>=', $filter !== 'ALL' ? $dateStart->startOfMonth() : null)
-            ->groupBy('mes', 'año', 'id_estado_documentacion')
-            ->get();
+            ->join('estado_documentacion', 'estado_documentacion.id', '=', 'documentacion.id_estado_documentacion')
+            ->addSelect('estado_documentacion.nombre as nombre_estado');
 
-        return response()->json($documentaciones);
+        if ($filter !== 'ALL') {
+            $dateEnd = now(); // Define la fecha de fin como la fecha y hora actual
+
+            switch ($filter) {
+                case '1D':
+                    $dateStart = now()->startOfDay(); // Inicia en el comienzo del día actual.
+                    break;
+                case '1S':
+                    $dateStart = now()->subDays(7)->startOfDay(); // Resta 7 días para obtener la semana.
+                    break;
+                case '1M':
+                    $dateStart = now()->subMonth()->startOfMonth();
+                    break;
+                case '6M':
+                    $dateStart = now()->subMonths(6)->startOfMonth();
+                    break;
+                case '1Y':
+                    $dateStart = now()->subYear()->startOfDay();
+                    break;
+                // Asegúrate de tener una opción predeterminada en caso de que `$filter` no coincida con ninguno de los casos.
+                default:
+                    $dateStart = now()->startOfDay();
+                    break;
+            }
+            $query->where('fecha_creacion', '>=', $dateStart)->where('fecha_creacion', '<=', $dateEnd);
+        }
+
+        $estados = EstadoDocumentacion::select('id', 'nombre')->get();
+
+
+        $totalsByDate = clone $query;
+        $totalsByDate = $totalsByDate->select(
+            DB::raw('DAY(fecha_creacion) as dia'),
+            DB::raw('MONTH(fecha_creacion) as mes'),
+            DB::raw('YEAR(fecha_creacion) as año'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->groupBy('dia', 'mes', 'año')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get();
+// Añade los nombres de los estados a las documentaciones
+        $documentaciones = $query->groupBy('dia', 'mes', 'año', 'id_estado_documentacion')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get()->map(function ($item) use ($estados) {
+            $estado = $estados->firstWhere('id', $item->id_estado_documentacion);
+            $item->nombre_estado = $estado ? $estado->nombre : null;
+            return $item;
+        });
+        return response()->json([
+            'documentaciones' => $documentaciones,
+            'totalsByDate' => $totalsByDate, // Asegúrate de agregar esto
+            'estados' => $estados
+        ]);
     }
     //delete
     public function destroy(string $id){

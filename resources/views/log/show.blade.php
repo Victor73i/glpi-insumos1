@@ -319,6 +319,7 @@
                                     </div>
 
                                     <div class="mt-2 text-center">
+
                                         <a href="{{route('logs.edit', [$log->id])}}" type="button" class="btn btn-success">EDITAR</a>
                                     </div>
                                 </div>

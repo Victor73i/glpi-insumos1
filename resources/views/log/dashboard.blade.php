@@ -1,11 +1,11 @@
+@extends('layouts.master')
+@section('title') @lang('Log') @endsection
+@section('content')
 
-<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('Documentacion'); ?> <?php $__env->stopSection(); ?>
-<?php $__env->startSection('content'); ?>
-
-    <?php $__env->startComponent('components.breadcrumb'); ?>
-        <?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Documentacion <?php $__env->endSlot(); ?>
-    <?php echo $__env->renderComponent(); ?>
+    @component('components.breadcrumb')
+        @slot('li_1') Dashboards @endslot
+        @slot('title') Log @endslot
+    @endcomponent
     <div class="row project-wrapper">
         <div class="col-xxl-8">
             <div class="row">
@@ -22,7 +22,7 @@
                 <div class="col-xl-7">
                     <div class="card">
                         <div class="card-header border-0 align-items-center d-flex justify-content-between">
-                            <h4 class="card-title mb-0 flex-grow-1">Documentacion</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Log</h4>
                             <div class="button-group" role="group" aria-label="Basic example">
                                 <!-- Añade la clase .filter-btn a cada botón -->
                                 <button type="button" class="btn btn-outline-primary filter-btn" data-filter="ALL">ALL</button>
@@ -48,34 +48,34 @@
                 <div class="col-xxl-4">
                     <div class="card">
                         <div class="card-header border-0">
-                            <h4 class="card-title mb-0">Últimos Documentacion</h4>
+                            <h4 class="card-title mb-0">Últimos Logs</h4>
                         </div><!-- end cardheader -->
                         <div class="card-body pt-0">
                             <h6 class="text-uppercase fw-semibold mt-4 mb-3 text-muted">Últimos Registros:</h6>
                             <div class="upcoming-scheduled">
-                                
-                                <?php $__currentLoopData = $ultimosDocumentacion; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentacion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                {{-- Bucle para mostrar cada evento/equipo IT --}}
+                                @foreach($ultimosLog as $log)
                                     <div class="d-flex align-items-center mb-4">
-                                        
+                                        {{-- Aquí iría el icono o imagen que represente al equipo --}}
                                         <div class="flex-shrink-0 avatar-sm">
                         <span class="avatar-title bg-soft-primary text-primary rounded-circle fs-4">
-                            
+                            {{-- Icono o iniciales --}}
                             <i class="ri-computer-line"></i>
                         </span>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h6 class="mb-1"><?php echo e($documentacion->nombre); ?></h6>
-                                            <p class="text-muted mb-0">Tipo: <?php echo e($documentacion->descripcion); ?> - <?php echo e($documentacion->tipo_documentacion->nombre); ?></p>
+                                            <h6 class="mb-1">{{ $log->nombre }}</h6>
+                                            <p class="text-muted mb-0">{{ $log->observaciones }} - {{ $log->estado_log->nombre}}</p>
                                         </div>
                                         <div class="flex-shrink-0">
-                                            
-                                            <p class="text-muted mb-0"><?php echo e($documentacion->fecha_creacion); ?></p>
+                                            {{-- Aquí podrías poner la fecha de registro o cualquier otra información --}}
+                                            <p class="text-muted mb-0">{{ $log->fecha_finalizacion}}</p>
                                         </div>
                                     </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                @endforeach
                             </div>
                             <div class="mt-3 text-center">
-                                <a href="<?php echo e(route('documentacions.index')); ?>" class="btn btn-primary">Ver Todos los Documentos</a>
+                                <a href="{{ route('logs.index') }}" class="btn btn-primary">Ver Todos los Logs</a>
                             </div>
                         </div><!-- end cardbody -->
                     </div><!-- end card -->
@@ -86,7 +86,7 @@
                 <div class="col-xl-9">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
-                            <h4 class="card-title flex-grow-1 mb-0">EQUIPO IT</h4>
+                            <h4 class="card-title flex-grow-1 mb-0">Log</h4>
 
                         </div><!-- end cardheader -->
                         <div class="card-body">
@@ -96,11 +96,9 @@
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Descripcion</th>
-                                        <th scope="col">Fecha Creacion</th>
+                                        <th scope="col">Observaciones</th>
+                                        <th scope="col">Fecha Finalizacion</th>
                                         <th scope="col">Estado</th>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Categoria</th>
                                         <th scope="col">Usuario</th>
                                         <th scope="col">Action</th>
 
@@ -108,21 +106,19 @@
                                     </thead><!-- thead -->
 
                                     <tbody>
-                                    <?php $__currentLoopData = $documentacions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documentacion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    @foreach($logs as $log)
 
                                         <tr>
 
-                                            <td class="id"><?php echo e($documentacion->id); ?></td>
+                                            <td class="id">{{$log->id}}</td>
 
 
-                                            <td class="nombre"><?php echo e($documentacion->nombre); ?></td>
+                                            <td class="nombre">{{$log->nombre}}</td>
 
-                                            <td class="descripcion"><?php echo e($documentacion->descripcion); ?></td>
-                                            <td class="fecha_creacion"><?php echo e($documentacion->fecha_creacion); ?></td>
-                                            <td class="descripcion"><?php echo e($documentacion->estado_documentacion->nombre); ?></td>
-                                            <td class="descripcion"><?php echo e($documentacion->tipo_documentacion->nombre); ?></td>
-                                            <td class="descripcion"><?php echo e($documentacion->categoria_documentacion->nombre); ?></td>
-                                            <td class="descripcion"><?php echo e($documentacion->glpi_users->name); ?></td>
+                                            <td class="descripcion">{{$log->observaciones}}</td>
+                                            <td class="fecha_creacion">{{$log->fecha_finalizacion}}</td>
+                                            <td class="descripcion">{{$log->estado_log->nombre}}</td>
+                                            <td class="descripcion">{{$log->glpi_users->name}}</td>
 
 
                                             <td>
@@ -138,7 +134,7 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item view-item-btn"
-                                                                       href="<?php echo e(route('documentacions.show', [$documentacion->id])); ?>"><i
+                                                                       href="{{route('logs.show', [$log->id])}}"><i
                                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                                         Vista</a></li>
                                                             </ul>
@@ -147,45 +143,45 @@
                                                 </ul>
                                             </td>
                                         </tr>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    @endforeach
 
                                     </tbody>
                                 </table><!-- end table -->
                                 <div class="pagination-container">
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination justify-content-center">
-                                            
-                                            <?php if($documentacions->onFirstPage()): ?>
+                                            {{-- Previous Page Link --}}
+                                            @if ($logs->onFirstPage())
                                                 <li class="page-item disabled">
                                                     <span class="page-link">Anterior</span>
                                                 </li>
-                                            <?php else: ?>
+                                            @else
                                                 <li class="page-item">
-                                                    <a class="page-link" href="<?php echo e($documentacions->previousPageUrl()); ?>">Anterior</a>
+                                                    <a class="page-link" href="{{ $logs->previousPageUrl() }}">Anterior</a>
                                                 </li>
-                                            <?php endif; ?>
+                                            @endif
 
-                                            
-                                            <?php $__currentLoopData = range(1, $documentacions->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php if($i >= $documentacions->currentPage() - 2 && $i <= $documentacions->currentPage() + 2): ?>
-                                                    <?php if($i == $documentacions->currentPage()): ?>
-                                                        <li class="page-item active"><span class="page-link"><?php echo e($i); ?></span></li>
-                                                    <?php else: ?>
-                                                        <li class="page-item"><a class="page-link" href="<?php echo e($documentacions->url($i)); ?>"><?php echo e($i); ?></a></li>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            {{-- Pagination Elements --}}
+                                            @foreach(range(1, $logs->lastPage()) as $i)
+                                                @if($i >= $logs->currentPage() - 2 && $i <= $logs->currentPage() + 2)
+                                                    @if ($i == $logs->currentPage())
+                                                        <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
+                                                    @else
+                                                        <li class="page-item"><a class="page-link" href="{{ $logs->url($i) }}">{{ $i }}</a></li>
+                                                    @endif
+                                                @endif
+                                            @endforeach
 
-                                            
-                                            <?php if($documentacions->hasMorePages()): ?>
+                                            {{-- Next Page Link --}}
+                                            @if ($logs->hasMorePages())
                                                 <li class="page-item">
-                                                    <a class="page-link" href="<?php echo e($documentacions->nextPageUrl()); ?>">Siguiente</a>
+                                                    <a class="page-link" href="{{ $logs->nextPageUrl() }}">Siguiente</a>
                                                 </li>
-                                            <?php else: ?>
+                                            @else
                                                 <li class="page-item disabled">
                                                     <span class="page-link">Siguiente</span>
                                                 </li>
-                                            <?php endif; ?>
+                                            @endif
                                         </ul>
                                     </nav>
                                 </div>
@@ -212,64 +208,20 @@
                 <div class="col-xl-4">
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Estatus Estado de Documentación</h4>
+                            <h4 class="card-title mb-0 flex-grow-1">Estatus Estado de Log</h4>
                         </div><!-- end card header -->
 
                         <div class="card-body">
                             <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
-                                <canvas id="documentacion-status-chart" width="400" height="400"></canvas>
+                                <canvas id="log-status-chart" width="400" height="400"></canvas>
                             </div>
-                            <div id="total-documentacion" class="text-center">
+                            <div id="total-log" class="text-center">
                                 <!-- El total se actualizará dinámicamente -->
-                                <strong>Total Documentación:</strong> <span id="total-doc-count">0</span> Documentos
+                                <strong>Total Log:</strong> <span id="total-log-count">0</span> Logs
                             </div>
                             <!-- Contadores para cada estado -->
                             <div class="mt-3">
-                                <div id="documentacion-status-counters">
-                                    <!-- Se generan dinámicamente con JS -->
-                                </div>
-                            </div>
-                        </div><!-- end cardbody -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-                <div class="col-xl-4">
-                    <div class="card card-height-100">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Estatus Categoría de Documentación</h4>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
-                                <canvas id="categoria-documentacion-chart" width="400" height="400"></canvas>
-                            </div>
-                            <div id="total-categoria" class="text-center">
-                                <!-- El total se actualizará dinámicamente -->
-                                <strong>Total Documentación:</strong> <span id="total-cat-count">0</span> Documentos
-                            </div>
-                            <!-- Contadores para cada estado -->
-                            <div class="mt-3">
-                                <div id="documentacion-categorias-counters">
-                                    <!-- Se generan dinámicamente con JS -->
-                                </div>
-                            </div>
-                        </div><!-- end cardbody -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
-                <div class="col-xl-4">
-                    <div class="card card-height-100">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1">Estatus Tipo de Documentación</h4>
-                        </div>
-                        <div class="card-body">
-                            <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
-                                <canvas id="tipo-documentacion-chart" width="400" height="400"></canvas>
-                            </div>
-                            <div id="total-tipo" class="text-center">
-                                <!-- El total se actualizará dinámicamente -->
-                                <strong>Total Documentación:</strong> <span id="total-tip-count">0</span> Documentos
-                            </div>
-                            <!-- Contadores para cada estado -->
-                            <div class="mt-3">
-                                <div id="documentacion-tipos-counters">
+                                <div id="log-status-counters">
                                     <!-- Se generan dinámicamente con JS -->
                                 </div>
                             </div>
@@ -278,9 +230,9 @@
                 </div><!-- end col -->
             </div><!-- end row -->
 
-            <?php $__env->stopSection(); ?>
+            @endsection
 
-            <?php $__env->startSection('script'); ?>
+            @section('script')
 
                 <!-- Cargar Chart.js si aún no se ha cargado -->
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -288,27 +240,23 @@
                 <!-- Script para generar la gráfica -->
                 <script>
                     document.addEventListener("DOMContentLoaded", function(){
-                        fetch('/documentacions/status')
+                        fetch('/logs/status')
                             .then(response => response.json())
                             .then(data => {
-                                // Total de documentación
-                                const totalDocumentacion = data.estados.reduce((acc, estado) => acc + estado.documentacions_count, 0);
-                                const totalCategorias = data.categorias.reduce((sum, cat) => sum + cat.documentacions_count, 0);
-                                const totalTipos = data.tipos.reduce((sum, tipo) => sum + tipo.documentacions_count, 0);
+                                // Total de Log
+                                const totalLog = data.estados.reduce((acc, estado) => acc + estado.logs_count, 0);
+
 
 
                                 // Actualizar el total en la página
-                                document.getElementById('total-doc-count').textContent = totalDocumentacion;
-                                document.getElementById('total-cat-count').textContent = totalCategorias;
-                                document.getElementById('total-tip-count').textContent = totalTipos;
+                                document.getElementById('total-log-count').textContent = totalLog;
+
 
 
                                 // Generar gráficas y contadores para cada tipo
-                                generateChartAndCounters('documentacion-status-chart', 'documentacion-status-counters', data.estados);
-                                generateChartAndCounters('categoria-documentacion-chart', 'documentacion-categorias-counters', data.categorias);
-                                generateChartAndCounters('tipo-documentacion-chart', 'documentacion-tipos-counters', data.tipos);
-                            })
-                            .catch(error => console.error('Error al obtener el estado de la documentación:', error));
+                                generateChartAndCounters('log-status-chart', 'log-status-counters', data.estados);
+                                })
+                            .catch(error => console.error('Error al obtener el estado de log:', error));
                     });
 
                     function generateChartAndCounters(canvasId, countersId, items) {
@@ -320,7 +268,7 @@
 
                         // Datos para la gráfica
                         const labels = items.map(item => item.nombre);
-                        const data = items.map(item => item.documentacions_count);
+                        const data = items.map(item => item.logs_count);
                         const backgroundColor = ['rgba(54, 162, 235, 0.2)', /* otros colores */];
                         const borderColor = ['rgba(54, 162, 235, 1)', /* otros colores */];
 
@@ -330,7 +278,7 @@
                             data: {
                                 labels: labels,
                                 datasets: [{
-                                    label: 'Documentación',
+                                    label: 'Log',
                                     data: data,
                                     backgroundColor: [
                                         'rgba(54, 162, 235, 0.2)',
@@ -362,7 +310,7 @@
                             counterDiv.innerHTML = `
             <p class="fw-medium mb-0">${item.nombre}</p>
             <div>
-                <span class="text-muted">${item.documentacions_count} Documentos</span>
+                <span class="text-muted">${item.logs_count} Logs</span>
             </div>
         `;
                             countersContainer.appendChild(counterDiv);
@@ -386,7 +334,7 @@
                         // Asigna un color único al total para destacarlo.
                         const totalColor = 'rgba(54, 162, 235, 0.2)';
 
-                        function drawChart(documentaciones, totalsByDate) {
+                        function drawChart(loges, totalsByDate) {
                             const ctx = document.getElementById('projects-overview-chart').getContext('2d');
 
                             if (window.projectsOverviewChart instanceof Chart) {
@@ -410,13 +358,13 @@
                             });
 
                             // Crea datasets para cada estado.
-                            let estados = [...new Set(documentaciones.map(d => d.nombre_estado))];
+                            let estados = [...new Set(loges.map(d => d.nombre_estado))];
                             estados.forEach((estado) => {
                                 if (!colorMap.has(estado)) {
                                     colorMap.set(estado, generateRandomColor());
                                 }
                                 // Filtrar sólo las documentaciones que tienen una cantidad para este estado
-                                let estadoData = documentaciones.filter(d => d.nombre_estado === estado && d.cantidad);
+                                let estadoData = loges.filter(d => d.nombre_estado === estado && d.cantidad);
                                 if (estadoData.length > 0) {
                                     datasets.push({
                                         label: estado,
@@ -472,10 +420,10 @@
 
 
                         function fetchDataAndGenerateChart(filter) {
-                            fetch(`/documentacions/status-by-month-and-status?filter=${filter}`)
+                            fetch(`/logs/status-by-month-and-status?filter=${filter}`)
                                 .then(response => response.json())
                                 .then(data => {
-                                    drawChart(data.documentaciones, data.totalsByDate); // Asegúrate de pasar data.totalsByDate aquí
+                                    drawChart(data.loges, data.totalsByDate); // Asegúrate de pasar data.totalsByDate aquí
                                 })
                                 .catch(error => console.error('Error:', error));
                         }
@@ -491,19 +439,19 @@
                         fetchDataAndGenerateChart('ALL');
                     });
                 </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Obtener la información de estado del backend
-        fetch('/documentacions/status')
-            .then(response => response.json())
-            .then(data => {
-                const estadosContainer = document.querySelector('#estados-container');
-                estadosContainer.innerHTML = '';
-                let totalDocumentos = 0;
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Obtener la información de estado del backend
+                        fetch('/logs/status')
+                            .then(response => response.json())
+                            .then(data => {
+                                const estadosContainer = document.querySelector('#estados-container');
+                                estadosContainer.innerHTML = '';
+                                let totallogs = 0;
 
-                data.estados.forEach(estado => {
-                    totalDocumentos += estado.documentacions_count; // Sumar el contador de cada estado para obtener el total
-                    const cardHTML = `
+                                data.estados.forEach(estado => {
+                                    totallogs += estado.logs_count; // Sumar el contador de cada estado para obtener el total
+                                    const cardHTML = `
                     <div class="col-xl-3 col-sm-6">
                         <div class="card card-animate">
                             <div class="card-body">
@@ -512,47 +460,45 @@
                                     Estado: ${estado.nombre}
                                 </p>
                                 <h4 class="fs-4 flex-grow-1 mb-0">
-                                    <span class="counter-value" data-target="${estado.documentacions_count}">
-                                        ${estado.documentacions_count}
-                                    </span> Documentos
+                                    <span class="counter-value" data-target="${estado.logs_count}">
+                                        ${estado.logs_count}
+                                    </span> Logs
                                 </h4>
                             </div><!-- end card body -->
                         </div>
                     </div><!-- end col -->
                 `;
-                    estadosContainer.insertAdjacentHTML('beforeend', cardHTML);
-                });
+                                    estadosContainer.insertAdjacentHTML('beforeend', cardHTML);
+                                });
 
-                // Crear y añadir la tarjeta para el total de documentaciones
-                const totalCardHTML = `
+                                // Crear y añadir la tarjeta para el total de Logs
+                                const totalCardHTML = `
                 <div class="col-xl-3 col-sm-6">
                     <div class="card card-animate bg-soft-primary text-white">
                         <div class="card-body">
                             <!-- Contenido de la tarjeta para el total -->
-                            <p class="text-uppercase fw-medium text-truncate mb-3">Total Documentos</p>
+                            <p class="text-uppercase fw-medium text-truncate mb-3">Total Logs</p>
                             <h4 class="fs-4 flex-grow-1 mb-0">
-                                <span class="counter-value" data-target="${totalDocumentos}">
-                                    ${totalDocumentos}
+                                <span class="counter-value" data-target="${totallogs}">
+                                    ${totallogs}
                                 </span>
                             </h4>
                         </div><!-- end card body -->
                     </div>
                 </div><!-- end col -->
             `;
-                estadosContainer.insertAdjacentHTML('afterbegin', totalCardHTML);
+                                estadosContainer.insertAdjacentHTML('afterbegin', totalCardHTML);
 
-                // Re-inicializar Feather Icons si se están utilizando
-                if (window.feather) {
-                    feather.replace();
-                }
-            })
-            .catch(error => {
-                console.error('Error al obtener los estados:', error);
-            });
-    });
-   </script>
+                                // Re-inicializar Feather Icons si se están utilizando
+                                if (window.feather) {
+                                    feather.replace();
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al obtener los estados:', error);
+                            });
+                    });
+                </script>
                 <!-- apexcharts -->
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\glpi-insumos\resources\views/documentacion/dashboard.blade.php ENDPATH**/ ?>
+@endsection
