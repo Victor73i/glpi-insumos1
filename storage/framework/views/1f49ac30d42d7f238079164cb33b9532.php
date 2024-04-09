@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('title'); ?> <?php echo app('translator')->get('Log'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 
@@ -14,11 +15,11 @@
                     <!-- Aquí se insertarán las tarjetas de estado dinámicamente -->
                 </div>
 
+            </div></div></div>
 
-            </div><!-- end row -->
 
             <div class="row">
-                <div class="col-xl-7">
+                <div class="col-xl-8">
                     <div class="card">
                         <div class="card-header border-0 align-items-center d-flex justify-content-between">
                             <h4 class="card-title mb-0 flex-grow-1">Log</h4>
@@ -63,7 +64,7 @@
                         </span>
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h6 class="mb-1"><?php echo e($log->nombre); ?></h6>
+                                            <h6 class="mb-1"><?php echo e($log->titulo); ?></h6>
                                             <p class="text-muted mb-0"><?php echo e($log->observaciones); ?> - <?php echo e($log->estado_log->nombre); ?></p>
                                         </div>
                                         <div class="flex-shrink-0">
@@ -82,10 +83,26 @@
             </div><!-- end row -->
 
             <div class="row">
-                <div class="col-xl-9">
+                <div class="col-xl-14">
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
                             <h4 class="card-title flex-grow-1 mb-0">Log</h4>
+                            <div class="flex-shrink-0">
+                                <div class="dropdown card-header-dropdown">
+                                    <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted">Filtrado Por: <i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#" data-filter="ALL">ALL</a>
+                                        <a class="dropdown-item" href="#" data-filter="Recepción">Recepción</a>
+                                        <a class="dropdown-item" href="#" data-filter="Diagnóstico">Diagnóstico</a>
+                                        <a class="dropdown-item" href="#" data-filter="Entregado">Entregado</a>
+                                        <a class="dropdown-item" href="#" data-filter="Cerrado">Cerrado</a>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div><!-- end cardheader -->
                         <div class="card-body">
@@ -112,7 +129,7 @@
                                             <td class="id"><?php echo e($log->id); ?></td>
 
 
-                                            <td class="nombre"><?php echo e($log->nombre); ?></td>
+                                            <td class="nombre"><?php echo e($log->titulo); ?></td>
 
                                             <td class="descripcion"><?php echo e($log->observaciones); ?></td>
                                             <td class="fecha_creacion"><?php echo e($log->fecha_finalizacion); ?></td>
@@ -203,8 +220,68 @@
                         </div><!-- end card body -->
                     </div><!-- end card -->
                 </div><!-- end col -->
+                <div class="col-xl-7">
+                    <div class="card">
+                        <div class="card-header align-items-center d-flex">
+                            <h4 class="card-title mb-0 flex-grow-1 py-1">Mi Log</h4>
+                            <div class="flex-shrink-0">
+                                <div class="dropdown card-header-dropdown">
+                                    <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
+                                       aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted">Filtrado Por: <i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#" data-filter="ALL">ALL</a>
+                                        <a class="dropdown-item" href="#" data-filter="Recepción">Recepción</a>
+                                        <a class="dropdown-item" href="#" data-filter="Diagnóstico">Diagnóstico</a>
+                                        <a class="dropdown-item" href="#" data-filter="Entregado">Entregado</a>
+                                        <a class="dropdown-item" href="#" data-filter="Cerrado">Cerrado</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end card header -->
+                        <div class="card-body">
+                            <div class="table-responsive table-card">
+                                <table
+                                    class="table table-borderless table-nowrap table-centered align-middle mb-0">
+                                    <thead class="table-light text-muted">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Titulo</th>
+                                        <th scope="col">Fecha Finalizacion</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Tickets</th>
+                                        <th scope="col">Usuario</th>
+                                    </tr>
+                                    </thead><!-- end thead -->
+                                    <tbody>
+                                    <tr>
+                                        <?php $__currentLoopData = $logs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $log): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                <div class="col-xl-4">
+                                        <td class="id"><?php echo e($log->id); ?></td>
+
+
+                                        <td class="nombre"><?php echo e($log->titulo); ?></td>
+
+                                        <td class="fecha_creacion"><?php echo e($log->fecha_finalizacion); ?></td>
+                                        <td class="descripcion"><?php echo e($log->estado_log->nombre); ?></td>
+                                        <td class="descripcion"><?php echo e($log->glpi_tickets->name); ?></td>
+                                        <td class="descripcion"><?php echo e($log->glpi_users->name); ?></td>
+                                    </tr><!-- end -->
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </tbody><!-- end tbody -->
+                                </table><!-- end table -->
+                            </div>
+                            <div class="mt-3 text-center">
+                                <a href="<?php echo e(route('logs.index')); ?>" class="text-muted text-decoration-underline">Load
+                                    More</a>
+                            </div>
+                        </div><!-- end cardbody -->
+                    </div><!-- end card -->
+                </div><!-- end col -->
+
+                <div class="col-xl-5">
                     <div class="card card-height-100">
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Estatus Estado de Log</h4>
@@ -228,6 +305,7 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
             </div><!-- end row -->
+
 
             <?php $__env->stopSection(); ?>
 
@@ -499,7 +577,72 @@
                     });
                 </script>
                 <!-- apexcharts -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const filterButtons = document.querySelectorAll('.dropdown-menu a[data-filter]');
+                        filterButtons.forEach(button => {
+                            button.addEventListener('click', function(event) {
+                                event.preventDefault();
+                                const filter = this.getAttribute('data-filter');
+                                updateLogTable(filter);
+                            });
+                        });
 
+                        function updateLogTable(filter) {
+                            const url = `/logs/filter-by-status?filter=${filter}`;
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    const logs = data.logs;
+                                    const tbody = document.querySelector('.table-responsive table > tbody');
+                                    tbody.innerHTML = ''; // Clear the table body
+
+                                    // Populate the table with new rows based on the fetched logs
+                                    logs.forEach(log => {
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `
+                        <td class="id">${log.id}</td>
+                        <td class="nombre">${log.titulo}</td>
+                        <td class="descripcion">${log.observaciones}</td>
+                        <td class="fecha_creacion">${log.fecha_finalizacion}</td>
+                        <td class="estado">${log.estado_log.nombre}</td>
+                        <td class="usuario">${log.glpi_users.name}</td>
+                        <td class="action">
+                          <ul class="list-inline hstack gap-2 mb-0">
+
+                                                    <li class="list-inline-item">
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-soft-secondary btn-sm dropdown"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <i class="ri-more-fill align-middle"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item view-item-btn"
+                                                                       href="<?php echo e(route('logs.show', [$log->id])); ?>"><i
+                                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                        Vista</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                        </td>
+                    `;
+                                        tbody.appendChild(row);
+                                    });
+
+                                    if(logs.length === 0) {
+                                        // Show 'No Results' message or something similar
+                                        // ...
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching logs:', error);
+                                });
+                        }
+                    });
+                </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\glpi-insumos\resources\views/log/dashboard.blade.php ENDPATH**/ ?>

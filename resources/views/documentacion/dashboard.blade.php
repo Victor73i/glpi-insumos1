@@ -14,8 +14,7 @@
                 <div id="estados-container" class="row">
                     <!-- Aquí se insertarán las tarjetas de estado dinámicamente -->
                 </div>
-
-
+            </div></div></div>
             </div><!-- end row -->
 
             <div class="row">

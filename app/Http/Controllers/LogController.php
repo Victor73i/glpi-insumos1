@@ -346,6 +346,25 @@ class LogController extends Controller
             'estados' => $estados
         ]);
     }
+
+    public function filterLogsByStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+
+        $logsQuery = Log::with('estado_log', 'glpi_users');
+
+        if ($filter !== 'ALL') {
+            $estado = EstadoLog::where('nombre', $filter)->first();
+            $logsQuery->where('id_estado_log', $estado ? $estado->id : null);
+        }
+
+        $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
+
+        return response()->json([
+            'logs' => $logs,
+        ]);
+    }
+
     //delete
     public function destroy(string $id){
         $log = Log::findOrFail($id);

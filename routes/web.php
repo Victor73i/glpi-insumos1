@@ -35,7 +35,7 @@ Route::get('/documentacions/status-by-month-and-status', [DocumentacionControlle
 Route::get('/logs/dashboard', [LogController::class, 'dashboard'])->name('logs.dashboard');
 Route::get('/logs/status', [LogController::class, 'getLogStatus'])->name('logs.status');
 Route::get('/logs/status-by-month-and-status', [LogController::class, 'getLogByMonthAndStatus'])->name('logs.getLogByMonthAndStatus');
-
+Route::get('/logs/filter-by-status', [LogController::class, 'filterLogsByStatus'])->name('logs.filterByStatus');
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
 Route::resource('/estado_logs',EstadoLogController::class);
