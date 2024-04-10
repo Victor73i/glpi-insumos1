@@ -204,12 +204,6 @@
                                                 <ul class="list-inline tasks-list-menu mb-0">
                                                     <li class="list-inline-item"><a href="{{route('tareas.show', ['tarea'=>$tarea])}}"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                     </li>
-                                                    
-                                                    <li class="list-inline-item">
-                                                        <a class="remove-item-btn" data-bs-toggle="modal" href="#deleteOrder">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                        </a>
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
