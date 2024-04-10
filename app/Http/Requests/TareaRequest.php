@@ -24,7 +24,7 @@ class TareaRequest extends FormRequest
         return [
             'nombre' => 'required',
             'descripcion' => 'required',
-            'estado' => 'required',
+            'estado' => 'nullable',
             'prioridad' => 'required',
             'fecha_asignacion' => 'required',
             'fecha_aproximada' => 'required',
