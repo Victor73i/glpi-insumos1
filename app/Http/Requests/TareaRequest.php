@@ -28,10 +28,10 @@ class TareaRequest extends FormRequest
             'prioridad' => 'required',
             'fecha_asignacion' => 'required',
             'fecha_aproximada' => 'required',
-            'fecha_terminado' => 'required',
+            'fecha_terminado' => 'nullable',
             'id_glpi_users' => 'required',
-            'id_glpi_tickets' => 'required',
-            'observacion' => 'required',
+            'id_glpi_tickets' => 'nullable',
+            'observacion' => 'nullable',
 
         ];
     }
