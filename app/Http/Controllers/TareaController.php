@@ -93,6 +93,14 @@ class TareaController extends Controller
         return redirect()-> route('tareas.index')
             ->with('success', 'Tarea update Successfully!');
     }
+    public function dashboard() {
+
+        $tareas = Tarea::latest()->paginate(10); // Usa get() en lugar de paginate()
+        $ultimosTarea = Tarea::latest()->take(5)->get();
+
+
+        return view('tarea.dashboard', compact(  'ultimosTarea', 'tareas'  ));
+    }
     //delete
     public function destroy(string $id){
         $tarea = Tarea::findOrFail($id);
