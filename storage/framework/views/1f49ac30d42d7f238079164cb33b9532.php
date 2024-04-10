@@ -232,11 +232,8 @@
                                         class="mdi mdi-chevron-down ms-1"></i></span>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#" data-filter="ALL">ALL</a>
-                                        <a class="dropdown-item" href="#" data-filter="Recepción">Recepción</a>
-                                        <a class="dropdown-item" href="#" data-filter="Diagnóstico">Diagnóstico</a>
-                                        <a class="dropdown-item" href="#" data-filter="Entregado">Entregado</a>
-                                        <a class="dropdown-item" href="#" data-filter="Cerrado">Cerrado</a>
+                                        <a class="dropdown-item" href="#" data-filter="TODOS" data-target="myLogTable">ALL</a>
+                                        <!-- No hay otros filtros, pero si agregas, sigue el mismo patrón -->
                                     </div>
                                 </div>
                             </div>
@@ -641,6 +638,60 @@
                                     console.error('Error fetching logs:', error);
                                 });
                         }
+                    });
+                </script>
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Asumiendo que este es el botón para "Mi Log"
+                        const miLogFilterButton = document.querySelector('.dropdown-menu a[data-filter="TODOS"][data-target="myLogTable"]');
+
+                        miLogFilterButton.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            // Actualizar la tabla "Mi Log"
+                            updateMiLogTable();
+                        });
+                        function updateMiLogTable() {
+                            // Define la URL para filtrar "Mi Log" por el estado "ALL"
+                            const url = `/logs/filter-by-status1?filter=TODOS`; // Asegúrate de que esta URL es correcta y apunta al endpoint deseado
+
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Asume que 'data.logs' contiene los logs filtrados
+                                    const logs = data.logs;
+                                    // Selecciona el cuerpo de la tabla específica para "Mi Log" usando un selector único
+                                    const tbody = document.querySelector('[data-mi-log] table > tbody');
+
+                                    tbody.innerHTML = ''; // Limpia el cuerpo de la tabla
+
+                                    // Itera sobre los logs y los añade a la tabla
+                                    logs.forEach(log => {
+                                        const row = `
+                        <tr>
+                            <td class="id">${log.id}</td>
+                            <td class="nombre">${log.titulo}</td>
+                            <td class="fecha_creacion">${log.fecha_finalizacion}</td>
+                            <td class="estado">${log.estado_log.nombre}</td>
+                            <td class="usuario">${log.glpi_users.name}</td>
+                        </tr>
+                    `;
+                                        // Añade cada fila nueva al cuerpo de la tabla
+                                        tbody.innerHTML += row;
+                                    });
+
+                                    if(logs.length === 0) {
+                                        // Si no hay logs, podrías mostrar un mensaje o realizar alguna acción
+                                        tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay logs disponibles</td></tr>`;
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching logs:', error);
+                                });
+                        }
+
+                        // Opcional: Llamar inmediatamente a updateMiLogTable para cargar los logs al cargar la página
+                        updateMiLogTable();
                     });
                 </script>
 <?php $__env->stopSection(); ?>
