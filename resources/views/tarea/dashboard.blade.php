@@ -1,10 +1,10 @@
 @extends('layouts.master')
-@section('title') @lang('Log') @endsection
+@section('title') @lang('Tarea') @endsection
 @section('content')
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Log @endslot
+        @slot('title') Tarea @endslot
     @endcomponent
     <div class="row project-wrapper">
         <div class="col-xxl-8">
@@ -22,7 +22,7 @@
         <div class="col-xl-8">
             <div class="card">
                 <div class="card-header border-0 align-items-center d-flex justify-content-between">
-                    <h4 class="card-title mb-0 flex-grow-1">Log</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Tarea</h4>
                     <div class="button-group" role="group" aria-label="Basic example">
                         <!-- Añade la clase .filter-btn a cada botón -->
                         <button type="button" class="btn btn-outline-primary filter-btn" data-filter="ALL">ALL</button>
@@ -54,7 +54,7 @@
                     <h6 class="text-uppercase fw-semibold mt-4 mb-3 text-muted">Últimos Registros:</h6>
                     <div class="upcoming-scheduled">
                         {{-- Bucle para mostrar cada evento/equipo IT --}}
-                        @foreach($ultimosLog as $log)
+                        @foreach($ultimosTarea as $tarea)
                             <div class="d-flex align-items-center mb-4">
                                 {{-- Aquí iría el icono o imagen que represente al equipo --}}
                                 <div class="flex-shrink-0 avatar-sm">
@@ -64,18 +64,18 @@
                         </span>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <h6 class="mb-1">{{ $log->titulo }}</h6>
-                                    <p class="text-muted mb-0">{{ $log->observaciones }} - {{ $log->estado_log->nombre}}</p>
+                                    <h6 class="mb-1">{{ $tarea->nombre }}</h6>
+                                    <p class="text-muted mb-0">{{ $tarea->descripcion }} - {{ $tarea->estado}}</p>
                                 </div>
                                 <div class="flex-shrink-0">
                                     {{-- Aquí podrías poner la fecha de registro o cualquier otra información --}}
-                                    <p class="text-muted mb-0">{{ $log->fecha_finalizacion}}</p>
+                                    <p class="text-muted mb-0">{{ $tarea->fecha_tarea}}</p>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                     <div class="mt-3 text-center">
-                        <a href="{{ route('logs.index') }}" class="btn btn-primary">Ver Todos los Logs</a>
+                        <a href="{{ route('tareas.index') }}" class="btn btn-primary">Ver Todas las Tareas</a>
                     </div>
                 </div><!-- end cardbody -->
             </div><!-- end card -->
@@ -86,7 +86,7 @@
         <div class="col-xl-14">
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h4 class="card-title flex-grow-1 mb-0">Log</h4>
+                    <h4 class="card-title flex-grow-1 mb-0">Tarea</h4>
                     <div class="flex-shrink-0">
                         <div class="dropdown card-header-dropdown">
                             <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
@@ -96,10 +96,11 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#" data-filter="ALL">ALL</a>
-                                <a class="dropdown-item" href="#" data-filter="Recepción">Recepción</a>
-                                <a class="dropdown-item" href="#" data-filter="Diagnóstico">Diagnóstico</a>
-                                <a class="dropdown-item" href="#" data-filter="Entregado">Entregado</a>
-                                <a class="dropdown-item" href="#" data-filter="Cerrado">Cerrado</a>
+                                <a class="dropdown-item" href="#" data-filter="en espera">En Espera</a>
+                                <a class="dropdown-item" href="#" data-filter="terminado">Terminado</a>
+                                <a class="dropdown-item" href="#" data-filter="en proceso">En Proceso</a>
+                                <a class="dropdown-item" href="#" data-filter="nuevo">Nuevo</a>
+                                <a class="dropdown-item" href="#" data-filter="borrado">Borrado</a>
                             </div>
                         </div>
                     </div>
@@ -112,29 +113,29 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
-                                <th scope="col">Observaciones</th>
-                                <th scope="col">Fecha Finalizacion</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Fecha Terminado</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Usuario</th>
+                                <th scope="col">Tickets</th>
                                 <th scope="col">Action</th>
 
                             </tr><!-- end tr -->
                             </thead><!-- thead -->
 
                             <tbody>
-                            @foreach($logs as $log)
+                            @foreach($tareas as $tarea)
 
                                 <tr>
 
-                                    <td class="id">{{$log->id}}</td>
+                                    <td class="id">{{$tarea->id}}</td>
 
 
-                                    <td class="nombre">{{$log->titulo}}</td>
+                                    <td class="nombre">{{$tarea->nombre}}</td>
 
-                                    <td class="descripcion">{{$log->observaciones}}</td>
-                                    <td class="fecha_creacion">{{$log->fecha_finalizacion}}</td>
-                                    <td class="descripcion">{{$log->estado_log->nombre}}</td>
-                                    <td class="descripcion">{{$log->glpi_users->name}}</td>
+                                    <td class="descripcion">{{$tarea->descripcion}}</td>
+                                    <td class="fecha_creacion">{{$tarea->fecha_terminado}}</td>
+                                    <td class="descripcion">{{$tarea->estado}}</td>
+                                    <td class="descripcion">{{$tarea->glpi_tickets->name}}</td>
 
 
                                     <td>
@@ -150,7 +151,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li><a class="dropdown-item view-item-btn"
-                                                               href="{{route('logs.show', [$log->id])}}"><i
+                                                               href="{{route('tareas.show', [$tarea->id])}}"><i
                                                                     class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                                 Vista</a></li>
                                                     </ul>
@@ -167,31 +168,31 @@
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
                                     {{-- Previous Page Link --}}
-                                    @if ($logs->onFirstPage())
+                                    @if ($tareas->onFirstPage())
                                         <li class="page-item disabled">
                                             <span class="page-link">Anterior</span>
                                         </li>
                                     @else
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $logs->previousPageUrl() }}">Anterior</a>
+                                            <a class="page-link" href="{{ $tareas->previousPageUrl() }}">Anterior</a>
                                         </li>
                                     @endif
 
                                     {{-- Pagination Elements --}}
-                                    @foreach(range(1, $logs->lastPage()) as $i)
-                                        @if($i >= $logs->currentPage() - 2 && $i <= $logs->currentPage() + 2)
-                                            @if ($i == $logs->currentPage())
+                                    @foreach(range(1, $tareas->lastPage()) as $i)
+                                        @if($i >= $tareas->currentPage() - 2 && $i <= $tareas->currentPage() + 2)
+                                            @if ($i == $tareas->currentPage())
                                                 <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
                                             @else
-                                                <li class="page-item"><a class="page-link" href="{{ $logs->url($i) }}">{{ $i }}</a></li>
+                                                <li class="page-item"><a class="page-link" href="{{ $tareas->url($i) }}">{{ $i }}</a></li>
                                             @endif
                                         @endif
                                     @endforeach
 
                                     {{-- Next Page Link --}}
-                                    @if ($logs->hasMorePages())
+                                    @if ($tareas->hasMorePages())
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ $logs->nextPageUrl() }}">Siguiente</a>
+                                            <a class="page-link" href="{{ $tareas->nextPageUrl() }}">Siguiente</a>
                                         </li>
                                     @else
                                         <li class="page-item disabled">
@@ -245,33 +246,34 @@
                             <thead class="table-light text-muted">
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">Fecha Finalizacion</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Fecha Terminado</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Tickets</th>
-                                <th scope="col">Usuario</th>
                             </tr>
                             </thead><!-- end thead -->
                             <tbody>
                             <tr>
-                                @foreach($logs as $log)
+                                @foreach($tareas as $tarea)
 
-                                    <td class="id">{{$log->id}}</td>
+                                    <td class="id">{{$tarea->id}}</td>
 
 
-                                    <td class="nombre">{{$log->titulo}}</td>
+                                    <td class="nombre">{{$tarea->nombre}}</td>
 
-                                    <td class="fecha_creacion">{{$log->fecha_finalizacion}}</td>
-                                    <td class="descripcion">{{$log->estado_log->nombre}}</td>
-                                    <td class="descripcion">{{$log->glpi_tickets->name}}</td>
-                                    <td class="descripcion">{{$log->glpi_users->name}}</td>
+                                    <td class="descripcion">{{$tarea->descripcion}}</td>
+                                    <td class="fecha_creacion">{{$tarea->fecha_terminado}}</td>
+                                    <td class="descripcion">{{$tarea->estado}}</td>
+                                    <td class="descripcion">{{$tarea->glpi_tickets->name}}</td>
                             </tr><!-- end -->
                             @endforeach
                             </tbody><!-- end tbody -->
                         </table><!-- end table -->
+
                     </div>
                     <div class="mt-3 text-center">
-                        <a href="{{route('logs.index')}}" class="text-muted text-decoration-underline">Load
+                        <a href="{{route('tareas.index')}}" class="text-muted text-decoration-underline">Load
                             More</a>
                     </div>
                 </div><!-- end cardbody -->
@@ -449,7 +451,7 @@
                             backgroundColor: colorMap.get(estado),
                             borderColor: colorMap.get(estado),
                             borderWidth: 1,
-                            barThickness: 20, // Ajusta el grosor de la barra como necesites
+                            barThickness: 10, // Ajusta el grosor de la barra como necesites
                             type: 'bar',
                         });
                     }
@@ -586,7 +588,7 @@
             });
 
             function updateLogTable(filter) {
-                const url = `/logs/filter-by-status?filter=${filter}`;
+                const url = `/tareas/filter-by-status?filter=${filter}`;
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
@@ -598,12 +600,12 @@
                         logs.forEach(log => {
                             const row = document.createElement('tr');
                             row.innerHTML = `
-                        <td class="id">${log.id}</td>
-                        <td class="nombre">${log.titulo}</td>
-                        <td class="descripcion">${log.observaciones}</td>
-                        <td class="fecha_creacion">${log.fecha_finalizacion}</td>
-                        <td class="estado">${log.estado_log.nombre}</td>
-                        <td class="usuario">${log.glpi_users.name}</td>
+                        <td class="id">${tarea.id}</td>
+                        <td class="nombre">${tarea.nombre}</td>
+                        <td class="descripcion">${tarea.descripcion}</td>
+                        <td class="fecha_creacion">${tarea.fecha_terminado}</td>
+                        <td class="estado">${tarea.estado}</td>
+                        <td class="usuario">${tarea.glpi_tickets.name}</td>
                         <td class="action">
                           <ul class="list-inline hstack gap-2 mb-0">
 
@@ -617,7 +619,7 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item view-item-btn"
-                                                                       href="{{route('logs.show', [$log->id])}}"><i
+                                                                       href="{{route('tareas.show', [$tarea->id])}}"><i
                                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i>
                                                                         Vista</a></li>
                                                             </ul>

@@ -101,6 +101,133 @@ class TareaController extends Controller
 
         return view('tarea.dashboard', compact(  'ultimosTarea', 'tareas'  ));
     }
+    public function getLogStatus() {
+        try {
+            $estados = EstadoLog::withCount('logs')->get();
+            return response()->json([
+                'estados' => $estados,
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getLogByMonthAndStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+        $dateEnd = now(); // La fecha de finalización siempre será "ahora".
+        $dateStart = now()->startOfDay(); // Por defecto establece la fecha de inicio al comienzo del día actual.
+
+        $query = Log::select(
+            DB::raw('DAY(fecha_finalizacion) as dia'),
+            DB::raw('MONTH(fecha_finalizacion) as mes'),
+            DB::raw('YEAR(fecha_finalizacion) as año'),
+            'id_estado_log',
+            DB::raw('COUNT(*) as cantidad')
+        )
+            ->join('estado_log', 'estado_log.id', '=', 'log.id_estado_log')
+            ->addSelect('estado_log.nombre as nombre_estado');
+
+        if ($filter !== 'ALL') {
+            $dateEnd = now(); // Define la fecha de fin como la fecha y hora actual
+
+            switch ($filter) {
+                case '1D':
+                    $dateStart = now()->startOfDay(); // Inicia en el comienzo del día actual.
+                    break;
+                case '1S':
+                    $dateStart = now()->subDays(7)->startOfDay(); // Resta 7 días para obtener la semana.
+                    break;
+                case '1M':
+                    $dateStart = now()->subMonth()->startOfMonth();
+                    break;
+                case '6M':
+                    $dateStart = now()->subMonths(6)->startOfMonth();
+                    break;
+                case '1Y':
+                    $dateStart = now()->subYear()->startOfDay();
+                    break;
+                // Asegúrate de tener una opción predeterminada en caso de que `$filter` no coincida con ninguno de los casos.
+                default:
+                    $dateStart = now()->startOfDay();
+                    break;
+            }
+            $query->where('fecha_finalizacion', '>=', $dateStart)->where('fecha_finalizacion', '<=', $dateEnd);
+        }
+
+        $estados = EstadoLog::select('id', 'nombre')->get();
+
+
+        $totalsByDate = clone $query;
+        $totalsByDate = $totalsByDate->select(
+            DB::raw('DAY(fecha_finalizacion) as dia'),
+            DB::raw('MONTH(fecha_finalizacion) as mes'),
+            DB::raw('YEAR(fecha_finalizacion) as año'),
+            DB::raw('COUNT(*) as total')
+        )
+            ->groupBy('dia', 'mes', 'año')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get();
+// Añade los nombres de los estados a los logs
+        $loges = $query->groupBy('dia', 'mes', 'año', 'id_estado_log')
+            ->orderBy('año', 'desc')
+            ->orderBy('mes', 'desc')
+            ->orderBy('dia', 'desc')
+            ->get()->map(function ($item) use ($estados) {
+                $estado = $estados->firstWhere('id', $item->id_estado_log);
+                $item->nombre_estado = $estado ? $estado->nombre : null;
+                return $item;
+            });
+        return response()->json([
+            'loges' => $loges,
+            'totalsByDate' => $totalsByDate, // Asegúrate de agregar esto
+            'estados' => $estados
+        ]);
+    }
+
+    public function filterLogsByStatus(Request $request)
+    {
+        $filter = $request->query('filter', 'ALL');
+
+        $logsQuery = Log::with('estado_log', 'glpi_users');
+
+        if ($filter !== 'ALL') {
+            $estado = EstadoLog::where('nombre', $filter)->first();
+            $logsQuery->where('id_estado_log', $estado ? $estado->id : null);
+        }
+
+        $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
+
+        return response()->json([
+            'logs' => $logs,
+        ]);
+    }
+    public function filterLogsByStatus1(Request $request)
+    {
+        $filter = $request->query('filter', 'TODOS');
+        $userId = auth()->user()->id; // Asumiendo que estás usando la autenticación de Laravel
+
+        $logsQuery = Log::with('estado_log', 'glpi_users');
+
+        // Si el filtro es 'ALL', no aplicar filtro de estado, pero sí de usuario para "Mi Log"
+        if ($filter === 'TODOS') {
+            $logsQuery->where('user_id', $userId);
+        } else {
+            $estado = EstadoLog::where('nombre', $filter)->first();
+            $logsQuery->where('id_estado_log', $estado ? $estado->id : null)
+                ->where('user_id', $userId); // Asegurarse de que siempre se filtre por el usuario logueado
+        }
+
+        $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
+
+        return response()->json([
+            'logs' => $logs,
+        ]);
+    }
+
     //delete
     public function destroy(string $id){
         $tarea = Tarea::findOrFail($id);

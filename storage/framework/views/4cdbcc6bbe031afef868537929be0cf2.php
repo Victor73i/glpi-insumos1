@@ -1,591 +1,701 @@
-<?php $__env->startSection('title'); ?> Job Dashboard <?php $__env->stopSection(); ?>
-<?php $__env->startSection('css'); ?>
-    <!-- jsvectormap css -->
-    <link href="<?php echo e(URL::asset('build/libs/jsvectormap/css/jsvectormap.min.css')); ?>" rel="stylesheet" type="text/css" />
 
-    <!-- gridjs css -->
-    <link rel="stylesheet" href="<?php echo e(URL::asset('build/libs/gridjs/theme/mermaid.min.css')); ?>">
-<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('Tarea'); ?> <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
+
     <?php $__env->startComponent('components.breadcrumb'); ?>
         <?php $__env->slot('li_1'); ?> Dashboards <?php $__env->endSlot(); ?>
-        <?php $__env->slot('title'); ?> Job Dashboard <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?> Tarea <?php $__env->endSlot(); ?>
     <?php echo $__env->renderComponent(); ?>
-
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="d-flex flex-column h-100">
-                <div class="row">
-                    <div class="col-xl-6 col-md-6">
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3"> Total Jobs</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="36894">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="total_jobs" data-colors='["--vz-success"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <!--end col-->
-                    <div class="col-xl-6 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3"> Apply Jobs</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="28410">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="apply_jobs" data-colors='["--vz-success"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-xl-6 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3">New Jobs</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="4305">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="new_jobs_chart" data-colors='["--vz-success"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-xl-6 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3"> Interview</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="5021">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="interview_chart" data-colors='["--vz-danger"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                    <div class="col-xl-6 col-md-6">
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3"> Hired</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="3948">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="hired_chart" data-colors='["--vz-success"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div>
-                    <!--end col-->
-                    <div class="col-xl-6 col-md-6">
-                        <!-- card -->
-                        <div class="card card-animate overflow-hidden">
-                            <div class="position-absolute start-0" style="z-index: 0;">
-                                <svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120" width="200" height="120">
-                                    <style>
-                                        .s0 {
-                                            opacity: .05;
-                                            fill: var(--vz-success)
-                                        }
-
-                                    </style>
-                                    <path id="Shape 8" class="s0" d="m189.5-25.8c0 0 20.1 46.2-26.7 71.4 0 0-60 15.4-62.3 65.3-2.2 49.8-50.6 59.3-57.8 61.5-7.2 2.3-60.8 0-60.8 0l-11.9-199.4z" />
-                                </svg>
-                            </div>
-                            <div class="card-body" style="z-index:1 ;">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-grow-1 overflow-hidden">
-                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Rejected</p>
-                                        <h4 class="fs-22 fw-semibold ff-secondary mb-0"><span class="counter-value" data-target="1340">0</span></h4>
-                                    </div>
-                                    <div class="flex-shrink-0">
-                                        <div id="rejected_chart" data-colors='["--vz-danger"]' class="apex-charts" dir="ltr"></div>
-                                    </div>
-                                </div>
-                            </div><!-- end card body -->
-                        </div><!-- end card -->
-                    </div><!-- end col -->
-                </div>
-                <!--end row-->
-            </div>
-        </div>
-        <!--end col-->
-        <div class="col-xl-6">
-            <div class="card card-height-100">
-                <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Featured Companies</h4>
-                    <div class="flex-shrink-0">
-                        <a href="#!" class="btn btn-soft-primary btn-sm">View All Companies <i class="ri-arrow-right-line align-bottom"></i></a>
-                    </div>
-                </div><!-- end card header -->
-
-                <div class="card-body">
-                    <div class="table-responsive table-card">
-                        <table class="table table-centered table-hover align-middle table-nowrap mb-0">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="avatar-xs me-2 flex-shrink-0">
-                                            <div class="avatar-title bg-soft-secondary rounded">
-                                                <img src="<?php echo e(URL::asset('build/images/companies/img-1.png')); ?>" alt="" height="16">
-                                            </div>
-                                        </div>
-                                        <h6 class="mb-0">Force Medicines</h6>
-                                    </div>
-                                </td>
-                                <td>
-                                    <i class="ri-map-pin-2-line text-primary me-1 align-bottom"></i> Cullera, Spain
-                                </td>
-                                <td>
-                                    <ul class="list-inline mb-0">
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="link-secondary"><i class="ri-facebook-fill"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="link-danger"><i class="ri-mail-line"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="link-primary"><i class="ri-global-line"></i></a>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <a href="#!" class="link-info"><i class="ri-twitter-line"></i></a>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <a href="#!" class="btn btn-link btn-sm">View More <i class="ri-arrow-right-line align-bottom"></i></a>
-                                </td>
-                            </tr>
-                            
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="align-items-center mt-4 pt-2 justify-content-between d-flex">
-                        <div class="flex-shrink-0">
-                            <div class="text-muted">
-                                Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">25</span> Results
-                            </div>
-                        </div>
-                        <ul class="pagination pagination-separated pagination-sm mb-0">
-                            <li class="page-item disabled">
-                                <a href="#" class="page-link">←</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">1</a>
-                            </li>
-                            <li class="page-item active">
-                                <a href="#" class="page-link">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">→</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div> <!-- .card-->
-        </div>
-        <!--end col-->
-    </div>
-    <!--end row-->
-
-    <div class="row">
+    <div class="row project-wrapper">
         <div class="col-xxl-8">
-            <div class="card card-height-100">
-                <div class="card-header border-0 align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Applications Statistic</h4>
-                    <div>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            ALL
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            1M
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                            6M
-                        </button>
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                            1Y
-                        </button>
+            <div class="row">
+
+
+                <div id="estados-container" class="row">
+                    <!-- Aquí se insertarán las tarjetas de estado dinámicamente -->
+                </div>
+
+            </div></div></div>
+
+
+    <div class="row">
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-header border-0 align-items-center d-flex justify-content-between">
+                    <h4 class="card-title mb-0 flex-grow-1">Tarea</h4>
+                    <div class="button-group" role="group" aria-label="Basic example">
+                        <!-- Añade la clase .filter-btn a cada botón -->
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="ALL">ALL</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1D">1D</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1S">1S</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1M">1M</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="6M">6M</button>
+                        <button type="button" class="btn btn-outline-primary filter-btn" data-filter="1Y">1Y</button>
                     </div>
                 </div><!-- end card header -->
 
-                <div class="card-header p-0 border-0 bg-soft-light">
-                    <div class="row g-0 text-center">
-                        <div class="col-6 col-sm-3">
-                            <div class="p-3 border border-dashed border-start-0">
-                                <h5 class="mb-1"><span class="counter-value" data-target="3364">0</span></h5>
-                                <p class="text-muted mb-0">New Applications</p>
-                            </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                            <div class="p-3 border border-dashed border-start-0">
-                                <h5 class="mb-1"><span class="counter-value" data-target="2804">0</span></h5>
-                                <p class="text-muted mb-0">Interview</p>
-                            </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                            <div class="p-3 border border-dashed border-start-0">
-                                <h5 class="mb-1"><span class="counter-value" data-target="2402">0</span></h5>
-                                <p class="text-muted mb-0">Hired</p>
-                            </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                            <div class="p-3 border border-dashed border-start-0 border-end-0">
-                                <h5 class="mb-1 text-success"><span class="counter-value" data-target="8">0</span>k</h5>
-                                <p class="text-muted mb-0">Total Applications</p>
-                            </div>
-                        </div>
-                        <!--end col-->
-                    </div>
-                </div><!-- end card header -->
+                <!-- ... El resto de tu código ... -->
 
                 <div class="card-body p-0 pb-2">
-                    <div class="w-100">
-                        <div id="line_chart_dashed" data-colors='["--vz-success", "--vz-info", "--vz-primary"]' class="apex-charts" dir="ltr"></div>
+                    <div>
+                        <!-- Elemento canvas para Chart.js -->
+                        <canvas id="projects-overview-chart" width="400" height="400"></canvas>
                     </div>
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col -->
+
         <div class="col-xxl-4">
             <div class="card">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h6 class="card-title mb-0 flex-grow-1">Popular Candidates</h6>
-                        <div class="flex-shrink-0">
-                            <a href="apps-job-candidate-lists" class="link-primary">View All <i class="ri-arrow-right-line"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-0">
-                    <div class="col-lg-6">
-                        <div class="card-body border-end">
-                            <div class="search-box">
-                                <input type="text" class="form-control bg-light border-light" autocomplete="off" id="searchList" placeholder="Search candidate...">
-                                <i class="ri-search-line search-icon"></i>
-                            </div>
-                            <div data-simplebar style="max-height: 190px" class="px-3 mx-n3">
-                                <ul class="list-unstyled mb-0 pt-2" id="candidate-list">
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-10.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Tonya Noble</span> <span class="text-muted fw-normal">@tonya</span></h5>
-                                                <div class="d-none candidate-position">Web Developer</div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-1.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Nicholas Ball</span> <span class="text-muted fw-normal">@nicholas</span></h5>
-                                                <div class="d-none candidate-position">Assistant / Store Keeper</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-9.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Zynthia Marrow</span> <span class="text-muted fw-normal">@zynthia</span></h5>
-                                                <div class="d-none candidate-position">Full Stack Engineer</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Cheryl Moore</span> <span class="text-muted fw-normal">@Cheryl</span></h5>
-                                                <div class="d-none candidate-position">Product Designer</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Jennifer Bailey</span> <span class="text-muted fw-normal">@Jennifer</span></h5>
-                                                <div class="d-none candidate-position">Marketing Director</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" class="d-flex align-items-center py-2">
-                                            <div class="flex-shrink-0 me-2">
-                                                <div class="avatar-xs">
-                                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt="" class="img-fluid rounded-circle candidate-img">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h5 class="fs-13 mb-1 text-truncate"><span class="candidate-name">Hadley Leonard</span> <span class="text-muted fw-normal">@hadley</span></h5>
-                                                <div class="d-none candidate-position">Executive, HR Operations</div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="card-body text-center">
-                            <div class="avatar-md mb-3 mx-auto">
-                                <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="" id="candidate-img" class="img-thumbnail rounded-circle shadow-none">
-                            </div>
-
-                            <h5 id="candidate-name" class="mb-0">Tonya Noble</h5>
-                            <p id="candidate-position" class="text-muted">Web Developer</p>
-
-                            <div class="d-flex gap-2 justify-content-center mb-3">
-                                <button type="button" class="btn avatar-xs p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Google">
-                                <span class="avatar-title rounded-circle bg-light text-body">
-                                    <i class="ri-google-line"></i>
-                                </span>
-                                </button>
-
-                                <button type="button" class="btn avatar-xs p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin">
-                                <span class="avatar-title rounded-circle bg-light text-body">
-                                    <i class="ri-linkedin-line"></i>
-                                </span>
-                                </button>
-                                <button type="button" class="btn avatar-xs p-0" data-bs-toggle="tooltip" data-bs-placement="top" title="Dribbble">
-                                <span class="avatar-title rounded-circle bg-light text-body">
-                                    <i class="ri-dribbble-fill"></i>
-                                </span>
-                                </button>
-                            </div>
-
-                            <div>
-                                <button type="button" class="btn btn-success custom-toggle w-100" data-bs-toggle="button" aria-pressed="false">
-                                    <span class="icon-on"><i class="ri-add-line align-bottom me-1"></i> Follow</span>
-                                    <span class="icon-off"><i class="ri-user-unfollow-line align-bottom me-1"></i> Unfollow</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- end card -->
-
-        </div><!-- end col -->
-    </div>
-    <!--end row-->
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row g-4 align-items-center">
-                        <div class="col-sm-auto">
-                            <div>
-                                <h4 class="card-title mb-0 flex-grow-1">Recomended Jobs</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="d-flex justify-content-sm-end">
-                                <div class="search-box ms-2">
-                                    <input type="text" class="form-control" id="searchResultList" placeholder="Search for jobs...">
-                                    <i class="ri-search-line search-icon"></i>
+                <div class="card-header border-0">
+                    <h4 class="card-title mb-0">Últimos Logs</h4>
+                </div><!-- end cardheader -->
+                <div class="card-body pt-0">
+                    <h6 class="text-uppercase fw-semibold mt-4 mb-3 text-muted">Últimos Registros:</h6>
+                    <div class="upcoming-scheduled">
+                        
+                        <?php $__currentLoopData = $ultimosTarea; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarea): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="d-flex align-items-center mb-4">
+                                
+                                <div class="flex-shrink-0 avatar-sm">
+                        <span class="avatar-title bg-soft-primary text-primary rounded-circle fs-4">
+                            
+                            <i class="ri-computer-line"></i>
+                        </span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6 class="mb-1"><?php echo e($tarea->nombre); ?></h6>
+                                    <p class="text-muted mb-0"><?php echo e($tarea->descripcion); ?> - <?php echo e($tarea->estado); ?></p>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    
+                                    <p class="text-muted mb-0"><?php echo e($tarea->fecha_tarea); ?></p>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div id="recomended-jobs" class="table-card"></div>
-                </div>
-            </div>
-        </div>
-        <!--end col-->
-    </div>
-    <!--end row-->
+                    <div class="mt-3 text-center">
+                        <a href="<?php echo e(route('tareas.index')); ?>" class="btn btn-primary">Ver Todas las Tareas</a>
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row -->
 
     <div class="row">
-        <div class="col-xxl-8">
+        <div class="col-xl-14">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h4 class="card-title flex-grow-1 mb-0">Tarea</h4>
+                    <div class="flex-shrink-0">
+                        <div class="dropdown card-header-dropdown">
+                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted">Filtrado Por: <i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#" data-filter="ALL">ALL</a>
+                                <a class="dropdown-item" href="#" data-filter="en espera">En Espera</a>
+                                <a class="dropdown-item" href="#" data-filter="terminado">Terminado</a>
+                                <a class="dropdown-item" href="#" data-filter="en proceso">En Proceso</a>
+                                <a class="dropdown-item" href="#" data-filter="nuevo">Nuevo</a>
+                                <a class="dropdown-item" href="#" data-filter="borrado">Borrado</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- end cardheader -->
+                <div class="card-body">
+                    <div class="table-responsive table-card">
+                        <table class="table table-nowrap table-centered align-middle">
+                            <thead class="bg-light text-muted">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Fecha Terminado</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Tickets</th>
+                                <th scope="col">Action</th>
+
+                            </tr><!-- end tr -->
+                            </thead><!-- thead -->
+
+                            <tbody>
+                            <?php $__currentLoopData = $tareas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarea): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                <tr>
+
+                                    <td class="id"><?php echo e($tarea->id); ?></td>
+
+
+                                    <td class="nombre"><?php echo e($tarea->nombre); ?></td>
+
+                                    <td class="descripcion"><?php echo e($tarea->descripcion); ?></td>
+                                    <td class="fecha_creacion"><?php echo e($tarea->fecha_terminado); ?></td>
+                                    <td class="descripcion"><?php echo e($tarea->estado); ?></td>
+                                    <td class="descripcion"><?php echo e($tarea->glpi_tickets->name); ?></td>
+
+
+                                    <td>
+                                        <ul class="list-inline hstack gap-2 mb-0">
+
+                                            <li class="list-inline-item">
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-soft-secondary btn-sm dropdown"
+                                                        type="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="ri-more-fill align-middle"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item view-item-btn"
+                                                               href="<?php echo e(route('tareas.show', [$tarea->id])); ?>"><i
+                                                                    class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                Vista</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                            </tbody>
+                        </table><!-- end table -->
+                        <div class="pagination-container">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    
+                                    <?php if($tareas->onFirstPage()): ?>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Anterior</span>
+                                        </li>
+                                    <?php else: ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="<?php echo e($tareas->previousPageUrl()); ?>">Anterior</a>
+                                        </li>
+                                    <?php endif; ?>
+
+                                    
+                                    <?php $__currentLoopData = range(1, $tareas->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($i >= $tareas->currentPage() - 2 && $i <= $tareas->currentPage() + 2): ?>
+                                            <?php if($i == $tareas->currentPage()): ?>
+                                                <li class="page-item active"><span class="page-link"><?php echo e($i); ?></span></li>
+                                            <?php else: ?>
+                                                <li class="page-item"><a class="page-link" href="<?php echo e($tareas->url($i)); ?>"><?php echo e($i); ?></a></li>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                    
+                                    <?php if($tareas->hasMorePages()): ?>
+                                        <li class="page-item">
+                                            <a class="page-link" href="<?php echo e($tareas->nextPageUrl()); ?>">Siguiente</a>
+                                        </li>
+                                    <?php else: ?>
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Siguiente</span>
+                                        </li>
+                                    <?php endif; ?>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="noresult" style="display: none">
+                            <div class="text-center">
+                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json"
+                                           trigger="loop" colors="primary:#121331,secondary:#08a88a"
+                                           style="width:75px;height:75px">
+                                </lord-icon>
+                                <h5 class="mt-2">Sorry! No Result Found</h5>
+                                <p class="text-muted mb-0">We've searched more than 150+ contacts We
+                                    did not find any
+                                    contacts for you search.</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div><!-- end card body -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+        <div class="col-xl-7">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Recent Applicants</h4>
+                    <h4 class="card-title mb-0 flex-grow-1 py-1">Mi Log</h4>
                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-soft-info btn-sm">
-                            <i class="ri-file-list-3-line align-bottom"></i> Generate Report
-                        </button>
+                        <div class="dropdown card-header-dropdown">
+                            <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <span class="text-muted">Filtrado Por: <i
+                                        class="mdi mdi-chevron-down ms-1"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#" data-filter="TODOS" data-target="myLogTable">ALL</a>
+                                <!-- No hay otros filtros, pero si agregas, sigue el mismo patrón -->
+                            </div>
+                        </div>
                     </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div class="table-responsive table-card">
+                        <table
+                            class="table table-borderless table-nowrap table-centered align-middle mb-0">
+                            <thead class="table-light text-muted">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Fecha Terminado</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Tickets</th>
+                            </tr>
+                            </thead><!-- end thead -->
+                            <tbody>
+                            <tr>
+                                <?php $__currentLoopData = $tareas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarea): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+                                    <td class="id"><?php echo e($tarea->id); ?></td>
+
+
+                                    <td class="nombre"><?php echo e($tarea->nombre); ?></td>
+
+                                    <td class="descripcion"><?php echo e($tarea->descripcion); ?></td>
+                                    <td class="fecha_creacion"><?php echo e($tarea->fecha_terminado); ?></td>
+                                    <td class="descripcion"><?php echo e($tarea->estado); ?></td>
+                                    <td class="descripcion"><?php echo e($tarea->glpi_tickets->name); ?></td>
+                            </tr><!-- end -->
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tbody><!-- end tbody -->
+                        </table><!-- end table -->
+
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a href="<?php echo e(route('tareas.index')); ?>" class="text-muted text-decoration-underline">Load
+                            More</a>
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+
+        <div class="col-xl-5">
+            <div class="card card-height-100">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Estatus Estado de Log</h4>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-                    <div class="table-responsive table-card">
-                        <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                            <thead class="text-muted table-light">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Candidate Name</th>
-                                <th scope="col">Designation</th>
-                                <th scope="col">Rate/hr</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Rating</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <a href="#!" class="fw-medium link-primary">#VZ2112</a>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="flex-shrink-0 me-2">
-                                            <img src="<?php echo e(URL::asset('build/images/users/avatar-1.jpg')); ?>" alt="" class="avatar-xs rounded-circle" />
-                                        </div>
-                                        <div class="flex-grow-1">Nicholas Ball</div>
-                                    </div>
-                                </td>
-                                <td>Assistant / Store Keeper</td>
-                                <td>
-                                    <span class="text-success">$109.00</span>
-                                </td>
-                                <td>California, US</td>
-                                <td>
-                                    <span class="badge badge-soft-success">Full Time</span>
-                                </td>
-                                <td>
-                                    <h5 class="fs-14 fw-medium mb-0">5.0<span class="text-muted fs-11 ms-1">(245 Rating)</span></h5>
-                                </td>
-                            </tr><!-- end tr -->
-
-
-                            </tbody><!-- end tbody -->
-                        </table><!-- end table -->
+                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                        <canvas id="log-status-chart" width="400" height="400"></canvas>
                     </div>
-                </div>
-            </div> <!-- .card-->
-        </div> <!-- .col-->
+                    <div id="total-log" class="text-center">
+                        <!-- El total se actualizará dinámicamente -->
+                        <strong>Total Log:</strong> <span id="total-log-count">0</span> Logs
+                    </div>
+                    <!-- Contadores para cada estado -->
+                    <div class="mt-3">
+                        <div id="log-status-counters">
+                            <!-- Se generan dinámicamente con JS -->
+                        </div>
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row -->
 
-    </div> <!-- end row-->
 
 <?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('script'); ?>
+
+    <!-- Cargar Chart.js si aún no se ha cargado -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Script para generar la gráfica -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            fetch('/logs/status')
+                .then(response => response.json())
+                .then(data => {
+                    // Total de Log
+                    const totalLog = data.estados.reduce((acc, estado) => acc + estado.logs_count, 0);
+
+
+
+                    // Actualizar el total en la página
+                    document.getElementById('total-log-count').textContent = totalLog;
+
+
+
+                    // Generar gráficas y contadores para cada tipo
+                    generateChartAndCounters('log-status-chart', 'log-status-counters', data.estados);
+                })
+                .catch(error => console.error('Error al obtener el estado de log:', error));
+        });
+
+        function generateChartAndCounters(canvasId, countersId, items) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const countersContainer = document.getElementById(countersId);
+
+            // Limpia los contadores existentes
+            countersContainer.innerHTML = '';
+
+            // Datos para la gráfica
+            const labels = items.map(item => item.nombre);
+            const data = items.map(item => item.logs_count);
+            const backgroundColor = ['rgba(54, 162, 235, 0.2)', /* otros colores */];
+            const borderColor = ['rgba(54, 162, 235, 1)', /* otros colores */];
+
+            // Crea la gráfica
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Log',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Crea y añade los contadores para cada item
+            items.forEach(item => {
+                const counterDiv = document.createElement('div');
+                counterDiv.classList.add('d-flex', 'justify-content-between', 'py-2');
+                counterDiv.innerHTML = `
+            <p class="fw-medium mb-0">${item.nombre}</p>
+            <div>
+                <span class="text-muted">${item.logs_count} Logs</span>
+            </div>
+        `;
+                countersContainer.appendChild(counterDiv);
+            });
+        }
+    </script>
+
+    <script>
+        function generateRandomColor() {
+            var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            return randomColor;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterButtons = document.querySelectorAll(".filter-btn");
+
+
+            // Generar un mapa de colores para cada estado
+            let colorMap = new Map();
+
+            // Asigna un color único al total para destacarlo.
+            const totalColor = 'rgba(54, 162, 235, 0.2)';
+
+            function drawChart(loges, totalsByDate) {
+                const ctx = document.getElementById('projects-overview-chart').getContext('2d');
+
+                if (window.projectsOverviewChart instanceof Chart) {
+                    window.projectsOverviewChart.destroy();
+                }
+
+                // Crea un arreglo que incluirá todos los datasets (conjuntos de datos).
+                let datasets = [];
+
+                // Agrega el dataset para el total.
+                datasets.push({
+                    label: 'Total',
+                    data: totalsByDate.map(total => ({
+                        x: `${total.dia}/${total.mes}/${total.año}`,
+                        y: total.total ? total.total : 0
+                    })),
+                    backgroundColor: totalColor,
+                    borderColor: totalColor,
+                    borderWidth: 2,
+                    type: 'bar', // Esto crea una línea en el gráfico
+                });
+
+                // Crea datasets para cada estado.
+                let estados = [...new Set(loges.map(d => d.nombre_estado))];
+                estados.forEach((estado) => {
+                    if (!colorMap.has(estado)) {
+                        colorMap.set(estado, generateRandomColor());
+                    }
+                    // Filtrar sólo las documentaciones que tienen una cantidad para este estado
+                    let estadoData = loges.filter(d => d.nombre_estado === estado && d.cantidad);
+                    if (estadoData.length > 0) {
+                        datasets.push({
+                            label: estado,
+                            data: estadoData.map(d => ({
+                                x: `${d.dia}/${d.mes}/${d.año}`,
+                                y: d.cantidad
+                            })),
+                            backgroundColor: colorMap.get(estado),
+                            borderColor: colorMap.get(estado),
+                            borderWidth: 1,
+                            barThickness: 10, // Ajusta el grosor de la barra como necesites
+                            type: 'bar',
+                        });
+                    }
+                });
+
+                // Crea el gráfico.
+                window.projectsOverviewChart = new Chart(ctx, {
+                    type: 'bar', // El tipo predeterminado para el gráfico, puedes tener varios tipos en un gráfico mixto.
+                    data: { datasets },
+                    options: {
+                        scales: {
+                            x: {
+                                stacked: false
+                            },
+                            y: {
+                                beginAtZero: true,
+                                stacked: false,
+                                // Asegúrate de que solo se muestren enteros en la escala Y
+                                ticks: {
+                                    stepSize: 1, // Esto hará que la escala de ticks vaya en incrementos de uno
+                                    callback: function(value) {
+                                        if (value % 1 === 0) { // Solo muestra valores enteros
+                                            return value;
+                                        }
+                                    },
+                                }
+                            },
+                            // Definir múltiples ejes Y para diferentes datasets si es necesario
+                            // ...
+                        },
+                        plugins: {
+                            legend: {
+                                display: true
+                            },
+                            tooltip: {
+                                enabled: true
+                            }
+                        }
+                    }
+                });
+            }
+
+
+            function fetchDataAndGenerateChart(filter) {
+                fetch(`/logs/status-by-month-and-status?filter=${filter}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        drawChart(data.loges, data.totalsByDate); // Asegúrate de pasar data.totalsByDate aquí
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    fetchDataAndGenerateChart(filter);
+                });
+            });
+
+            // Llama al filtro por defecto para cargar inicialmente los datos del día actual
+            fetchDataAndGenerateChart('ALL');
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener la información de estado del backend
+            fetch('/logs/status')
+                .then(response => response.json())
+                .then(data => {
+                    const estadosContainer = document.querySelector('#estados-container');
+                    estadosContainer.innerHTML = '';
+                    let totallogs = 0;
+
+                    data.estados.forEach(estado => {
+                        totallogs += estado.logs_count; // Sumar el contador de cada estado para obtener el total
+                        const cardHTML = `
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate">
+                            <div class="card-body">
+                                <!-- Contenido de la tarjeta para cada estado -->
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-3">
+                                    Estado: ${estado.nombre}
+                                </p>
+                                <h4 class="fs-4 flex-grow-1 mb-0">
+                                    <span class="counter-value" data-target="${estado.logs_count}">
+                                        ${estado.logs_count}
+                                    </span> Logs
+                                </h4>
+                            </div><!-- end card body -->
+                        </div>
+                    </div><!-- end col -->
+                `;
+                        estadosContainer.insertAdjacentHTML('beforeend', cardHTML);
+                    });
+
+                    // Crear y añadir la tarjeta para el total de Logs
+                    const totalCardHTML = `
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card card-animate bg-soft-primary text-white">
+                        <div class="card-body">
+                            <!-- Contenido de la tarjeta para el total -->
+                            <p class="text-uppercase fw-medium text-truncate mb-3">Total Logs</p>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <span class="counter-value" data-target="${totallogs}">
+                                    ${totallogs}
+                                </span>
+                            </h4>
+                        </div><!-- end card body -->
+                    </div>
+                </div><!-- end col -->
+            `;
+                    estadosContainer.insertAdjacentHTML('afterbegin', totalCardHTML);
+
+                    // Re-inicializar Feather Icons si se están utilizando
+                    if (window.feather) {
+                        feather.replace();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al obtener los estados:', error);
+                });
+        });
+    </script>
     <!-- apexcharts -->
-    <script src="<?php echo e(URL::asset('build/libs/apexcharts/apexcharts.min.js')); ?>"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const filterButtons = document.querySelectorAll('.dropdown-menu a[data-filter]');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const filter = this.getAttribute('data-filter');
+                    updateLogTable(filter);
+                });
+            });
 
-    <!-- Vector map-->
-    <script src="<?php echo e(URL::asset('build/libs/jsvectormap/js/jsvectormap.min.js')); ?>"></script>
-    <script src="<?php echo e(URL::asset('build/libs/jsvectormap/maps/world-merc.js')); ?>"></script>
-    <!-- gridjs js -->
-    <script src="<?php echo e(URL::asset('build/libs/gridjs/gridjs.umd.js')); ?>"></script>
+            function updateLogTable(filter) {
+                const url = `/tareas/filter-by-status?filter=${filter}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const logs = data.logs;
+                        const tbody = document.querySelector('.table-responsive table > tbody');
+                        tbody.innerHTML = ''; // Clear the table body
 
-    <!-- Dashboard init -->
-    <script src="<?php echo e(URL::asset('build/js/pages/dashboard-job.init.js')); ?>"></script>
+                        // Populate the table with new rows based on the fetched logs
+                        logs.forEach(log => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                        <td class="id">${tarea.id}</td>
+                        <td class="nombre">${tarea.nombre}</td>
+                        <td class="descripcion">${tarea.descripcion}</td>
+                        <td class="fecha_creacion">${tarea.fecha_terminado}</td>
+                        <td class="estado">${tarea.estado}</td>
+                        <td class="usuario">${tarea.glpi_tickets.name}</td>
+                        <td class="action">
+                          <ul class="list-inline hstack gap-2 mb-0">
 
-    <!-- App js -->
-    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+                                                    <li class="list-inline-item">
+                                                        <div class="dropdown">
+                                                            <button
+                                                                class="btn btn-soft-secondary btn-sm dropdown"
+                                                                type="button" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <i class="ri-more-fill align-middle"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item view-item-btn"
+                                                                       href="<?php echo e(route('tareas.show', [$tarea->id])); ?>"><i
+                                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                        Vista</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                        </td>
+                    `;
+                            tbody.appendChild(row);
+                        });
+
+                        if(logs.length === 0) {
+                            // Show 'No Results' message or something similar
+                            // ...
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching logs:', error);
+                    });
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Asumiendo que este es el botón para "Mi Log"
+            const miLogFilterButton = document.querySelector('.dropdown-menu a[data-filter="TODOS"][data-target="myLogTable"]');
+
+            miLogFilterButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Actualizar la tabla "Mi Log"
+                updateMiLogTable();
+            });
+            function updateMiLogTable() {
+                // Define la URL para filtrar "Mi Log" por el estado "ALL"
+                const url = `/logs/filter-by-status1?filter=TODOS`; // Asegúrate de que esta URL es correcta y apunta al endpoint deseado
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Asume que 'data.logs' contiene los logs filtrados
+                        const logs = data.logs;
+                        // Selecciona el cuerpo de la tabla específica para "Mi Log" usando un selector único
+                        const tbody = document.querySelector('[data-mi-log] table > tbody');
+
+                        tbody.innerHTML = ''; // Limpia el cuerpo de la tabla
+
+                        // Itera sobre los logs y los añade a la tabla
+                        logs.forEach(log => {
+                            const row = `
+                        <tr>
+                            <td class="id">${log.id}</td>
+                            <td class="nombre">${log.titulo}</td>
+                            <td class="fecha_creacion">${log.fecha_finalizacion}</td>
+                            <td class="estado">${log.estado_log.nombre}</td>
+                            <td class="usuario">${log.glpi_users.name}</td>
+                        </tr>
+                    `;
+                            // Añade cada fila nueva al cuerpo de la tabla
+                            tbody.innerHTML += row;
+                        });
+
+                        if(logs.length === 0) {
+                            // Si no hay logs, podrías mostrar un mensaje o realizar alguna acción
+                            tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay logs disponibles</td></tr>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching logs:', error);
+                    });
+            }
+
+            // Opcional: Llamar inmediatamente a updateMiLogTable para cargar los logs al cargar la página
+            updateMiLogTable();
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\glpi-insumos\resources\views/tarea/dashboard.blade.php ENDPATH**/ ?>
