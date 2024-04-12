@@ -94,100 +94,93 @@ class TareaController extends Controller
             ->with('success', 'Tarea update Successfully!');
     }
     public function dashboard() {
+        $conteoEnProceso = Tarea::where('estado', 'en proceso')->count();
+        $conteoEnEspera = Tarea::where('estado', 'en espera')->count();
+        $conteoNuevo = Tarea::where('estado', 'nuevo')->count();
+        $conteoFinalizado = Tarea::where('estado', 'finalizado')->count();
+        $conteoBorrado = Tarea::where('estado', 'borrado')->count();
+        $totalTarea = $conteoEnProceso + $conteoEnEspera + $conteoNuevo + $conteoFinalizado +$conteoBorrado;
 
-        $tareas = Tarea::latest()->paginate(10); // Usa get() en lugar de paginate()
+        $tareas = Tarea::latest()->paginate(10); // Usa get() en lugar de paginate() si es necesario
         $ultimosTarea = Tarea::latest()->take(5)->get();
 
-
-        return view('tarea.dashboard', compact(  'ultimosTarea', 'tareas'  ));
+        // Pasar los conteos a la vista
+        return view('tarea.dashboard', compact('totalTarea','conteoEnProceso', 'conteoEnEspera', 'conteoNuevo', 'conteoFinalizado', 'conteoBorrado', 'ultimosTarea', 'tareas'));
     }
-    public function getLogStatus() {
+    public function getTareaStatus() {
         try {
-            $estados = EstadoLog::withCount('logs')->get();
-            return response()->json([
-                'estados' => $estados,
 
-            ]);
+
+            $taskCounts = [
+                'en_proceso' => Tarea::where('estado', 'en proceso')->count(),
+                'en_espera' => Tarea::where('estado', 'en espera')->count(),
+                'nuevo' => Tarea::where('estado', 'nuevo')->count(),
+                'finalizado' => Tarea::where('estado', 'finalizado')->count(),
+                'borrado' => Tarea::where('estado', 'borrado')->count(),
+            ];
+
+            return response()->json($taskCounts);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function getLogByMonthAndStatus(Request $request)
+    public function getTareaByMonthAndStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');
-        $dateEnd = now(); // La fecha de finalización siempre será "ahora".
-        $dateStart = now()->startOfDay(); // Por defecto establece la fecha de inicio al comienzo del día actual.
+        $dateStart = now()->startOfDay();
 
-        $query = Log::select(
-            DB::raw('DAY(fecha_finalizacion) as dia'),
-            DB::raw('MONTH(fecha_finalizacion) as mes'),
-            DB::raw('YEAR(fecha_finalizacion) as año'),
-            'id_estado_log',
+        $dateEnd = now();
+
+        $query = Tarea::select(
+            DB::raw('DAY(fecha_terminado) as dia'),
+            DB::raw('MONTH(fecha_terminado) as mes'),
+            DB::raw('YEAR(fecha_terminado) as año'),
+            'estado',
             DB::raw('COUNT(*) as cantidad')
-        )
-            ->join('estado_log', 'estado_log.id', '=', 'log.id_estado_log')
-            ->addSelect('estado_log.nombre as nombre_estado');
+
+        )->groupBy('dia', 'mes', 'año', 'estado')->orderBy('año', 'asc')
+            ->orderBy('mes', 'asc')
+            ->orderBy('dia', 'asc');
 
         if ($filter !== 'ALL') {
-            $dateEnd = now(); // Define la fecha de fin como la fecha y hora actual
+            // Asigna la fecha de inicio basada en el filtro.
+            $dateStart = $this->calculateStartDateBasedOnFilter($filter);
 
-            switch ($filter) {
-                case '1D':
-                    $dateStart = now()->startOfDay(); // Inicia en el comienzo del día actual.
-                    break;
-                case '1S':
-                    $dateStart = now()->subDays(7)->startOfDay(); // Resta 7 días para obtener la semana.
-                    break;
-                case '1M':
-                    $dateStart = now()->subMonth()->startOfMonth();
-                    break;
-                case '6M':
-                    $dateStart = now()->subMonths(6)->startOfMonth();
-                    break;
-                case '1Y':
-                    $dateStart = now()->subYear()->startOfDay();
-                    break;
-                // Asegúrate de tener una opción predeterminada en caso de que `$filter` no coincida con ninguno de los casos.
-                default:
-                    $dateStart = now()->startOfDay();
-                    break;
-            }
-            $query->where('fecha_finalizacion', '>=', $dateStart)->where('fecha_finalizacion', '<=', $dateEnd);
+            $query->whereBetween('fecha_terminado', [$dateStart, $dateEnd]);
         }
 
-        $estados = EstadoLog::select('id', 'nombre')->get();
-
-
-        $totalsByDate = clone $query;
-        $totalsByDate = $totalsByDate->select(
-            DB::raw('DAY(fecha_finalizacion) as dia'),
-            DB::raw('MONTH(fecha_finalizacion) as mes'),
-            DB::raw('YEAR(fecha_finalizacion) as año'),
-            DB::raw('COUNT(*) as total')
-        )
-            ->groupBy('dia', 'mes', 'año')
-            ->orderBy('año', 'desc')
+        $tareas = Tarea::select(DB::raw('DAY(fecha_terminado) as dia'), DB::raw('MONTH(fecha_terminado) as mes'), DB::raw('YEAR(fecha_terminado) as año'), 'estado', DB::raw('COUNT(*) as cantidad'))
+            ->groupBy('estado', 'dia', 'mes', 'año')->orderBy('año', 'desc')
             ->orderBy('mes', 'desc')
             ->orderBy('dia', 'desc')
+            ->when($filter !== 'ALL', function ($query) use ($dateStart) {
+                return $query->where('fecha_terminado', '>=', $dateStart);
+            })
             ->get();
-// Añade los nombres de los estados a los logs
-        $loges = $query->groupBy('dia', 'mes', 'año', 'id_estado_log')
-            ->orderBy('año', 'desc')
-            ->orderBy('mes', 'desc')
-            ->orderBy('dia', 'desc')
-            ->get()->map(function ($item) use ($estados) {
-                $estado = $estados->firstWhere('id', $item->id_estado_log);
-                $item->nombre_estado = $estado ? $estado->nombre : null;
-                return $item;
-            });
+
         return response()->json([
-            'loges' => $loges,
-            'totalsByDate' => $totalsByDate, // Asegúrate de agregar esto
-            'estados' => $estados
+            'tareas' => $tareas
         ]);
     }
 
+    private function calculateStartDateBasedOnFilter($filter)
+    {
+        switch ($filter) {
+            case '1D':
+                return now()->startOfDay();
+            case '1S':
+                return now()->subDays(7)->startOfDay();
+            case '1M':
+                return now()->subMonth()->startOfMonth();
+            case '6M':
+                return now()->subMonths(6)->startOfMonth();
+            case '1Y':
+                return now()->subYear()->startOfDay();
+            default:
+                return now()->startOfDay();
+        }
+    }
     public function filterLogsByStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');

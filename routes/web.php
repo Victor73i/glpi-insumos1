@@ -38,6 +38,8 @@ Route::get('/logs/status-by-month-and-status', [LogController::class, 'getLogByM
 Route::get('/logs/filter-by-status', [LogController::class, 'filterLogsByStatus'])->name('logs.filterByStatus');
 Route::get('/logs/filter-by-status1', [LogController::class, 'filterLogsByStatus1'])->name('logs.filterByStatus1');
 Route::get('/tareas/dashboard', [TareaController::class, 'dashboard'])->name('tareas.dashboard');
+Route::get('/tareas/status', [TareaController::class, 'getTareaStatus'])->name('tareas.status');
+Route::get('/tareas/status-by-month-and-status', [TareaController::class, 'getTareaByMonthAndStatus'])->name('tareas.getLogByMonthAndStatus');
 
 Route::resource('/tasks', TaskController::class);
 Route::resource('/documentacions', DocumentacionController::class);
