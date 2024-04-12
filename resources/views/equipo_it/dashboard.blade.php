@@ -374,7 +374,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- apexcharts -->
-    <script src="{{ URL::asset('build/libs/apexcharts/apexcharts.min.js') }}"></script>
 
     <script src="{{ URL::asset('build/js/pages/dashboard-projects.init.js') }}"></script>
     <script src="{{ URL::asset('build/js/app.js') }}"></script>

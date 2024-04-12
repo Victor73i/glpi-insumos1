@@ -181,24 +181,21 @@ class TareaController extends Controller
                 return now()->startOfDay();
         }
     }
-    public function filterLogsByStatus(Request $request)
+    public function filterTareasByStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');
 
-        $logsQuery = Log::with('estado_log', 'glpi_users');
-
-        if ($filter !== 'ALL') {
-            $estado = EstadoLog::where('nombre', $filter)->first();
-            $logsQuery->where('id_estado_log', $estado ? $estado->id : null);
+        if ($filter === 'ALL') {
+            $tareas = Tarea::where('estado', '<>', 'borrado')->get();
+        } else {
+            $tareas = Tarea::where('estado', $filter)->get();
         }
 
-        $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
-
         return response()->json([
-            'logs' => $logs,
+            'tareas' => $tareas,
         ]);
     }
-    public function filterLogsByStatus1(Request $request)
+    public function filterTareasByStatus1(Request $request)
     {
         $filter = $request->query('filter', 'TODOS');
         $userId = auth()->user()->id; // Asumiendo que estás usando la autenticación de Laravel

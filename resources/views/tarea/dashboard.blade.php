@@ -289,38 +289,7 @@
 
                                 <tr>
 
-                                    <td class="id">{{$tarea->id}}</td>
 
-
-                                    <td class="nombre">{{$tarea->nombre}}</td>
-
-                                    <td class="descripcion">{{$tarea->descripcion}}</td>
-                                    <td class="fecha_creacion">{{$tarea->fecha_terminado}}</td>
-                                    <td class="descripcion">{{$tarea->estado}}</td>
-                                    <td class="descripcion">{{$tarea->glpi_tickets->name}}</td>
-
-
-                                    <td>
-                                        <ul class="list-inline hstack gap-2 mb-0">
-
-                                            <li class="list-inline-item">
-                                                <div class="dropdown">
-                                                    <button
-                                                        class="btn btn-soft-secondary btn-sm dropdown"
-                                                        type="button" data-bs-toggle="dropdown"
-                                                        aria-expanded="false">
-                                                        <i class="ri-more-fill align-middle"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-end">
-                                                        <li><a class="dropdown-item view-item-btn"
-                                                               href="{{route('tareas.show', [$tarea->id])}}"><i
-                                                                    class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                Vista</a></li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </td>
                                 </tr>
                             @endforeach
 
@@ -677,72 +646,78 @@
             </script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const filterButtons = document.querySelectorAll('.dropdown-menu a[data-filter]');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const filter = this.getAttribute('data-filter');
-                    updateLogTable(filter);
-                });
-            });
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const filterButtons = document.querySelectorAll('.dropdown-menu a[data-filter]');
+                    filterButtons.forEach(button => {
+                        button.addEventListener('click', function(event) {
+                            event.preventDefault();
+                            const filter = this.getAttribute('data-filter');
+                            updateTareaTable(filter);
+                        });
+                    });
 
-            function updateLogTable(filter) {
-                const url = `/tareas/filter-by-status?filter=${filter}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        const logs = data.logs;
-                        const tbody = document.querySelector('.table-responsive table > tbody');
-                        tbody.innerHTML = ''; // Clear the table body
+                    function updateTareaTable(filter) {
+                        const url = `/tareas/filter-by-status?filter=${encodeURIComponent(filter)}`;
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                const tareas = data.tareas;
+                                const tbody = document.querySelector('.table-responsive table > tbody');
+                                tbody.innerHTML = ''; // Clear the table body
 
-                        // Populate the table with new rows based on the fetched logs
-                        logs.forEach(log => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
+                                // Populate the table with new rows based on the fetched tareas
+                                tareas.forEach(tarea => {
+                                    const row = document.createElement('tr');
+                                    row.innerHTML = `
                         <td class="id">${tarea.id}</td>
                         <td class="nombre">${tarea.nombre}</td>
                         <td class="descripcion">${tarea.descripcion}</td>
-                        <td class="fecha_creacion">${tarea.fecha_terminado}</td>
+                        <td class="fecha_terminado">${tarea.fecha_terminado}</td>
                         <td class="estado">${tarea.estado}</td>
-                        <td class="usuario">${tarea.glpi_tickets.name}</td>
-                        <td class="action">
-                          <ul class="list-inline hstack gap-2 mb-0">
+                        <td class="tickets">{{$tarea->glpi_tickets ? $tarea->glpi_tickets->name: ''}}</td>
 
-                                                    <li class="list-inline-item">
-                                                        <div class="dropdown">
-                                                            <button
-                                                                class="btn btn-soft-secondary btn-sm dropdown"
-                                                                type="button" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                                <i class="ri-more-fill align-middle"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                                <li><a class="dropdown-item view-item-btn"
-                                                                       href="{{route('tareas.show', [$tarea->id])}}"><i
-                                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                        Vista</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                        </td>
+
+                                    <td>
+                                        <ul class="list-inline hstack gap-2 mb-0">
+
+                                            <li class="list-inline-item">
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="btn btn-soft-secondary btn-sm dropdown"
+                                                        type="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        <i class="ri-more-fill align-middle"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item view-item-btn"
+                                                               href="{{route('tareas.show', [$tarea->id])}}"><i
+                                                                    class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                                Vista</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </td>
                     `;
-                            tbody.appendChild(row);
-                        });
+                                    tbody.appendChild(row);
+                                });
 
-                        if(logs.length === 0) {
-                            // Show 'No Results' message or something similar
-                            // ...
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching logs:', error);
-                    });
-            }
-        });
-    </script>
+                                if(tareas.length === 0) {
+                                    const noResultRow = document.createElement('tr');
+                                    noResultRow.innerHTML = `
+                        <td colspan="7" class="text-center">No se encontraron resultados</td>
+                    `;
+                                    tbody.appendChild(noResultRow);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error fetching tareas:', error);
+                            });
+                    }
+                    updateTareaTable('ALL');
+                });
+            </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
