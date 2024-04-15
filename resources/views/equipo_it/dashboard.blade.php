@@ -134,18 +134,12 @@
                                             <span class="text-muted pe-5">{{ $conteoComputadoras }} Equipos</span>
                                         </div>
                                     </h4>
-                                </div><!-- end -->
-                                <div
-                                    class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
                                     <h4 class="fs-4 flex-grow-1 mb-0">
                                         <p class="fw-medium mb-0">IMPRESORAS</p>
                                         <div>
                                             <span class="text-muted pe-5">{{ $conteoImpresoras }} Equipos</span>
                                         </div>
                                     </h4>
-                                </div><!-- end -->
-                                <div
-                                    class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
                                     <h4 class="fs-4 flex-grow-1 mb-0">
                                         <p class="fw-medium mb-0">PDUS</p>
                                         <div>

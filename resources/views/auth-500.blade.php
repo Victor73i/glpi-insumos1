@@ -21,9 +21,9 @@
                             <h1 class="title text-muted">500</h1>
                         </div>
                         <div>
-                            <h4>Internal Server Error!</h4>
-                            <p class="text-muted w-75 mx-auto">Server Error 500. We're not exactly sure what happened, but our servers say something is wrong.</p>
-                            <a href="index" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to home</a>
+                            <h4>Error Interno del Servidor!</h4>
+                            <p class="text-muted w-75 mx-auto">Error de Servidor 500. Nosotros No estamos Seguros de lo que pasa actualmente.</p>
+                            <a href="index" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Regresar a home</a>
                         </div>
                     </div><!-- end col-->
                 </div>

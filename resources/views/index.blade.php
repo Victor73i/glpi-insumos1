@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title') @lang('translation.dashboards') @endsection
+@section('title') @lang('Index') @endsection
 @section('css')
 <link href="{{ URL::asset('build/libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('build/libs/swiper/swiper-bundle.min.css')}}" rel="stylesheet" type="text/css" />
@@ -21,12 +21,7 @@
                             <form action="javascript:void(0);">
                                 <div class="row g-3 mb-0 align-items-center">
                                     <div class="col-sm-auto">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022">
-                                            <div class="input-group-text bg-primary border-primary text-white">
-                                                <i class="ri-calendar-2-line"></i>
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <!--end col-->
                                     <div class="col-auto">
@@ -78,13 +73,14 @@
                                 <div class="flex-shrink-0">
                                     <h5 class="text-success fs-14 mb-0">
                                         <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                        +16.24 %
+                                        {{$totalLog}}
                                     </h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="559.25">0</span>k
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">                                        {{$totalLog}}
+
                                     </h4>
                                     <a href="{{route('logs.index')}}" class="text-decoration-underline">Ver Logs</a>
                                 </div>
@@ -104,14 +100,17 @@
                                         Documentacion</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <h5 class="text-muted fs-14 mb-0">
-                                        +0.00 %
+                                    <h5 class="text-success fs-14 mb-0">
+                                        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                        {{$totalDocumentacion}}
+
                                     </h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="165.89">0</span>k
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">                                        {{$totalDocumentacion}}
+
                                     </h4>
                                     <a href="{{route('documentacions.index')}}" class="text-decoration-underline">Ver Documentacion</a>
                                 </div>
@@ -136,14 +135,14 @@
                                 </div>
                                 <div class="flex-shrink-0">
                                     <h5 class="text-danger fs-14 mb-0">
-                                        <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                        -3.57 %
+                                        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                        {{$totalTarea}}
                                     </h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36894">0</span></h4>
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">{{$totalTarea }}</h4>
                                     <a href="{{route('tareas.index')}}" class="text-decoration-underline">Ver Tareas</a>
                                 </div>
                                 <div class="avatar-sm flex-shrink-0">
@@ -224,13 +223,13 @@
                                 <div class="flex-shrink-0">
                                     <h5 class="text-success fs-14 mb-0">
                                         <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                        +29.08 %
+                                        {{$totalEquiposIT}}
                                     </h5>
                                 </div>
                             </div>
                             <div class="d-flex align-items-end justify-content-between mt-4">
                                 <div>
-                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183.35">0</span>M
+                                    <h4 class="fs-22 fw-semibold ff-secondary mb-4">{{$totalEquiposIT}}
                                     </h4>
                                     <a href="{{route('equipo_its.index')}}" class="text-decoration-underline">Ver Equipo IT</a>
                                 </div>
@@ -367,188 +366,88 @@
                         <div class="card-body">
                             <div class="table-responsive table-card">
                                 <table class="table table-hover table-centered align-middle table-nowrap mb-0">
+                                    <thead class="text-muted table-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Titulo</th>
+                                        <th scope="col">Observaciones</th>
+                                        <th scope="col">Fecha Inicio</th>
+                                        <th scope="col">Ubicacion</th>
+                                    </tr>
+                                    </thead>
                                     <tbody>
+                                    @foreach ($logs as $log1)
+
                                         <tr>
                                             <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                        <img src="{{ URL::asset('build/images/products/img-1.png') }}" alt="" class="img-fluid d-block" />
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details" class="text-reset">Branded
-                                                                T-Shirts</a></h5>
-                                                        <span class="text-muted">24 Apr 2021</span>
-                                                    </div>
-                                                </div>
+                                                <a href="{{ route('logs.show', $log1->id) }}" class="fw-medium link-primary">{{ $log1->id }}</a>
+
                                             </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$29.00</h5>
-                                                <span class="text-muted">Price</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">62</h5>
-                                                <span class="text-muted">Orders</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">510</h5>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$1,798</h5>
-                                                <span class="text-muted">Amount</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                        <img src="{{ URL::asset('build/images/products/img-2.png') }}" alt="" class="img-fluid d-block" />
+                                                    <div class="flex-shrink-0 me-2">
+                                                        <img src="{{ URL::asset('build/images/users/avatar-tecnico.jpg') }}" alt="" class="avatar-xs rounded-circle" />
                                                     </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details" class="text-reset">Bentwood
-                                                                Chair</a></h5>
-                                                        <span class="text-muted">19 Mar 2021</span>
-                                                    </div>
+                                                    <div class="flex-grow-1">{{ $log1->glpi_users->name }}</div>
                                                 </div>
                                             </td>
+                                            <td>{{ $log1->titulo }}</td>
                                             <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$85.20</h5>
-                                                <span class="text-muted">Price</span>
+                                                <span class="text-success">{{ $log1->observaciones }}</span>
                                             </td>
+                                            <td>{{ $log1->fecha_inicio }}</td>
                                             <td>
-                                                <h5 class="fs-14 my-1 fw-normal">35</h5>
-                                                <span class="text-muted">Orders</span>
+                                                <span class="badge badge-soft-success">{{ $log1->glpi_locations->name }}</span>
                                             </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal"><span class="badge badge-soft-danger">Out of
-                                                        stock</span> </h5>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$2982</h5>
-                                                <span class="text-muted">Amount</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                        <img src="{{ URL::asset('build/images/products/img-3.png') }}" alt="" class="img-fluid d-block" />
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details" class="text-reset">Borosil Paper
-                                                                Cup</a></h5>
-                                                        <span class="text-muted">01 Mar 2021</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$14.00</h5>
-                                                <span class="text-muted">Price</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">80</h5>
-                                                <span class="text-muted">Orders</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">749</h5>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$1120</h5>
-                                                <span class="text-muted">Amount</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                        <img src="{{ URL::asset('build/images/products/img-4.png') }}" alt="" class="img-fluid d-block" />
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details" class="text-reset">One Seater
-                                                                Sofa</a></h5>
-                                                        <span class="text-muted">11 Feb 2021</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$127.50</h5>
-                                                <span class="text-muted">Price</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">56</h5>
-                                                <span class="text-muted">Orders</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal"><span class="badge badge-soft-danger">Out of
-                                                        stock</span></h5>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$7140</h5>
-                                                <span class="text-muted">Amount</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-sm bg-light rounded p-1 me-2">
-                                                        <img src="{{ URL::asset('build/images/products/img-5.png') }}" alt="" class="img-fluid d-block" />
-                                                    </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details" class="text-reset">Stillbird
-                                                                Helmet</a></h5>
-                                                        <span class="text-muted">17 Jan 2021</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$54</h5>
-                                                <span class="text-muted">Price</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">74</h5>
-                                                <span class="text-muted">Orders</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">805</h5>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 my-1 fw-normal">$3996</h5>
-                                                <span class="text-muted">Amount</span>
-                                            </td>
-                                        </tr>
+
+                                        </tr><!-- end tr -->
+
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
 
 
                             <div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
-                                <div class="col-sm">
-                                    <div class="text-muted">
-                                        Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">25</span> Results
-                                    </div>
-                                </div>
-                                <div class="col-sm-auto  mt-3 mt-sm-0">
-                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
-                                        <li class="page-item disabled">
-                                            <a href="#" class="page-link">←</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">→</a>
-                                        </li>
-                                    </ul>
+                                <div class="pagination-container">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                            {{-- Previous Page Link --}}
+                                            @if ($logs->onFirstPage())
+                                                <li class="page-item disabled">
+                                                    <span class="page-link">Anterior</span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $logs->previousPageUrl() }}">Anterior</a>
+                                                </li>
+                                            @endif
+
+                                            {{-- Pagination Elements --}}
+                                            @foreach(range(1, $logs->lastPage()) as $i)
+                                                @if($i >= $logs->currentPage() - 2 && $i <= $logs->currentPage() + 2)
+                                                    @if ($i == $logs->currentPage())
+                                                        <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
+                                                    @else
+                                                        <li class="page-item"><a class="page-link" href="{{ $logs->url($i) }}">{{ $i }}</a></li>
+                                                    @endif
+                                                @endif
+                                            @endforeach
+
+                                            {{-- Next Page Link --}}
+                                            @if ($logs->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $logs->nextPageUrl() }}">Siguiente</a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled">
+                                                    <span class="page-link">Siguiente</span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+
                                 </div>
                             </div>
 
@@ -577,179 +476,93 @@
                         <div class="card-body">
                             <div class="table-responsive table-card">
                                 <table class="table table-centered table-hover align-middle table-nowrap mb-0">
+                                    <thead class="text-muted table-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Tipo</th>
+                                    </tr>
+                                    </thead>
                                     <tbody>
+                                    @foreach ($documentacions as $documentacion1)
+
                                         <tr>
+                                            <td>
+                                                <a href="{{ route('documentacions.show', $documentacion1->id) }}" class="fw-medium link-primary">{{ $documentacion1->id }}</a>
+
+                                            </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-shrink-0 me-2">
-                                                        <img src="{{ URL::asset('build/images/companies/img-1.png') }}" alt="" class="avatar-sm p-2" />
+                                                        <img src="{{ URL::asset('build/images/users/avatar-tecnico.jpg') }}" alt="" class="avatar-xs rounded-circle" />
                                                     </div>
-                                                    <div>
-                                                        <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details" class="text-reset">iTest Factory</a>
-                                                        </h5>
-                                                        <span class="text-muted">Oliver Tyler</span>
-                                                    </div>
+                                                    <div class="flex-grow-1">{{ $documentacion1->glpi_users->name }}</div>
                                                 </div>
                                             </td>
+                                            <td>{{ $documentacion1->nombre }}</td>
                                             <td>
-                                                <span class="text-muted">Bags and Wallets</span>
+                                                <span class="text-success">{{ $documentacion1->descripcion }}</span>
+                                            </td>
+                                            <td>{{ $documentacion1->fecha_creacion }}</td>
+                                            <td>
+                                                <span class="badge badge-soft-success">{{ $documentacion1->estado_documentacion->nombre }}</span>
                                             </td>
                                             <td>
-                                                <p class="mb-0">8547</p>
-                                                <span class="text-muted">Stock</span>
+                                                <h5 class="fs-14 fw-medium mb-0">{{ $documentacion1->tipo_documentacion->nombre }}
                                             </td>
-                                            <td>
-                                                <span class="text-muted">$541200</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 mb-0">32%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                </h5>
-                                            </td>
-                                        </tr><!-- end -->
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0 me-2">
-                                                        <img src="{{ URL::asset('build/images/companies/img-2.png') }}" alt="" class="avatar-sm p-2" />
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details" class="text-reset">Digitech
-                                                                Galaxy</a></h5>
-                                                        <span class="text-muted">John Roberts</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">Watches</span>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">895</p>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">$75030</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 mb-0">79%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                </h5>
-                                            </td>
-                                        </tr><!-- end -->
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0 me-2">
-                                                        <img src="{{ URL::asset('build/images/companies/img-3.png') }}" alt="" class="avatar-sm p-2" />
-                                                    </div>
-                                                    <div class="flex-gow-1">
-                                                        <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details" class="text-reset">Nesta
-                                                                Technologies</a></h5>
-                                                        <span class="text-muted">Harley
-                                                            Fuller</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">Bike Accessories</span>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">3470</p>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">$45600</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 mb-0">90%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                </h5>
-                                            </td>
-                                        </tr><!-- end -->
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0 me-2">
-                                                        <img src="{{ URL::asset('build/images/companies/img-8.png') }}" alt="" class="avatar-sm p-2" />
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details" class="text-reset">Zoetic
-                                                                Fashion</a></h5>
-                                                        <span class="text-muted">James Bowen</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">Clothes</span>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">5488</p>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">$29456</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 mb-0">40%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                </h5>
-                                            </td>
-                                        </tr><!-- end -->
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-shrink-0 me-2">
-                                                        <img src="{{ URL::asset('build/images/companies/img-5.png') }}" alt="" class="avatar-sm p-2" />
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details" class="text-reset">Meta4Systems</a>
-                                                        </h5>
-                                                        <span class="text-muted">Zoe Dennis</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">Furniture</span>
-                                            </td>
-                                            <td>
-                                                <p class="mb-0">4100</p>
-                                                <span class="text-muted">Stock</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-muted">$11260</span>
-                                            </td>
-                                            <td>
-                                                <h5 class="fs-14 mb-0">57%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i>
-                                                </h5>
-                                            </td>
-                                        </tr><!-- end -->
+                                        </tr><!-- end tr -->
+
+                                    @endforeach
                                     </tbody>
                                 </table><!-- end table -->
-                            </div>
 
-                            <div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
-                                <div class="col-sm">
-                                    <div class="text-muted">
-                                        Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">25</span> Results
-                                    </div>
                                 </div>
-                                <div class="col-sm-auto  mt-3 mt-sm-0">
-                                    <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
+
+                            </div>
+                        <div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
+
+                        <div class="pagination-container">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    {{-- Previous Page Link --}}
+                                    @if ($documentacions->onFirstPage())
                                         <li class="page-item disabled">
-                                            <a href="#" class="page-link">←</a>
+                                            <span class="page-link">Anterior</span>
                                         </li>
+                                    @else
                                         <li class="page-item">
-                                            <a href="#" class="page-link">1</a>
+                                            <a class="page-link" href="{{ $documentacions->previousPageUrl() }}">Anterior</a>
                                         </li>
-                                        <li class="page-item active">
-                                            <a href="#" class="page-link">2</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">3</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="#" class="page-link">→</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                                    @endif
 
+                                    {{-- Pagination Elements --}}
+                                    @foreach(range(1, $documentacions->lastPage()) as $i)
+                                        @if($i >= $documentacions->currentPage() - 2 && $i <= $documentacions->currentPage() + 2)
+                                            @if ($i == $documentacions->currentPage())
+                                                <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
+                                            @else
+                                                <li class="page-item"><a class="page-link" href="{{ $documentacions->url($i) }}">{{ $i }}</a></li>
+                                            @endif
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($documentacions->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $documentacions->nextPageUrl() }}">Siguiente</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Siguiente</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        </div>
                         </div> <!-- .card-body-->
                     </div> <!-- .card-->
                 </div> <!-- .col-->
@@ -785,9 +598,9 @@
                         <div class="card-header align-items-center d-flex">
                             <h4 class="card-title mb-0 flex-grow-1">Tareas Nuevas</h4>
                             <div class="flex-shrink-0">
-                                <button type="button" class="btn btn-soft-info btn-sm">
+                                <a type="button" class="btn btn-soft-info btn-sm" href="{{route('tareas.create')}}">
                                     <i class="ri-file-list-3-line align-middle"></i> Generar Tarea
-                                </button>
+                                </a>
                             </div>
                         </div><!-- end card header -->
 
@@ -838,8 +651,50 @@
 
                                     </tbody><!-- end tbody -->
                                 </table><!-- end table -->
+
+
+                                </div> <!-- .card-body-->
+
                             </div>
+                        <div class="pagination-container">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    {{-- Previous Page Link --}}
+                                    @if ($tareas->onFirstPage())
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Anterior</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tareas->previousPageUrl() }}">Anterior</a>
+                                        </li>
+                                    @endif
+
+                                    {{-- Pagination Elements --}}
+                                    @foreach(range(1, $tareas->lastPage()) as $i)
+                                        @if($i >= $tareas->currentPage() - 2 && $i <= $tareas->currentPage() + 2)
+                                            @if ($i == $tareas->currentPage())
+                                                <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
+                                            @else
+                                                <li class="page-item"><a class="page-link" href="{{ $tareas->url($i) }}">{{ $i }}</a></li>
+                                            @endif
+                                        @endif
+                                    @endforeach
+
+                                    {{-- Next Page Link --}}
+                                    @if ($tareas->hasMorePages())
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $tareas->nextPageUrl() }}">Siguiente</a>
+                                        </li>
+                                    @else
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Siguiente</span>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </nav>
                         </div>
+
                     </div> <!-- .card-->
 
 

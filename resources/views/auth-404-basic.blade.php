@@ -1,7 +1,7 @@
 @extends('layouts.master-without-nav')
 
 @section('title')
-    @lang('translation.404')
+    @lang('Error 404')
 @endsection
 
 @section('body')
@@ -32,11 +32,10 @@
                                     <img src="{{ URL::asset('build/images/error.svg') }}" alt="" class="error-basic-img move-animation">
                                 </div>
                                 <div class="mt-n4">
-                                    <h1 class="display-1 fw-medium">404</h1>
-                                    <h3 class="text-uppercase">Sorry, Page not Found 😭</h3>
-                                    <p class="text-muted mb-4">The page you are looking for not available!</p>
-                                    <a href="index" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Back to
-                                        home</a>
+                                    <h1 class="display-1 fw-medium">Error 404</h1>
+                                    <h3 class="text-uppercase">Lo siento Pagina No Buscada 😭</h3>
+                                    <p class="text-muted mb-4">La Pagina que buscas no esta disponible en este momento!</p>
+                                    <a href="index" class="btn btn-success"><i class="mdi mdi-home me-1"></i>Regresa a Home</a>
                                 </div>
                             </div>
                         </div>
@@ -57,8 +56,8 @@
                                 <p class="mb-0 text-muted">&copy;
                                     <script>
                                         document.write(new Date().getFullYear())
-                                    </script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i>
-                                    by Themesbrand
+                                    </script> Informatica <i class="mdi mdi-heart text-danger"></i>
+                                   EMPORNAC
                                 </p>
                             </div>
                         </div>

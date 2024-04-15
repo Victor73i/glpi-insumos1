@@ -19,7 +19,7 @@
 
 
             <div class="row">
-                <div class="col-xl-8">
+                <div class="col-xl-5">
                     <div class="card">
                         <div class="card-header border-0 align-items-center d-flex justify-content-between">
                             <h4 class="card-title mb-0 flex-grow-1">Log</h4>
@@ -428,7 +428,7 @@
                                 backgroundColor: totalColor,
                                 borderColor: totalColor,
                                 borderWidth: 2,
-                                type: 'bar', // Esto crea una línea en el gráfico
+                                type: 'line', // Esto crea una línea en el gráfico
                             });
 
                             // Crea datasets para cada estado.
@@ -448,8 +448,8 @@
                                         })),
                                         backgroundColor: colorMap.get(estado),
                                         borderColor: colorMap.get(estado),
-                                        borderWidth: 1,
-                                        barThickness: 20, // Ajusta el grosor de la barra como necesites
+                                        borderWidth: 2,
+                                        barThickness: 10, // Ajusta el grosor de la barra como necesites
                                         type: 'bar',
                                     });
                                 }

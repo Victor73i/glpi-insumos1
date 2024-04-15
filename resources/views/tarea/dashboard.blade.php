@@ -181,8 +181,8 @@
 
 
     <div class="row">
-        <div class="col-xl-5">
-            <div class="card">
+        <div class="col-xl-4">
+            <div class="card card-height-100">
                 <div class="card-header border-0 align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Tarea</h4>
                     <div class="button-group" role="group" aria-label="Basic example">
@@ -206,7 +206,82 @@
                 </div><!-- end card body -->
             </div><!-- end card -->
         </div><!-- end col -->
+        <div class="col-xl-4">
+            <div class="card card-height-100">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">Estatus Tarea</h4>
 
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
+                        <canvas id="tasks-status-chart" width="400" height="400"></canvas>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-center align-items-center mb-4">
+                            <div>
+                                <p class="text-muted mb-0">Total Tareas</p>
+                                <h2 class="me-3 ff-secondary mb-0" id="totalTarea">{{$totalTarea}}</h2> <!-- Inicializar con 0 o con el valor del servidor -->
+
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">En Proceso</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $conteoEnProceso }} Tareas</span>
+                                </div>
+                            </h4>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">En Espera</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $conteoEnEspera }} Tareas</span>
+                                </div>
+                            </h4>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">Nuevos</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $conteoNuevo }} Tareas</span>
+                                </div>
+                            </h4>
+                        </div><!-- end -->
+
+                        <div
+                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
+
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">Finalizado</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $conteoFinalizado }} Tareas</span>
+                                </div>
+                            </h4>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">Borrado</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $conteoBorrado }} Tareas</span>
+                                </div>
+                            </h4>
+                            <h4 class="fs-4 flex-grow-1 mb-0">
+                                <p class="fw-medium mb-0">Total</p>
+                                <div>
+                                    <span class="text-muted pe-5">{{ $totalTarea }} Tareas</span>
+                                </div>
+                            </h4>
+                        </div><!-- end -->
+
+
+
+
+                    </div>
+                </div><!-- end cardbody -->
+            </div><!-- end card -->
+        </div><!-- end col -->
         <div class="col-xxl-4">
             <div class="card">
                 <div class="card-header border-0">
@@ -242,6 +317,7 @@
                 </div><!-- end cardbody -->
             </div><!-- end card -->
         </div><!-- end col -->
+
     </div><!-- end row -->
 
     <div class="row">
@@ -411,89 +487,7 @@
             </div><!-- end card -->
         </div><!-- end col -->
 
-        <div class="col-xl-5">
-            <div class="card card-height-100">
-                <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Estatus Tarea</h4>
 
-                </div><!-- end card header -->
-
-                <div class="card-body">
-                    <div style="display: flex; justify-content: center; align-items: center; height: 400px;">
-                        <canvas id="tasks-status-chart" width="400" height="400"></canvas>
-                    </div>
-
-
-                    <div class="mt-3">
-                        <div class="d-flex justify-content-center align-items-center mb-4">
-                            <div>
-                                <p class="text-muted mb-0">Total Tareas</p>
-                                <h2 class="me-3 ff-secondary mb-0" id="totalTarea">{{$totalTarea}}</h2> <!-- Inicializar con 0 o con el valor del servidor -->
-
-
-                            </div>
-
-                        </div>
-
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">En Proceso</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $conteoEnProceso }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">En Espera</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $conteoEnEspera }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">Nuevos</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $conteoNuevo }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">Finalizado</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $conteoFinalizado }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">Borrado</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $conteoBorrado }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-                        <div
-                            class="d-flex justify-content-between border-bottom border-bottom-dashed py-2">
-                            <h4 class="fs-4 flex-grow-1 mb-0">
-                                <p class="fw-medium mb-0">Total</p>
-                                <div>
-                                    <span class="text-muted pe-5">{{ $totalTarea }} Tareas</span>
-                                </div>
-                            </h4>
-                        </div><!-- end -->
-
-                    </div>
-                </div><!-- end cardbody -->
-            </div><!-- end card -->
-        </div><!-- end col -->
     </div><!-- end row -->
 
 

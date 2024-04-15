@@ -1,6 +1,6 @@
 @extends('layouts.master-without-nav')
 @section('title')
-    @lang('translation.lock-screen')
+    @lang('Pantalla Bloqueada')
 @endsection
 @section('content')
 
@@ -24,10 +24,10 @@
                     <div class="text-center mt-sm-5 mb-4 text-white-50">
                         <div>
                             <a href="index" class="d-inline-block auth-logo">
-                                <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="20">
+                                <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="200">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                        <p class="mt-3 fs-15 fw-medium">INFORMATICA EMPORNAC</p>
                     </div>
                 </div>
             </div>
@@ -39,21 +39,28 @@
 
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
-                                <h5 class="text-primary">Lock Screen</h5>
-                                <p class="text-muted">Enter your password to unlock the screen!</p>
+                                <h5 class="text-primary">Pantalla Bloqueada</h5>
+                                <p class="text-muted">Ingrese tu Contraseña Nuevamente!</p>
                             </div>
                             <div class="user-thumb text-center">
-                                <img src="{{ URL::asset('build/images/users/avatar-1.jpg') }}" class="rounded-circle img-thumbnail avatar-lg" alt="thumbnail">
-                                <h5 class="font-size-15 mt-3">Anna Adame</h5>
+                                <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('build/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
+                                <h5 class="font-size-15 mt-3">{{Auth::user()->name}}</h5>
                             </div>
                             <div class="p-2 mt-4">
-                                <form>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="userpassword">Password</label>
-                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter password" required>
+                                <form action="{{ route('unlockscreen') }}" method="POST">
+                                    @csrf
+                                    <label class="form-label" for="password-input">Contraseña</label>
+                                    <div class="position-relative auth-pass-inputgroup mb-3">
+                                        <input type="password" class="form-control password-input pe-5 @error('password') is-invalid @enderror" name="password" placeholder="Ingresa la Contraseña" id="password-input" value="" autocomplete="off">
+                                        <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                        @enderror
                                     </div>
                                     <div class="mb-2 mt-4">
-                                        <button class="btn btn-success w-100" type="submit">Unlock</button>
+                                        <button class="btn btn-success w-100" type="submit">Desbloquear</button>
                                     </div>
                                 </form><!-- end form -->
 
@@ -64,7 +71,10 @@
                     <!-- end card -->
 
                     <div class="mt-4 text-center">
-                        <p class="mb-0">Not you ? return <a href="auth-signin-basic" class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
+                        <p class="mb-0">No eres tu ? returna  <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout">@lang('Cerrar Sesion')</span></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form> </p>
                     </div>
 
                 </div>

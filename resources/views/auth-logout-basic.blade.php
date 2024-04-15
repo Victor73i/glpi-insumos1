@@ -24,10 +24,10 @@
                     <div class="text-center mt-sm-5 mb-4 text-white-50">
                         <div>
                             <a href="index" class="d-inline-block auth-logo">
-                                <img src="{{ URL::asset('build/images/logo-light.png') }}" alt="" height="20">
+                                <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="200">
                             </a>
                         </div>
-                        <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                        <p class="mt-3 fs-15 fw-medium">INFORMATICA EMPORNAC</p>
                     </div>
                 </div>
             </div>
@@ -38,15 +38,15 @@
                     <div class="card mt-4">
                         <div class="card-body p-4 text-center">
                             <lord-icon src="https://cdn.lordicon.com/hzomhqxz.json" trigger="loop"
-                                colors="primary:#405189,secondary:#08a88a" style="width:180px;height:180px">
+                                colors="primary:#405189,secondary:#08a88a" style="width:200px;height:360px">
                             </lord-icon>
 
                             <div class="mt-4 pt-2">
-                                <h5>You are Logged Out</h5>
-                                <p class="text-muted">Thank you for using <span class="fw-semibold">velzon</span>
-                                    admin template</p>
+                                <h5>Tu Cerraste Sesion</h5>
+                                <p class="text-muted">Gracias por Usar <span class="fw-semibold">Infoport-Control</span>
+                                    </p>
                                 <div class="mt-4">
-                                    <a href="auth-signin-basic" class="btn btn-success w-100">Sign In</a>
+                                    <a href="{{ route('login') }}" class="btn btn-success w-100">Iniciar Sesion</a>
                                 </div>
                             </div>
                         </div>
@@ -71,8 +71,8 @@
                     <div class="text-center">
                         <script>
                             document.write(new Date().getFullYear())
-                        </script> Velzon. Crafted with <i
-                                class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        </script> Informatica <i
+                                class="mdi mdi-heart text-danger"></i> </p>
                     </div>
                 </div>
             </div>
@@ -82,6 +82,11 @@
 
 @endsection
 @section('script')
+        <script>
+            setTimeout(function(){
+                window.location.href = "{{ route('login') }}"; // Cambia esto a la ruta de tu login
+            }, 20000); // 20 segundos
+        </script>
 <script src="{{ URL::asset('build/libs/particles.js/particles.js') }}"></script>
 <script src="{{ URL::asset('build/js/pages/particles.app.js') }}"></script>
 @endsection

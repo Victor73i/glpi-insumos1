@@ -298,8 +298,8 @@
                         <a class="dropdown-item" href="pages-faqs"><i class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Ayuda</span></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="tareas"><i class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Tareas : <b>Aproximamente</b></span></a>
-                        <a class="dropdown-item" href="auth-lockscreen-basic"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Bloquear Pantalla Proximamente</span></a>
-                        <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout">@lang('translation.logout')</span></a>
+                        <a class="dropdown-item" href="auth-lockscreen-basic"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Bloquear Pantalla</span></a>
+                        <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout">@lang('Cerrar Sesion')</span></a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -309,5 +309,23 @@
         </div>
     </div>
 </header>
+<script>
+    // Inicia un temporizador cuando se carga la página
+    let timeout;
 
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+
+    function logout() {
+        // Redirige al usuario a la ruta de bloqueo de pantalla
+        window.location.href = '/auth-lockscreen-basic';
+    }
+
+    function resetTimer() {
+        clearTimeout(timeout);
+        // Establece un nuevo temporizador
+        timeout = setTimeout(logout, 30000); // Tiempo de inactividad en milisegundos (60000 ms = 1 minuto)
+    }
+</script>
 <!-- removeNotificationModal -->

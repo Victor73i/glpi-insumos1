@@ -18,8 +18,8 @@
             </div><!-- end row -->
 
             <div class="row">
-                <div class="col-xl-7">
-                    <div class="card">
+                <div class="col-xl-4">
+                    <div class="card card-height-25">
                         <div class="card-header border-0 align-items-center d-flex justify-content-between">
                             <h4 class="card-title mb-0 flex-grow-1">Documentacion</h4>
                             <div class="button-group" role="group" aria-label="Basic example">

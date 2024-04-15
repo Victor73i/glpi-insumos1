@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 
 class Handler extends ExceptionHandler
 {
@@ -37,5 +40,22 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    public function render($request, Throwable $exception)
+    {
+        // Detectar si la aplicación está en modo de mantenimiento
+        if ($exception instanceof \Illuminate\Foundation\Http\Exceptions\MaintenanceModeException) {
+            return response()->view('auth-offline', [], 503);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            return response()->view('auth-404-basic', [], 404);
+        }
+
+        if ($exception instanceof HttpException && $exception->getStatusCode() == 500) {
+            return response()->view('auth-500', [], 500);
+        }
+
+        return parent::render($request, $exception);
     }
 }
