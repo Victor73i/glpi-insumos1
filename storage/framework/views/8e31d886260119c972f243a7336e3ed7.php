@@ -1,6 +1,6 @@
-@extends('layouts.master')
-@section('title') @lang('Tarea Detalle ') @endsection
-@section('content')
+
+<?php $__env->startSection('title'); ?> <?php echo app('translator')->get('Tarea Detalle '); ?> <?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
     <div class="row">
         <div class="col-xxl-3">
@@ -11,38 +11,38 @@
                         <lord-icon src="https://cdn.lordicon.com/kbtmbyzy.json" trigger="loop" colors="primary:#405189,secondary:#02a8b5" style="width:90px;height:90px">
                         </lord-icon>
                     </div>
-                    @if($tarea->completado)
+                    <?php if($tarea->completado): ?>
                         <h3 class="mb-1">Completado a Tiempo</h3>
-                    @else
-                        <h3 class="mb-1">{{ $tarea->dias_restantes }}</h3>
-                    @endif
+                    <?php else: ?>
+                        <h3 class="mb-1"><?php echo e($tarea->dias_restantes); ?></h3>
+                    <?php endif; ?>
                     <h5 class="fs-14 mb-4">DÍA POR TERMINAR</h5>
                     <div class="hstack gap-2 justify-content-center">
-                        @if($tarea->estado == 'borrado')
+                        <?php if($tarea->estado == 'borrado'): ?>
                         <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#removeProjectModal"><i class="ri-stop-circle-line align-bottom me-1"></i> Borrar</button>
-                        @endif
-                            <a class="btn btn-success btn-sm" href="{{route('tareas.edit', [$tarea->id])}}"><i class="ri-play-circle-line align-bottom me-1"></i> Editar</a>
+                        <?php endif; ?>
+                            <a class="btn btn-success btn-sm" href="<?php echo e(route('tareas.edit', [$tarea->id])); ?>"><i class="ri-play-circle-line align-bottom me-1"></i> Editar</a>
 
                             <!-- Botón Terminado -->
-                        @if($tarea->estado != 'terminado')
-                            <form action="{{ route('tareas.completar', $tarea) }}" method="POST" class="d-inline">
-                                @csrf
+                        <?php if($tarea->estado != 'terminado'): ?>
+                            <form action="<?php echo e(route('tareas.completar', $tarea)); ?>" method="POST" class="d-inline">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="ri-checkbox-circle-line align-bottom me-1"></i> Terminado</button>
                             </form>
-                        @endif
-                        @if($tarea->estado != 'en proceso')
-                            <form action="{{ route('tareas.revertir', $tarea) }}" method="POST">
-                                @csrf
+                        <?php endif; ?>
+                        <?php if($tarea->estado != 'en proceso'): ?>
+                            <form action="<?php echo e(route('tareas.revertir', $tarea)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="btn btn-warning btn-sm">Revertir</button>
                             </form>
-                        @endif
-                            @if($tarea->estado != 'borrado')
-                            <form action="{{ route('tareas.borrar', $tarea) }}" method="POST">
-                                @csrf
+                        <?php endif; ?>
+                            <?php if($tarea->estado != 'borrado'): ?>
+                            <form action="<?php echo e(route('tareas.borrar', $tarea)); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
                                 <button type="submit" class="btn btn-warning btn-sm">Borrar</button>
                             </form>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </div>
             </div><!--end card-->
@@ -62,30 +62,30 @@
                             <tbody>
                             <tr>
                                 <td class="fw-medium">No. Tarea</td>
-                                <td>{{$tarea->id}}</td>
+                                <td><?php echo e($tarea->id); ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Nombre Tarea</td>
-                                <td>{{$tarea->nombre}}</td>
+                                <td><?php echo e($tarea->nombre); ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Fecha Asignacion</td>
-                                <td>{{$tarea->fecha_asignacion}}</td>
+                                <td><?php echo e($tarea->fecha_asignacion); ?></td>
                             </tr><tr>
                                 <td class="fw-medium">Fecha Aproximada</td>
-                                <td>{{$tarea->fecha_aproximada}}</td>
+                                <td><?php echo e($tarea->fecha_aproximada); ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Prioridad</td>
-                                <td><span class="badge badge-soft-danger">{{$tarea->prioridad}}</span></td>
+                                <td><span class="badge badge-soft-danger"><?php echo e($tarea->prioridad); ?></span></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Estado</td>
-                                <td><span class="badge badge-soft-secondary">{{$tarea->estado}}</span></td>
+                                <td><span class="badge badge-soft-secondary"><?php echo e($tarea->estado); ?></span></td>
                             </tr>
                             <tr>
                                 <td class="fw-medium">Fecha Terminada</td>
-                                <td>{{$tarea->fecha_terminado}}</td>
+                                <td><?php echo e($tarea->fecha_terminado); ?></td>
                             </tr>
                             </tbody>
                         </table><!--end table-->
@@ -96,22 +96,18 @@
                 <div class="card-body">
                     <div class="d-flex mb-3">
                         <h6 class="card-title mb-0 flex-grow-1">Tecnico Asignado</h6>
-                        {{--
-                            PARA CUANDO LO HAGA DE MUCHOS TECNICOS ASIGNADOS PROXIMAMENTE
-                        <div class="flex-shrink-0">
-                            <button type="button" class="btn btn-soft-danger btn-sm" data-bs-toggle="modal" data-bs-target="#inviteMembersModal"><i class="ri-share-line me-1 align-bottom"></i> Assigned Member</button>
-                        </div>--}}
+                        
                     </div>
                     <ul class="list-unstyled vstack gap-3 mb-0">
                         <li>
                             <div class="d-flex align-items-center">
                                 <div class="flex-shrink-0">
-                                    <h6 class="mb-1"><a href="">{{$tarea->glpi_users->id}}</a></h6>
+                                    <h6 class="mb-1"><a href=""><?php echo e($tarea->glpi_users->id); ?></a></h6>
 
                                 </div>
                                 <div class="flex-grow-1 ms-2">
-                                    <h6 class="mb-1"><a href="">{{$tarea->glpi_users->name}}</a></h6>
-                                    <p class="text-muted mb-0">{{$tarea->glpi_users->name}}</p>
+                                    <h6 class="mb-1"><a href=""><?php echo e($tarea->glpi_users->name); ?></a></h6>
+                                    <p class="text-muted mb-0"><?php echo e($tarea->glpi_users->name); ?></p>
                                 </div>
 
                             </div>
@@ -120,113 +116,14 @@
                     </ul>
                 </div>
             </div><!--end card-->
-            {{--<div class="card">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">Attachments</h5>
-                    <div class="vstack gap-2">
-                        <div class="border rounded border-dashed p-2">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar-sm">
-                                        <div class="avatar-title bg-light text-secondary rounded fs-24">
-                                            <i class="ri-folder-zip-line"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <h5 class="fs-13 mb-1"><a href="javascript:void(0);" class="text-body text-truncate d-block">App pages.zip</a></h5>
-                                    <div>2.2MB</div>
-                                </div>
-                                <div class="flex-shrink-0 ms-2">
-                                    <div class="d-flex gap-1">
-                                        <button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button>
-                                        <div class="dropdown">
-                                            <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="ri-more-fill"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Rename</a></li>
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border rounded border-dashed p-2">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar-sm">
-                                        <div class="avatar-title bg-light text-secondary rounded fs-24">
-                                            <i class="ri-file-ppt-2-line"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <h5 class="fs-13 mb-1"><a href="javascript:void(0);" class="text-body text-truncate d-block">Velzon admin.ppt</a></h5>
-                                    <div>2.4MB</div>
-                                </div>
-                                <div class="flex-shrink-0 ms-2">
-                                    <div class="d-flex gap-1">
-                                        <button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button>
-                                        <div class="dropdown">
-                                            <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="ri-more-fill"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Rename</a></li>
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="border rounded border-dashed p-2">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-shrink-0 me-3">
-                                    <div class="avatar-sm">
-                                        <div class="avatar-title bg-light text-secondary rounded fs-24">
-                                            <i class="ri-folder-zip-line"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex-grow-1 overflow-hidden">
-                                    <h5 class="fs-13 mb-1"><a href="javascript:void(0);" class="text-body text-truncate d-block">Images.zip</a></h5>
-                                    <div>1.2MB</div>
-                                </div>
-                                <div class="flex-shrink-0 ms-2">
-                                    <div class="d-flex gap-1">
-                                        <button type="button" class="btn btn-icon text-muted btn-sm fs-18"><i class="ri-download-2-line"></i></button>
-                                        <div class="dropdown">
-                                            <button class="btn btn-icon text-muted btn-sm fs-18 dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="ri-more-fill"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Rename</a></li>
-                                                <li><a class="dropdown-item" href="javascript:void(0);"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-2 text-center">
-                            <button type="button" class="btn btn-success">View more</button>
-                        </div>
-                    </div>
-                </div>
-            </div>  PROXIMAMENTE COLOCAR LO QUE SERIA ARCHIVO
-            --}} <!--end card-->
+             <!--end card-->
         </div><!---end col-->
         <div class="col-xxl-9">
             <div class="card">
                 <div class="card-body">
                     <div class="text-muted">
                         <h6 class="mb-3 fw-semibold text-uppercase">Descripcion</h6>
-                        <p>{{$tarea->descripcion}}</p>
+                        <p><?php echo e($tarea->descripcion); ?></p>
 
                         <h6 class="mb-3 fw-semibold text-uppercase">Observacion</h6>
                         <ul class=" ps-3 list-unstyled vstack gap-2">
@@ -234,7 +131,8 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="productTask">
                                     <label class="form-check-label" for="productTask">
-                                        {{$tarea->observacion}}
+                                        <?php echo e($tarea->observacion); ?>
+
                                     </label>
                                 </div>
                             </li>
@@ -244,8 +142,8 @@
                         <div class="pt-3 border-top border-top-dashed mt-4">
                             <h6 class="mb-3 fw-semibold text-uppercase">Historico</h6>
                             <div class="hstack flex-wrap gap-2 fs-15">
-                                <div class="badge fw-medium badge-soft-info">Creado {{$tarea->created_at->diffForHumans()}}</div>
-                                <div class="badge fw-medium badge-soft-info">Actualizado {{$tarea->updated_at->diffForHumans()}}</div>
+                                <div class="badge fw-medium badge-soft-info">Creado <?php echo e($tarea->created_at->diffForHumans()); ?></div>
+                                <div class="badge fw-medium badge-soft-info">Actualizado <?php echo e($tarea->updated_at->diffForHumans()); ?></div>
                             </div>
                         </div>
                     </div>
@@ -275,17 +173,17 @@
                         <div class="avatar-group justify-content-center">
                             <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Tonya Noble">
                                 <div class="avatar-xs">
-                                    <img src="{{ URL::asset('build/images/users/avatar-10.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-10.jpg')); ?>" alt="" class="rounded-circle img-fluid">
                                 </div>
                             </a>
                             <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Thomas Taylor">
                                 <div class="avatar-xs">
-                                    <img src="{{ URL::asset('build/images/users/avatar-8.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-8.jpg')); ?>" alt="" class="rounded-circle img-fluid">
                                 </div>
                             </a>
                             <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Nancy Martino">
                                 <div class="avatar-xs">
-                                    <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" alt="" class="rounded-circle img-fluid">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt="" class="rounded-circle img-fluid">
                                 </div>
                             </a>
                         </div>
@@ -294,7 +192,7 @@
                         <div class="vstack gap-3">
                             <div class="d-flex align-items-center">
                                 <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" alt="" class="img-fluid rounded-circle">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">Nancy Martino</a></h5>
@@ -320,7 +218,7 @@
                             <!-- end member item -->
                             <div class="d-flex align-items-center">
                                 <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" alt="" class="img-fluid rounded-circle">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">Frank Hook</a></h5>
@@ -332,7 +230,7 @@
                             <!-- end member item -->
                             <div class="d-flex align-items-center">
                                 <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('build/images/users/avatar-4.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-4.jpg')); ?>" alt="" class="img-fluid rounded-circle">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">Jennifer Carter</a></h5>
@@ -358,7 +256,7 @@
                             <!-- end member item -->
                             <div class="d-flex align-items-center">
                                 <div class="avatar-xs flex-shrink-0 me-3">
-                                    <img src="{{ URL::asset('build/images/users/avatar-7.jpg') }}" alt="" class="img-fluid rounded-circle">
+                                    <img src="<?php echo e(URL::asset('build/images/users/avatar-7.jpg')); ?>" alt="" class="img-fluid rounded-circle">
                                 </div>
                                 <div class="flex-grow-1">
                                     <h5 class="fs-13 mb-0"><a href="javascript:void(0);" class="text-body d-block">Joseph Parker</a></h5>
@@ -400,9 +298,9 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cerrar</button>
-                        <form action="{{route('tareas.destroy',['tarea' =>$tarea->id])}}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                        <form action="<?php echo e(route('tareas.destroy',['tarea' =>$tarea->id])); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
                             <button type="submit" class="btn w-sm btn-danger"  id="remove-project">Si, Borralo!</button>
 
                         </form>
@@ -413,7 +311,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- end modal -->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\glpi-insumos\resources\views/tarea/show.blade.php ENDPATH**/ ?>

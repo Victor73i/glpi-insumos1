@@ -8,10 +8,19 @@ use App\Models\GlpiUsers;
 use App\Models\Tarea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class TareaController extends Controller
 {
     public function index(Request $request) {
+        $conteoEnProceso = Tarea::where('estado', 'en proceso')->count();
+        $conteoEnEspera = Tarea::where('estado', 'en espera')->count();
+        $conteoNuevo = Tarea::where('estado', 'nuevo')->count();
+        $conteoFinalizado = Tarea::where('estado', 'finalizado')->count();
+        $conteoBorrado = Tarea::where('estado', 'borrado')->count();
+        $totalTarea = $conteoEnProceso + $conteoEnEspera + $conteoNuevo + $conteoFinalizado +$conteoBorrado;
+
         $query = Tarea::query();
 
         // Filtrado por búsqueda general
@@ -25,11 +34,29 @@ class TareaController extends Controller
             });
         }
 
+
+
+        $filtro = $request->input('filter_by_type');
+
+        // Filtra por estado, pero excluye 'borrado' si 'ALL' es seleccionado
+        if ($filtro == 'ALL') {
+            $query->where('estado', '!=', 'borrado');
+        } elseif ($filtro == 'borrado') {
+            $query->where('estado', 'borrado');
+        } elseif ($filtro) {
+            $query->where('estado', $filtro);
+        }
+
         $tareas = $query->latest()->paginate(10);
+
+        if ($request->ajax()) {
+            // Solo devolver la sección de la tabla si la solicitud es AJAX
+            return view('tareas.partials._tasksTable', compact('tareas'))->render();
+        }
         $id_glpi_users = GlpiUsers::all();
         $id_glpi_tickets = GlpiTickets::all();
 
-        return view('tarea.index', compact('tareas', 'id_glpi_users', 'id_glpi_tickets'));
+        return view('tarea.index', compact('tareas', 'id_glpi_users', 'id_glpi_tickets','totalTarea','conteoEnProceso', 'conteoEnEspera', 'conteoNuevo', 'conteoFinalizado', 'conteoBorrado'));
     }
 
 
@@ -72,6 +99,28 @@ class TareaController extends Controller
         return view('tarea.show', [
             'tarea'=> $tarea]);
 
+    }
+    public function completarTarea(Request $request, Tarea $tarea)
+    {
+        $tarea->establecerCompletado('terminado');
+
+        return redirect()->back()->with('status', 'Tarea revertida a no completada.');    }
+
+    public function revertirTarea(Request $request, Tarea $tarea)
+    {
+        // Asegúrate de llamar a un método en tu modelo que actualice el estado correctamente
+        $tarea->establecerCompletado('en proceso', null, false);
+
+        // Redirección con mensaje flash
+        return redirect()->back()->with('status', 'Tarea revertida a no completada.');
+    }
+    public function borrarTarea(Request $request, Tarea $tarea)
+    {
+        // Asegúrate de llamar a un método en tu modelo que actualice el estado correctamente
+        $tarea->establecerCompletado('borrado', Carbon::now()->toDateString(), false);
+
+        // Redirección con mensaje flash
+        return redirect()->back()->with('status', 'Tarea Borrada no completada.');
     }
     //STORE
     public function store(TareaRequest $request){

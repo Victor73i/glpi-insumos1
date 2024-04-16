@@ -36,6 +36,9 @@ Route::view('/auth-offline', 'auth-offline')->name('auth-offline');
 
 Route::get('/auth-lockscreen-basic', [App\Http\Controllers\LockScreenController::class, 'showLockScreenForm'])->name('lockscreen');
 Route::post('/auth-lockscreen-basic', [App\Http\Controllers\LockScreenController::class, 'unlockScreen'])->name('unlockscreen');
+Route::post('/tareas/{tarea}', [TareaController::class, 'completarTarea'])->name('tareas.completar');
+Route::post('/tareas/{tarea}/revertir', [TareaController::class, 'revertirTarea'])->name('tareas.revertir');
+Route::post('/tareas/{tarea}/borrar', [TareaController::class, 'borrarTarea'])->name('tareas.borrar');
 
 
 Auth::routes();

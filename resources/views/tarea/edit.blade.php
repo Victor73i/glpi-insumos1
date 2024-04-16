@@ -106,7 +106,7 @@
                                         <option value="nuevo" {{ $tarea->estado == 'nuevo' ? 'selected' : '' }}>nuevo</option>
                                         <option value="en espera" {{ $tarea->estado == 'en espera' ? 'selected' : '' }}>en espera</option>
                                         <option value="en proceso" {{ $tarea->estado == 'en proceso' ? 'selected' : '' }}>en proceso</option>
-                                        <option value="completado" {{ $tarea->estado == 'completado' ? 'selected' : '' }}>completado</option>
+                                        <option value="terminado" {{ $tarea->estado == 'terminado' ? 'selected' : '' }}>terminado</option>
                                         <option value="borrado" {{ $tarea->estado == 'borrado' ? 'selected' : '' }}>borrado</option>
                                     </select>
                                 </div>

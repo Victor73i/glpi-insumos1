@@ -1,19 +1,19 @@
-@extends('layouts.master')
-@section('title')
-    @lang('Tarea ')
-@endsection
-@section('css')
-    <link href="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
-@endsection
-@section('content')
-    @component('components.breadcrumb')
-        @slot('li_1')
+
+<?php $__env->startSection('title'); ?>
+    <?php echo app('translator')->get('Tarea '); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+    <link href="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.css')); ?>" rel="stylesheet" type="text/css" />
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+    <?php $__env->startComponent('components.breadcrumb'); ?>
+        <?php $__env->slot('li_1'); ?>
             Tarea
-        @endslot
-        @slot('title')
+        <?php $__env->endSlot(); ?>
+        <?php $__env->slot('title'); ?>
             Lista de Tareas
-        @endslot
-    @endcomponent
+        <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
 
     <div class="row">
         <div class="col-xxl-3 col-sm-6">
@@ -22,10 +22,12 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Tareas Totales</p>
-                            <h2 class="mt-4 ff-secondary fw-semibold">{{$totalTarea}}
+                            <h2 class="mt-4 ff-secondary fw-semibold"><?php echo e($totalTarea); ?>
+
                             </h2>
                             <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
-                                <i class="ri-arrow-up-line align-middle"></i> {{$totalTarea}}
+                                <i class="ri-arrow-up-line align-middle"></i> <?php echo e($totalTarea); ?>
+
                             </span> </p>
                         </div>
                         <div>
@@ -46,9 +48,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Tareas En Espera</p>
-                            <h2 class="mt-4 ff-secondary fw-semibold">{{$conteoEnEspera}}</h2>
+                            <h2 class="mt-4 ff-secondary fw-semibold"><?php echo e($conteoEnEspera); ?></h2>
                             <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
-                                <i class="ri-arrow-down-line align-middle"></i>{{$conteoEnEspera}}
+                                <i class="ri-arrow-down-line align-middle"></i><?php echo e($conteoEnEspera); ?>
+
                             </span> </p>
                         </div>
                         <div>
@@ -67,9 +70,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Tareas En Proceso</p>
-                            <h2 class="mt-4 ff-secondary fw-semibold">{{$conteoEnProceso}}</h2>
+                            <h2 class="mt-4 ff-secondary fw-semibold"><?php echo e($conteoEnProceso); ?></h2>
                             <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
-                                <i class="ri-arrow-down-line align-middle"></i> {{$conteoEnProceso}}
+                                <i class="ri-arrow-down-line align-middle"></i> <?php echo e($conteoEnProceso); ?>
+
                             </span> </p>
                         </div>
                         <div>
@@ -90,9 +94,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Tareas Finalizadas</p>
-                            <h2 class="mt-4 ff-secondary fw-semibold">{{$conteoFinalizado}}</h2>
+                            <h2 class="mt-4 ff-secondary fw-semibold"><?php echo e($conteoFinalizado); ?></h2>
                             <p class="mb-0 text-muted"><span class="badge bg-light text-danger mb-0">
-                                <i class="ri-arrow-down-line align-middle"></i> {{$conteoFinalizado}}
+                                <i class="ri-arrow-down-line align-middle"></i> <?php echo e($conteoFinalizado); ?>
+
                             </span> </p>
                         </div>
                         <div>
@@ -113,9 +118,10 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <p class="fw-medium text-muted mb-0">Tareas Borradas</p>
-                            <h2 class="mt-4 ff-secondary fw-semibold">{{$conteoBorrado}}</h2>
+                            <h2 class="mt-4 ff-secondary fw-semibold"><?php echo e($conteoBorrado); ?></h2>
                             <p class="mb-0 text-muted"><span class="badge bg-light text-success mb-0">
-                                <i class="ri-arrow-up-line align-middle"></i> {{$conteoBorrado}}
+                                <i class="ri-arrow-up-line align-middle"></i> <?php echo e($conteoBorrado); ?>
+
                             </span> </p>
                         </div>
                         <div>
@@ -203,7 +209,7 @@
                             </tr>
                             </thead>
                             <tbody class="list form-check-all">
-                            @foreach($tareas as $tarea)
+                            <?php $__currentLoopData = $tareas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tarea): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                 <tr>
                                     <th scope="row">
@@ -214,34 +220,34 @@
                                     <td class="id">
 
                                         <div class="d-flex">
-                                            <a href="{{route('tareas.show', ['tarea'=>$tarea])}}" class="flex-grow-1">{{$tarea->id}}</a>
+                                            <a href="<?php echo e(route('tareas.show', ['tarea'=>$tarea])); ?>" class="flex-grow-1"><?php echo e($tarea->id); ?></a>
                                             <div class="flex-shrink-0 ms-4">
                                                 <ul class="list-inline tasks-list-menu mb-0">
-                                                    <li class="list-inline-item"><a href="{{route('tareas.show', ['tarea'=>$tarea])}}"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
+                                                    <li class="list-inline-item"><a href="<?php echo e(route('tareas.show', ['tarea'=>$tarea])); ?>"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="project_name"><a  class="fw-medium link-primary">{{ $tarea->glpi_users->name ?? 'Sin Usuario' }}</a></td>
+                                    <td class="project_name"><a  class="fw-medium link-primary"><?php echo e($tarea->glpi_users->name ?? 'Sin Usuario'); ?></a></td>
                                     <td class="client_name">
                                         <div class="d-flex">
-                                            <div class="flex-grow-1" name="nombre">{{$tarea->nombre}}</div>
+                                            <div class="flex-grow-1" name="nombre"><?php echo e($tarea->nombre); ?></div>
 
                                         </div>
                                     </td>
-                                    <td class="assignedto">{{$tarea->descripcion}}</td>
+                                    <td class="assignedto"><?php echo e($tarea->descripcion); ?></td>
 
-                                    <td class="due_date">{{$tarea->fecha_asignacion}}</td>
-                                    <td class="fecha_aproximada">{{$tarea->fecha_aproximada}}</td>
-                                    <td class="fecha_terminado">{{$tarea->fecha_terminado}}</td>
-                                    <td class="status">{{$tarea->estado }}</td>
-                                    <td class="priority"><span class="badge bg-danger text-uppercase">{{$tarea->prioridad}}</span>
-                                    <td class="tickets">{{ $tarea->glpi_tickets->name ?? 'Sin Tickets' }}</td>
+                                    <td class="due_date"><?php echo e($tarea->fecha_asignacion); ?></td>
+                                    <td class="fecha_aproximada"><?php echo e($tarea->fecha_aproximada); ?></td>
+                                    <td class="fecha_terminado"><?php echo e($tarea->fecha_terminado); ?></td>
+                                    <td class="status"><?php echo e($tarea->estado); ?></td>
+                                    <td class="priority"><span class="badge bg-danger text-uppercase"><?php echo e($tarea->prioridad); ?></span>
+                                    <td class="tickets"><?php echo e($tarea->glpi_tickets->name ?? 'Sin Tickets'); ?></td>
 
                                     </td>
                                 </tr>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
                         </table>
@@ -249,38 +255,38 @@
                             <div class="pagination-container">
                                 <nav aria-label="Page navigation example">
                                     <ul class="pagination justify-content-center">
-                                        {{-- Previous Page Link --}}
-                                        @if ($tareas->onFirstPage())
+                                        
+                                        <?php if($tareas->onFirstPage()): ?>
                                             <li class="page-item disabled">
                                                 <span class="page-link">Anterior</span>
                                             </li>
-                                        @else
+                                        <?php else: ?>
                                             <li class="page-item">
-                                                <a class="page-link" href="{{ $tareas->previousPageUrl() }}">Anterior</a>
+                                                <a class="page-link" href="<?php echo e($tareas->previousPageUrl()); ?>">Anterior</a>
                                             </li>
-                                        @endif
+                                        <?php endif; ?>
 
-                                        {{-- Pagination Elements --}}
-                                        @foreach(range(1, $tareas->lastPage()) as $i)
-                                            @if($i >= $tareas->currentPage() - 2 && $i <= $tareas->currentPage() + 2)
-                                                @if ($i == $tareas->currentPage())
-                                                    <li class="page-item active"><span class="page-link">{{ $i }}</span></li>
-                                                @else
-                                                    <li class="page-item"><a class="page-link" href="{{ $tareas->url($i) }}">{{ $i }}</a></li>
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                        
+                                        <?php $__currentLoopData = range(1, $tareas->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <?php if($i >= $tareas->currentPage() - 2 && $i <= $tareas->currentPage() + 2): ?>
+                                                <?php if($i == $tareas->currentPage()): ?>
+                                                    <li class="page-item active"><span class="page-link"><?php echo e($i); ?></span></li>
+                                                <?php else: ?>
+                                                    <li class="page-item"><a class="page-link" href="<?php echo e($tareas->url($i)); ?>"><?php echo e($i); ?></a></li>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                                        {{-- Next Page Link --}}
-                                        @if ($tareas->hasMorePages())
+                                        
+                                        <?php if($tareas->hasMorePages()): ?>
                                             <li class="page-item">
-                                                <a class="page-link" href="{{ $tareas->nextPageUrl() }}">Siguiente</a>
+                                                <a class="page-link" href="<?php echo e($tareas->nextPageUrl()); ?>">Siguiente</a>
                                             </li>
-                                        @else
+                                        <?php else: ?>
                                             <li class="page-item disabled">
                                                 <span class="page-link">Siguiente</span>
                                             </li>
-                                        @endif
+                                        <?php endif; ?>
                                     </ul>
                                 </nav>
 
@@ -316,75 +322,117 @@
                     <h5 class="modal-title" id="exampleModalLabel">Crear Tarea</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                 </div>
-                <form method="POST" class="tablelist-form" action="{{route('tareas.store')}}" autocomplete="off">
-                    @csrf
+                <form method="POST" class="tablelist-form" action="<?php echo e(route('tareas.store')); ?>" autocomplete="off">
+                    <?php echo csrf_field(); ?>
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-lg-12">
                                 <label for="id_glpi_users" class="form-label">TECNICO ASIGNADO</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                         name="id_glpi_users" id="id_glpi_users"
-                                        @class(['border-red-500' => $errors->has('id_glpi_users')])
-                                        value="{{old('id_glpi_users')}}" >
+                                        class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_users')]); ?>"
+                                        value="<?php echo e(old('id_glpi_users')); ?>" >
                                     <option value="">Seleccione un Usuario</option>
 
-                                    @foreach ($id_glpi_users as $id_glpi_user)
-                                        <option value="{{$id_glpi_user->id}}">{{ $id_glpi_user->id }}: {{$id_glpi_user->name}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $id_glpi_users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($id_glpi_user->id); ?>"><?php echo e($id_glpi_user->id); ?>: <?php echo e($id_glpi_user->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
-                                @error('id_glpi_users')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                <?php $__errorArgs = ['id_glpi_users'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col-->
                             <div class="col-lg-12">
                                 <div>
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el Nombre" required
-                                           @class(['border-red-500' => $errors->has('nombre')])
-                                           value="{{ old('nombre')}}"/>
-                                    @error('nombre')
-                                    <p class="error">{{$message}}</p>
-                                    @enderror
+                                           class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('nombre')]); ?>"
+                                           value="<?php echo e(old('nombre')); ?>"/>
+                                    <?php $__errorArgs = ['nombre'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <p class="error"><?php echo e($message); ?></p>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
                             <!--end col-->
                             <div class="col-lg-12">
                                 <label for="descripcion" class="form-label">Descripcion</label>
                                 <input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Ingrese Descripcion" required
-                                       @class(['border-red-500' => $errors->has('descripcion')])
-                                       value="{{ old('descripcion')}}"/>
-                                @error('descripcion')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                       class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('descripcion')]); ?>"
+                                       value="<?php echo e(old('descripcion')); ?>"/>
+                                <?php $__errorArgs = ['descripcion'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col-->
                             <div class="col-lg-12">
                                 <label for="fecha_asignacion" class="form-label">Fecha Asignacion</label>
                                 <input type="date" name="fecha_asignacion" id="fecha_asignacion" class="form-control"
-                                       @class(['border-red-500' => $errors->has('fecha_asignacion')])
-                                       value="{{old('fecha_asignacion')}}"/>
-                                @error('fecha_asignacion')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                       class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('fecha_asignacion')]); ?>"
+                                       value="<?php echo e(old('fecha_asignacion')); ?>"/>
+                                <?php $__errorArgs = ['fecha_asignacion'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col--><div class="col-lg-12">
                                 <label for="fecha_aproximada" class="form-label">Fecha Aproximada</label>
                                 <input type="date" name="fecha_aproximada" id="fecha_aproximada" class="form-control"
-                                       @class(['border-red-500' => $errors->has('fecha_aproximada')])
-                                       value="{{old('fecha_aproximada')}}"/>
-                                @error('fecha_aproximada')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                       class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('fecha_aproximada')]); ?>"
+                                       value="<?php echo e(old('fecha_aproximada')); ?>"/>
+                                <?php $__errorArgs = ['fecha_aproximada'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col--><div class="col-lg-12">
                                 <label for="fecha_terminado" class="form-label">Fecha Terminado</label>
                                 <input type="date" name="fecha_terminado" id="fecha_terminado" class="form-control"
-                                       @class(['border-red-500' => $errors->has('fecha_terminado')])
-                                       value="{{old('fecha_terminado')}}"/>
-                                @error('fecha_terminado')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                       class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('fecha_terminado')]); ?>"
+                                       value="<?php echo e(old('fecha_terminado')); ?>"/>
+                                <?php $__errorArgs = ['fecha_terminado'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col-->
                             <div class="col-lg-6">
@@ -411,28 +459,42 @@
                             <div class="col-lg-12">
                                 <label for="observacion" class="form-label">Observacion</label>
                                 <input type="text" name="observacion" id="observacion" class="form-control" placeholder="Ingrese Observacion" required
-                                       @class(['border-red-500' => $errors->has('observacion')])
-                                       value="{{ old('observacion')}}"/>
-                                @error('observacion')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                       class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('observacion')]); ?>"
+                                       value="<?php echo e(old('observacion')); ?>"/>
+                                <?php $__errorArgs = ['observacion'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col-->
                             <div class="col-lg-12">
                                 <label for="id_glpi_tickets" class="form-label">Ticket</label>
                                 <select class="form-select" data-choices data-choices-search-false
                                         name="id_glpi_tickets" id="id_glpi_tickets"
-                                        @class(['border-red-500' => $errors->has('id_glpi_tickets')])
-                                        value="{{old('id_glpi_tickets')}}" >
+                                        class="<?php echo \Illuminate\Support\Arr::toCssClasses(['border-red-500' => $errors->has('id_glpi_tickets')]); ?>"
+                                        value="<?php echo e(old('id_glpi_tickets')); ?>" >
                                     <option value="">Seleccione una ticket</option>
-                                    @foreach ($id_glpi_tickets as $id_glpi_ticket)
-                                        <option value="{{$id_glpi_ticket->id}}">{{ $id_glpi_ticket->id }}: {{$id_glpi_ticket->name}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $id_glpi_tickets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $id_glpi_ticket): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($id_glpi_ticket->id); ?>"><?php echo e($id_glpi_ticket->id); ?>: <?php echo e($id_glpi_ticket->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                                 </select>
-                                @error('id_glpi_tickets')
-                                <p class="error">{{$message}}</p>
-                                @enderror
+                                <?php $__errorArgs = ['id_glpi_tickets'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <p class="error"><?php echo e($message); ?></p>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                             <!--end col-->
                         </div>
@@ -442,7 +504,7 @@
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" id="close-modal" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-success" id="add-btn">Add Task</button>
-                            {{-- <button type="button" class="btn btn-success" id="edit-btn">Update Task</button> --}}
+                            
                         </div>
                     </div>
                 </form>
@@ -454,10 +516,10 @@
 
 
     <!--end modal-->
-@endsection
-@section('script')
-    <script src="{{ URL::asset('build/libs/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ URL::asset('build/js/app.js') }}"></script>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('script'); ?>
+    <script src="<?php echo e(URL::asset('build/libs/sweetalert2/sweetalert2.min.js')); ?>"></script>
+    <script src="<?php echo e(URL::asset('build/js/app.js')); ?>"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.1/list.min.js"></script>
 
@@ -533,4 +595,6 @@
     </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\glpi-insumos\resources\views/tarea/index.blade.php ENDPATH**/ ?>

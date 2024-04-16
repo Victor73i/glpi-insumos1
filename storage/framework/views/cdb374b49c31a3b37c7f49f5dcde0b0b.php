@@ -6,19 +6,19 @@
                 <div class="navbar-brand-box horizontal-logo">
                     <a href="index" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="22">
+                            <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="17">
+                            <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="" height="17">
                         </span>
                     </a>
 
                     <a href="index" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="22">
+                            <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="" height="22">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ URL::asset('build/images/empornac.png') }}" alt="" height="17">
+                            <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="" height="17">
                         </span>
                     </a>
                 </div>
@@ -81,7 +81,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src="{{ URL::asset('build/images/users/avatar-2.jpg') }}" class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                        <img src="<?php echo e(URL::asset('build/images/users/avatar-2.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">Angela Bernier</h6>
                                             <span class="fs-11 mb-0 text-muted">Manager</span>
@@ -91,7 +91,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src="{{ URL::asset('build/images/users/avatar-3.jpg') }}" class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                        <img src="<?php echo e(URL::asset('build/images/users/avatar-3.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">David Grasso</h6>
                                             <span class="fs-11 mb-0 text-muted">Web Designer</span>
@@ -101,7 +101,7 @@
                                 <!-- item -->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
                                     <div class="d-flex">
-                                        <img src="{{ URL::asset('build/images/users/avatar-5.jpg') }}" class="me-3 rounded-circle avatar-xs" alt="user-pic">
+                                        <img src="<?php echo e(URL::asset('build/images/users/avatar-5.jpg')); ?>" class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="m-0">Mike Bunch</h6>
                                             <span class="fs-11 mb-0 text-muted">React Developer</span>
@@ -138,20 +138,20 @@
 
                 <div class="dropdown ms-1 topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @switch(Session::get('lang'))
+                        <?php switch(Session::get('lang')):
 
-                        @case('sp')
-                        <img src="{{ URL::asset('build/images/flags/spain.svg') }}" class="rounded" alt="Header Language" height="20">
-                        @break
-                        @default
-                        <img src="{{ URL::asset('build/images/flags/spain.svg') }}" class="rounded" alt="Header Language" height="20">
-                        @endswitch
+                        case ('sp'): ?>
+                        <img src="<?php echo e(URL::asset('build/images/flags/spain.svg')); ?>" class="rounded" alt="Header Language" height="20">
+                        <?php break; ?>
+                        <?php default: ?>
+                        <img src="<?php echo e(URL::asset('build/images/flags/spain.svg')); ?>" class="rounded" alt="Header Language" height="20">
+                        <?php endswitch; ?>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
 
                         <!-- item-->
-                        <a href="{{ url('index/sp') }}" class="dropdown-item notify-item language" data-lang="sp" title="Spanish">
-                            <img src="{{ URL::asset('build/images/flags/spain.svg') }}" alt="user-image" class="me-2 rounded" height="20">
+                        <a href="<?php echo e(url('index/sp')); ?>" class="dropdown-item notify-item language" data-lang="sp" title="Spanish">
+                            <img src="<?php echo e(URL::asset('build/images/flags/spain.svg')); ?>" alt="user-image" class="me-2 rounded" height="20">
                             <span class="align-middle">Española</span>
                         </a>
 
@@ -176,19 +176,19 @@
                             <div class="row g-0">
                                 <div class="col">
                                     <a class="dropdown-icon-item" target="_blank" href="https://santotomasport.com.gt">
-                                        <img src="{{ URL::asset('build/images/empornac.png') }}" alt="">
+                                        <img src="<?php echo e(URL::asset('build/images/empornac.png')); ?>" alt="">
                                         <span>EMPORNAC</span>
                                     </a>
                                 </div>
                                 <div class="col">
                                     <a class="dropdown-icon-item" target="_blank" href="https://www.facebook.com/santotomasport">
-                                        <img src="{{ URL::asset('build/images/brands/facebook.png') }}" alt="bitbucket">
+                                        <img src="<?php echo e(URL::asset('build/images/brands/facebook.png')); ?>" alt="bitbucket">
                                         <span>FaceBook</span>
                                     </a>
                                 </div>
                                 <div class="col">
                                     <a class="dropdown-icon-item"  target="_blank" href="https://soporte.santotomasport.com.gt">
-                                        <img src="{{ URL::asset('build/images/images.png') }}" alt="dribbble">
+                                        <img src="<?php echo e(URL::asset('build/images/images.png')); ?>" alt="dribbble">
                                         <span>Soporte</span>
                                     </a>
                                 </div>
@@ -233,7 +233,7 @@
 
                                 <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
                                     <div class="d-flex align-items-center">
-                                        <img src="{{ URL::asset('build/images/products/img-5.png') }}" class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
+                                        <img src="<?php echo e(URL::asset('build/images/products/img-5.png')); ?>" class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
                                         <div class="flex-1">
                                             <h6 class="mt-0 mb-1 fs-14">
                                                 <a href="apps-ecommerce-product-details" class="text-reset">Stillbird Helmet</a>
@@ -284,24 +284,24 @@
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="@if (Auth::user()->avatar != ''){{ URL::asset('images/' . Auth::user()->avatar) }}@else{{ URL::asset('build/images/users/avatar-1.jpg') }}@endif" alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user" src="<?php if(Auth::user()->avatar != ''): ?><?php echo e(URL::asset('images/' . Auth::user()->avatar)); ?><?php else: ?><?php echo e(URL::asset('build/images/users/avatar-1.jpg')); ?><?php endif; ?>" alt="Header Avatar">
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{Auth::user()->name}}</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"><?php echo e(Auth::user()->name); ?></span>
                                 <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">ROL proximamente</span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Bienvenido {{Auth::user()->name}}!</h6>
+                        <h6 class="dropdown-header">Bienvenido <?php echo e(Auth::user()->name); ?>!</h6>
                         <a class="dropdown-item" href="apps-tasks-kanban"><i class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Tarea Kanban</span></a>
                         <a class="dropdown-item" href="pages-faqs"><i class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Ayuda</span></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="tareas"><i class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Tareas : <b>Aproximamente</b></span></a>
                         <a class="dropdown-item" href="auth-lockscreen-basic"><i class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Bloquear Pantalla</span></a>
-                        <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout">@lang('Cerrar Sesion')</span></a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
+                        <a class="dropdown-item " href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1"></i> <span key="t-logout"><?php echo app('translator')->get('Cerrar Sesion'); ?></span></a>
+                        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                            <?php echo csrf_field(); ?>
                         </form>
                     </div>
                 </div>
@@ -329,3 +329,4 @@
     }
 </script>
 <!-- removeNotificationModal -->
+<?php /**PATH C:\laragon\www\glpi-insumos\resources\views/layouts/topbar.blade.php ENDPATH**/ ?>
