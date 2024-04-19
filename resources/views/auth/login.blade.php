@@ -46,11 +46,11 @@
                                     @csrf
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
-                                        <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="username" name="email" placeholder="Ingresa tu Usuario">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+                                        <input type="text" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" id="username" name="username" placeholder="Ingresa tu Usuario">
+                                        @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
                                         @enderror
                                     </div>
 

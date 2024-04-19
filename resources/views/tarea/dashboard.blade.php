@@ -431,7 +431,7 @@
         <div class="col-xl-7">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1 py-1">Mi Log</h4>
+                    <h4 class="card-title mb-0 flex-grow-1 py-1">Mi Tarea</h4>
                     <div class="flex-shrink-0">
                         <div class="dropdown card-header-dropdown">
                             <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
@@ -440,7 +440,7 @@
                                         class="mdi mdi-chevron-down ms-1"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#" data-filter="TODOS" data-target="myLogTable">ALL</a>
+                                <a class="dropdown-item" href="#" data-filter="TODOS" data-target="myTareaTable">ALL</a>
                                 <!-- No hay otros filtros, pero si agregas, sigue el mismo patrón -->
                             </div>
                         </div>
@@ -507,14 +507,14 @@
             const myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-            labels: ['En Proceso', 'En Espera', 'Nuevo', 'Finalizado', 'Borrado'],
+            labels: ['En Proceso', 'En Espera', 'Nuevo', 'terminado', 'Borrado'],
             datasets: [{
             label: 'Estado de las Tareas',
             data: [
             data.en_proceso,
             data.en_espera,
             data.nuevo,
-            data.finalizado,
+            data.terminado,
             data.borrado
             ],
             backgroundColor: [
@@ -557,7 +557,7 @@
                         'nuevo': 'rgba(255, 99, 132, 0.2)',
                         'en proceso': 'rgba(54, 162, 235, 0.2)',
                         'en espera': 'rgba(255, 206, 86, 0.2)',
-                        'finalizado': 'rgba(75, 192, 192, 0.2)',
+                        'terminado': 'rgba(75, 192, 192, 0.2)',
                         'borrado': 'rgba(153, 102, 255, 0.2)'
                     };
 
@@ -716,54 +716,54 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Asumiendo que este es el botón para "Mi Log"
-            const miLogFilterButton = document.querySelector('.dropdown-menu a[data-filter="TODOS"][data-target="myLogTable"]');
+            const miTareaFilterButton = document.querySelector('.dropdown-menu a[data-filter="TODOS"][data-target="myTareaTable"]');
 
-            miLogFilterButton.addEventListener('click', function(event) {
+            miTareaFilterButton.addEventListener('click', function(event) {
                 event.preventDefault();
                 // Actualizar la tabla "Mi Log"
-                updateMiLogTable();
+                updateMiTareaTable();
             });
-            function updateMiLogTable() {
+            function updateMiTareaTable() {
                 // Define la URL para filtrar "Mi Log" por el estado "ALL"
-                const url = `/logs/filter-by-status1?filter=TODOS`; // Asegúrate de que esta URL es correcta y apunta al endpoint deseado
+                const url = `/tareas/filter-by-status1?filter=TODOS`; // Asegúrate de que esta URL es correcta y apunta al endpoint deseado
 
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
                         // Asume que 'data.logs' contiene los logs filtrados
-                        const logs = data.logs;
+                        const tareas = data.tareas;
                         // Selecciona el cuerpo de la tabla específica para "Mi Log" usando un selector único
-                        const tbody = document.querySelector('[data-mi-log] table > tbody');
+                        const tbody = document.querySelector('[data-mi-tarea] table > tbody');
 
                         tbody.innerHTML = ''; // Limpia el cuerpo de la tabla
 
                         // Itera sobre los logs y los añade a la tabla
-                        logs.forEach(log => {
+                        tareas.forEach(tarea => {
                             const row = `
                         <tr>
-                            <td class="id">${log.id}</td>
-                            <td class="nombre">${log.titulo}</td>
-                            <td class="fecha_creacion">${log.fecha_finalizacion}</td>
-                            <td class="estado">${log.estado_log.nombre}</td>
-                            <td class="usuario">${log.glpi_users.name}</td>
+                            <td class="id">${tarea.id}</td>
+                            <td class="nombre">${tarea.titulo}</td>
+                            <td class="fecha_terminado">${tarea.fecha_terminado}</td>
+                            <td class="estado">${tarea.estado}</td>
+                        <td class="tickets">{{$tarea->glpi_tickets ? $tarea->glpi_tickets->name: ''}}</td>
                         </tr>
                     `;
                             // Añade cada fila nueva al cuerpo de la tabla
                             tbody.innerHTML += row;
                         });
 
-                        if(logs.length === 0) {
+                        if(tareas.length === 0) {
                             // Si no hay logs, podrías mostrar un mensaje o realizar alguna acción
-                            tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay logs disponibles</td></tr>`;
+                            tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay tareas disponibles</td></tr>`;
                         }
                     })
                     .catch(error => {
-                        console.error('Error fetching logs:', error);
+                        console.error('Error fetching tareas:', error);
                     });
             }
 
             // Opcional: Llamar inmediatamente a updateMiLogTable para cargar los logs al cargar la página
-            updateMiLogTable();
+            updateMiTareaTable();
         });
     </script>
 

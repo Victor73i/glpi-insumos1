@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
 
 class LoginController extends Controller
 {
@@ -52,5 +54,16 @@ class LoginController extends Controller
 
         // Redirige a la vista personalizada de logout
         return redirect('/auth-logout-basic');
+    }
+    public function username()
+    {
+        return 'username';
+    }
+    protected function credentials(Request $request)
+    {
+        return[
+            'uid' => $request->get('username'),
+            'password' => $request->get('password'),
+        ];
     }
 }

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Fortify::authenticateUsing(function ($request){
+            $validated = Auth::validate([
+                'sAMAccountName' => $request->username,
+                'password' => $request->password
+            ]);
+            return $validated ? Auth::getLastAttempted() : null;
+        });
 
         //
     }

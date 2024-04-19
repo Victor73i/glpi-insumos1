@@ -350,13 +350,15 @@ class LogController extends Controller
     public function filterLogsByStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');
+        $userId = auth()->user()->id; // Asumiendo que estás usando la autenticación de Laravel
+
 
         $logsQuery = Log::with('estado_log', 'glpi_users');
 
         if ($filter !== 'ALL') {
             $estado = EstadoLog::where('nombre', $filter)->first();
-            $logsQuery->where('id_estado_log', $estado ? $estado->id : null);
-        }
+            $logsQuery->where('id_glpi_users', $userId);        }
+
 
         $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
 
@@ -364,28 +366,7 @@ class LogController extends Controller
             'logs' => $logs,
         ]);
     }
-    public function filterLogsByStatus1(Request $request)
-    {
-        $filter = $request->query('filter', 'TODOS');
-        $userId = auth()->user()->id; // Asumiendo que estás usando la autenticación de Laravel
 
-        $logsQuery = Log::with('estado_log', 'glpi_users');
-
-        // Si el filtro es 'ALL', no aplicar filtro de estado, pero sí de usuario para "Mi Log"
-        if ($filter === 'TODOS') {
-            $logsQuery->where('user_id', $userId);
-        } else {
-            $estado = EstadoLog::where('nombre', $filter)->first();
-            $logsQuery->where('id_estado_log', $estado ? $estado->id : null)
-                ->where('user_id', $userId); // Asegurarse de que siempre se filtre por el usuario logueado
-        }
-
-        $logs = $logsQuery->get(); // Cambiar a paginate si es necesario.
-
-        return response()->json([
-            'logs' => $logs,
-        ]);
-    }
 
 
     //delete

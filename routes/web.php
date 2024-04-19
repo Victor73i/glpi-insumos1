@@ -41,9 +41,7 @@ Route::post('/tareas/{tarea}/revertir', [TareaController::class, 'revertirTarea'
 Route::post('/tareas/{tarea}/borrar', [TareaController::class, 'borrarTarea'])->name('tareas.borrar');
 
 
-Auth::routes();
 //Language Translation
-Route::middleware(['auth', 'lockscreen'])->group(function () {
     Route::post('/logs/{id}/remove-file', [App\Http\Controllers\LogController::class, 'removeFile'])->name('logs.remove-file');
     Route::post('/documentacions/{id}/remove-file', [App\Http\Controllers\DocumentacionController::class, 'removeFile'])->name('documentacions.remove-file');
     Route::get('/equipo_its/detalles/{id}', [EquipoItController::class, 'detalles'])->name('equipo_its.detalles');
@@ -82,7 +80,6 @@ Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang'
 
 
     Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
-});
 Route::post('/estado_documentacions', [App\Http\Controllers\EstadoDocumentacionController::class, 'store1'] )->name('estado_documentacions.store1');
 Route::post('/tipo_documentacions', [App\Http\Controllers\TipoDocumentacionController::class, 'store1'] )->name('tipo_documentacions.store1');
 Route::post('/categoria_documentacions', [App\Http\Controllers\CategoriaDocumentacionController::class, 'store1'] )->name('categoria_documentacions.store1');
@@ -108,3 +105,13 @@ Route::put('tasks/{task}/toggle-complete', [TaskController::class, 'toggle'])->n
 //CATEGORIA DOCUMENTACION
 Route::put('categoria_documentacions/{categoria_documentacion}/toggle-complete', [CategoriaDocumentacionController::class, 'toggle'])->name('categoria_documentacions.toggle-complete');
 Route::put('reporte_insumo_consumibles/{reporte_insumo_consumible}/toggle-complete', [ReporteInsumoConsumibleController::class, 'toggle'])->name('reporte_insumo_consumibles.toggle-complete');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

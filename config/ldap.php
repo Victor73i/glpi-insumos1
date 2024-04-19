@@ -30,7 +30,7 @@ return [
 
         'default' => [
             'hosts' => [env('LDAP_HOST', '172.20.10.3')],
-            'username' => env('LDAP_USERNAME', 'cn=vdeleon,dc=empornac,dc=local'),
+            'username' => env('LDAP_USERNAME', 'vdeleon@empornac.local'),
             'password' => env('LDAP_PASSWORD', 'tecnicos4.'),
             'port' => env('LDAP_PORT', 389),
             'base_dn' => env('LDAP_BASE_DN', 'dc=empornac,dc=local'),

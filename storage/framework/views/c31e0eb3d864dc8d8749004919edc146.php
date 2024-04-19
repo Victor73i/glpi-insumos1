@@ -45,22 +45,22 @@
                                     <?php echo csrf_field(); ?>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
-                                        <input type="text" class="form-control <?php $__errorArgs = ['email'];
+                                        <input type="text" class="form-control <?php $__errorArgs = ['username'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('email')); ?>" id="username" name="email" placeholder="Ingresa tu Usuario">
-                                        <?php $__errorArgs = ['email'];
+unset($__errorArgs, $__bag); ?>" value="<?php echo e(old('username')); ?>" id="username" name="username" placeholder="Ingresa tu Usuario">
+                                        <?php $__errorArgs = ['username'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong><?php echo e($message); ?></strong>
-                                            </span>
+                                        <span class="invalid-feedback" role="alert">
+                <strong><?php echo e($message); ?></strong>
+            </span>
                                         <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
