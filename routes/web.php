@@ -63,16 +63,13 @@ Route::middleware(['auth', 'lockscreen'])->group(function () {
     Route::get('/tareas/filter-by-status', [TareaController::class, 'filterTareasByStatus'])->name('tareas.filterByStatus');
     Route::get('/tareas/filter-by-status1', [TareaController::class, 'filterTareasByStatus1'])->name('tareas.filterByStatus1');
 
-    Route::resource('/tasks', TaskController::class);
     Route::resource('/documentacions', DocumentacionController::class);
     Route::resource('/estado_logs',EstadoLogController::class);
     Route::resource('/logs', LogController::class);
     Route::resource('/tipo_documentacions', TipoDocumentacionController::class);
     Route::resource('/categoria_documentacions', CategoriaDocumentacionController::class);
     Route::resource('/estado_documentacions', EstadoDocumentacionController::class);
-    Route::resource('/reporte_insumo_inventariados', ReporteInsumoInventariadoController::class);
-    Route::resource('/reporte_insumo_fungibles', ReporteInsumoFungibleController::class);
-    Route::resource('/reporte_insumo_consumibles', ReporteInsumoConsumibleController::class);
+
     Route::resource('/tareas', TareaController::class);
     Route::resource('/equipo_its', EquipoItController::class)->only(['index', 'show']);
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
