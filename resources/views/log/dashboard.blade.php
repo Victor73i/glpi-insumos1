@@ -220,63 +220,6 @@
                         </div><!-- end card body -->
                     </div><!-- end card -->
                 </div><!-- end col -->
-                <div class="col-xl-7">
-                    <div class="card">
-                        <div class="card-header align-items-center d-flex">
-                            <h4 class="card-title mb-0 flex-grow-1 py-1">Mi Log</h4>
-                            <div class="flex-shrink-0">
-                                <div class="dropdown card-header-dropdown">
-                                    <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown"
-                                       aria-haspopup="true" aria-expanded="false">
-                                <span class="text-muted">Filtrado Por: <i
-                                        class="mdi mdi-chevron-down ms-1"></i></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="#" data-filter="TODOS" data-target="myLogTable">ALL</a>
-                                        <!-- No hay otros filtros, pero si agregas, sigue el mismo patrón -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- end card header -->
-                        <div class="card-body">
-                            <div class="table-responsive table-card">
-                                <table
-                                    class="table table-borderless table-nowrap table-centered align-middle mb-0">
-                                    <thead class="table-light text-muted">
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Titulo</th>
-                                        <th scope="col">Fecha Finalizacion</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">Tickets</th>
-                                        <th scope="col">Usuario</th>
-                                    </tr>
-                                    </thead><!-- end thead -->
-                                    <tbody>
-                                    <tr>
-                                        @foreach($logs as $log)
-
-                                        <td class="id">{{$log->id}}</td>
-
-
-                                        <td class="nombre">{{$log->titulo}}</td>
-
-                                        <td class="fecha_creacion">{{$log->fecha_finalizacion}}</td>
-                                        <td class="descripcion">{{$log->estado_log->nombre}}</td>
-                                        <td class="descripcion">{{$log->glpi_tickets->name}}</td>
-                                        <td class="descripcion">{{$log->glpi_users->name}}</td>
-                                    </tr><!-- end -->
-                                    @endforeach
-                                    </tbody><!-- end tbody -->
-                                </table><!-- end table -->
-                            </div>
-                            <div class="mt-3 text-center">
-                                <a href="{{route('logs.index')}}" class="text-muted text-decoration-underline">Load
-                                    More</a>
-                            </div>
-                        </div><!-- end cardbody -->
-                    </div><!-- end card -->
-                </div><!-- end col -->
 
                 <div class="col-xl-5">
                     <div class="card card-height-100">
@@ -594,7 +537,6 @@
                                     const tbody = document.querySelector('.table-responsive table > tbody');
                                     tbody.innerHTML = ''; // Clear the table body
 
-                                    // Populate the table with new rows based on the fetched logs
                                     logs.forEach(log => {
                                         const row = document.createElement('tr');
                                         row.innerHTML = `
@@ -637,61 +579,12 @@
                                 .catch(error => {
                                     console.error('Error fetching logs:', error);
                                 });
+
                         }
+                        updateLogTable('TODOS')
+
                     });
                 </script>
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        // Asumiendo que este es el botón para "Mi Log"
-                        const miLogFilterButton = document.querySelector('.dropdown-menu a[data-filter="TODOS"][data-target="myLogTable"]');
 
-                        miLogFilterButton.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            // Actualizar la tabla "Mi Log"
-                            updateMiLogTable();
-                        });
-                        function updateMiLogTable() {
-                            // Define la URL para filtrar "Mi Log" por el estado "ALL"
-                            const url = `/logs/filter-by-status1?filter=TODOS`; // Asegúrate de que esta URL es correcta y apunta al endpoint deseado
-
-                            fetch(url)
-                                .then(response => response.json())
-                                .then(data => {
-                                    // Asume que 'data.logs' contiene los logs filtrados
-                                    const logs = data.logs;
-                                    // Selecciona el cuerpo de la tabla específica para "Mi Log" usando un selector único
-                                    const tbody = document.querySelector('[data-mi-log] table > tbody');
-
-                                    tbody.innerHTML = ''; // Limpia el cuerpo de la tabla
-
-                                    // Itera sobre los logs y los añade a la tabla
-                                    logs.forEach(log => {
-                                        const row = `
-                        <tr>
-                            <td class="id">${log.id}</td>
-                            <td class="nombre">${log.titulo}</td>
-                            <td class="fecha_creacion">${log.fecha_finalizacion}</td>
-                            <td class="estado">${log.estado_log.nombre}</td>
-                            <td class="usuario">${log.glpi_users.name}</td>
-                        </tr>
-                    `;
-                                        // Añade cada fila nueva al cuerpo de la tabla
-                                        tbody.innerHTML += row;
-                                    });
-
-                                    if(logs.length === 0) {
-                                        // Si no hay logs, podrías mostrar un mensaje o realizar alguna acción
-                                        tbody.innerHTML = `<tr><td colspan="5" class="text-center">No hay logs disponibles</td></tr>`;
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error fetching logs:', error);
-                                });
-                        }
-
-                        // Opcional: Llamar inmediatamente a updateMiLogTable para cargar los logs al cargar la página
-                        updateMiLogTable();
-                    });
-                </script>
 @endsection

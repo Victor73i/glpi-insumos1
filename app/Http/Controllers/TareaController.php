@@ -17,7 +17,7 @@ class TareaController extends Controller
         $conteoEnProceso = Tarea::where('estado', 'en proceso')->count();
         $conteoEnEspera = Tarea::where('estado', 'en espera')->count();
         $conteoNuevo = Tarea::where('estado', 'nuevo')->count();
-        $conteoFinalizado = Tarea::where('estado', 'finalizado')->count();
+        $conteoFinalizado = Tarea::where('estado', 'terminado')->count();
         $conteoBorrado = Tarea::where('estado', 'borrado')->count();
         $totalTarea = $conteoEnProceso + $conteoEnEspera + $conteoNuevo + $conteoFinalizado +$conteoBorrado;
 
@@ -146,7 +146,7 @@ class TareaController extends Controller
         $conteoEnProceso = Tarea::where('estado', 'en proceso')->count();
         $conteoEnEspera = Tarea::where('estado', 'en espera')->count();
         $conteoNuevo = Tarea::where('estado', 'nuevo')->count();
-        $conteoFinalizado = Tarea::where('estado', 'finalizado')->count();
+        $conteoFinalizado = Tarea::where('estado', 'terminado')->count();
         $conteoBorrado = Tarea::where('estado', 'borrado')->count();
         $totalTarea = $conteoEnProceso + $conteoEnEspera + $conteoNuevo + $conteoFinalizado +$conteoBorrado;
 
@@ -164,7 +164,7 @@ class TareaController extends Controller
                 'en_proceso' => Tarea::where('estado', 'en proceso')->count(),
                 'en_espera' => Tarea::where('estado', 'en espera')->count(),
                 'nuevo' => Tarea::where('estado', 'nuevo')->count(),
-                'finalizado' => Tarea::where('estado', 'finalizado')->count(),
+                'terminado' => Tarea::where('estado', 'terminado')->count(),
                 'borrado' => Tarea::where('estado', 'borrado')->count(),
             ];
 
@@ -188,7 +188,9 @@ class TareaController extends Controller
             'estado',
             DB::raw('COUNT(*) as cantidad')
 
-        )->groupBy('dia', 'mes', 'año', 'estado')->orderBy('año', 'asc')
+        )
+            ->whereNotNull('fecha_terminado') // Asegúrate de que solo las tareas con fecha_terminado definida son incluidas
+            ->groupBy('dia', 'mes', 'año', 'estado')->orderBy('año', 'asc')
             ->orderBy('mes', 'asc')
             ->orderBy('dia', 'asc');
 
@@ -200,6 +202,7 @@ class TareaController extends Controller
         }
 
         $tareas = Tarea::select(DB::raw('DAY(fecha_terminado) as dia'), DB::raw('MONTH(fecha_terminado) as mes'), DB::raw('YEAR(fecha_terminado) as año'), 'estado', DB::raw('COUNT(*) as cantidad'))
+            ->whereNotNull('fecha_terminado') // Asegúrate de que solo las tareas con fecha_terminado definida son incluidas
             ->groupBy('estado', 'dia', 'mes', 'año')->orderBy('año', 'desc')
             ->orderBy('mes', 'desc')
             ->orderBy('dia', 'desc')
@@ -233,9 +236,13 @@ class TareaController extends Controller
     public function filterTareasByStatus(Request $request)
     {
         $filter = $request->query('filter', 'ALL');
+        $userId = auth()->user()->id; // Asumiendo que estás usando la autenticación de Laravel
+        $tareasQuery = Tarea::with('estado', 'glpi_users');
+
 
         if ($filter === 'ALL') {
-            $tareas = Tarea::where('estado', '<>', 'borrado')->get();
+
+            $tareas = Tarea::where('estado', '<>', 'borrado', )->get();
         } else {
             $tareas = Tarea::where('estado', $filter)->get();
         }

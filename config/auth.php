@@ -38,7 +38,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'ldap',
+        ],
+        'ldap' => [
+            'driver' => 'session',
+            'provider' => 'ldap',
         ],
     ],
 
@@ -64,12 +68,22 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'ldap' => [
+            'driver' => 'ldap',
+            'model' => LdapRecord\Models\ActiveDirectory\User::class,
+            'rules' => [],
+            'scopes' => [],
+            'database' => [
+                'model' => App\Models\User::class,
+                'sync_attributes' => [
+                    'name' => 'cn',
+                    'email' => 'mail',
+                    // Aquí debes agregar todos los atributos que quieres sincronizar.
+                ],
+            ],
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
