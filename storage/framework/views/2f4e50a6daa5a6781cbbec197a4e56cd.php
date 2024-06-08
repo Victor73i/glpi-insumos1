@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title'); ?>
     <?php echo app('translator')->get('Error 404'); ?>
 <?php $__env->stopSection(); ?>

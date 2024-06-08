@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
+        User::create(['name' => 'admin','email' => 'admin@themesbrand.com','password' => Hash::make('Tecnicos4.'),'email_verified_at'=>'2022-01-02 17:04:58','avatar' => 'avatar-1.jpg','created_at' => now(),]);
+        User::create(['name' => 'umgseguridad','email' => 'seguridad@gmail.com','password' => Hash::make('Redes#1'),'email_verified_at'=>'2022-01-02 17:04:58','avatar' => 'avatar-1.jpg','created_at' => now(),]);
     }
 
     /**
